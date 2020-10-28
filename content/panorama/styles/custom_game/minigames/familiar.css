@@ -1,0 +1,46 @@
+.FamiliarContainer {
+	width: 400px;
+	height: 400px;
+	margin: 20px;
+}
+
+@define FamiliarStartPosition: 0px 30px 0px;
+@define FamiliarEndPosition: 0px 310px 0px;
+
+.FamiliarContainer #Familiar {
+	horizontal-align: center;
+	width: 90px;
+	height: 90px;
+	background-image: url( "file://{images}/spellicons/visage_summon_familiars_stone_form.png" );
+	background-size: 100%;
+	position: FamiliarStartPosition;
+}
+
+.FamiliarContainer #Familiar.Animation {
+	animation-duration: 0.75s;
+	animation-timing-function: linear;
+	animation-name: Falling;
+	position: FamiliarEndPosition;
+}
+
+@keyframes 'Falling' {
+	0% {
+		position: FamiliarStartPosition;
+	}
+
+	13% {
+		position: 0px 0px 0px;
+	}
+
+	26% {
+		position: 0px 30px 0px;
+	}
+
+	50% {
+		position: 0px 100px 0px;
+	}
+
+	100% {
+		position: FamiliarEndPosition;
+	}
+}

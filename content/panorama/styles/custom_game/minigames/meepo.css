@@ -1,0 +1,31 @@
+.MeepoContainer {
+	flow-children: down;
+	margin: 10px;
+}
+
+.MeepoContainer #MeepoContainer {
+	width: 400px;
+	height: 400px;
+}
+
+.MeepoContainer #Meepo {
+	width: 45px;
+	height: 45px;
+}
+
+.MeepoContainer #ScorePanel {
+	margin-left: 10px;
+	flow-children: right;
+	height: 30px;
+}
+
+.MeepoContainer #ScorePanel Label {
+	color: white;
+	font-family: Radiance;
+	font-size: 22px;
+}
+
+.MeepoContainer #ScoreCount {
+	width: 30px;
+	text-align: center;
+}

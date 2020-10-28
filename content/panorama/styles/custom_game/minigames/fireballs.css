@@ -1,0 +1,41 @@
+.FireballsContainer {
+	margin: 24px;
+	flow-children: down;
+}
+
+.FireballsContainer #FireballsContainer {
+	width: 480px;
+	height: 480px;
+}
+
+.FireballsContainer .Fireball {
+	width: 36px;
+	height: 48px;
+	background-image: url( "file://{images}/custom_game/stone_remnant.png" );
+	background-size: 100%;
+	border-radius: 50%;
+	opacity: 1;
+	transition-property: opacity;
+	transition-duration: 0.4s;
+}
+
+.FireballsContainer .Fireball.Hidden {
+	opacity: 0;
+}
+
+.FireballsContainer #ScorePanel {
+	margin-left: 10px;
+	flow-children: right;
+	height: 30px;
+}
+
+.FireballsContainer #ScorePanel Label {
+	color: white;
+	font-family: Radiance;
+	font-size: 22px;
+}
+
+.FireballsContainer #ScoreCount {
+	width: 30px;
+	text-align: center;
+}

@@ -1,0 +1,18 @@
+.SearchContainer {
+	flow-children: down;
+	padding: 10px;
+}
+
+.SearchHero {
+	width: 40px;
+	height: 40px;
+	margin: 3px;
+}
+
+.SearchHero.Found {
+	wash-color: green;
+}
+
+.SearchHero.Fail {
+	wash-color: red;
+}

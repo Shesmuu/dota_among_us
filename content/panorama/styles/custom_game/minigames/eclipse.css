@@ -1,0 +1,23 @@
+.EclipseContainer {
+	height: 120px;
+	padding: 20px;
+	flow-children: right;
+}
+
+.EclipseContainer Button {
+	width: 48px;
+	height: 48px;
+	background-image: url( "file://{images}/spellicons/techies_land_mines.png" );
+	background-size: 100%;
+	margin-left: 2px;
+	margin-right: 2px;
+	margin-top: 0px;
+	wash-color: rgba( 0, 0, 0, 0 );
+	transition-property: margin-top, wash-color;
+	transition-duration: 0.5s;
+}
+
+.EclipseContainer Button.Clicked {
+	margin-top: 22px;
+	wash-color: rgba( 0, 0, 0, 0.8 );
+}

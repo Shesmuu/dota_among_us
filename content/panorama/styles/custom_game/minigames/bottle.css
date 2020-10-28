@@ -1,0 +1,11 @@
+.BottleContainer Image {
+	width: 88px;
+	height: 64px;
+	margin: 20px;
+}
+
+.BottleContainer Image:hover {
+	width: 92px;
+	height: 68px;
+	margin: 18px;
+}

@@ -1,0 +1,54 @@
+#Minigame {
+	horizontal-align: center;
+	vertical-align: center;
+	background-image: url( "s2r://panorama/images/hud/reborn/ability_bg_psd.vtex" );
+	background-size: 100%;
+	background-color: rgb( 33, 33, 33 );
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: 0.3s;
+	flow-children: down;
+}
+
+#Minigame.Visible {
+	opacity: 1;
+}
+
+#MinigameTitle {
+	horizontal-align: center;
+	color: rgb( 233, 233, 233 );
+	font-family: Radiance;
+	font-size: 24px;
+	text-shadow: 0px 0px 4px 4 #000a;
+	max-height: 30px;
+	margin: 5px;
+}
+
+#MinigameContent {
+	horizontal-align: center;
+}
+
+#MinigameContainer {
+	horizontal-align: center;
+	vertical-align: center;
+}
+
+#MinigameMessage {
+	horizontal-align: center;
+	vertical-align: center;
+	font-size: 30px;
+	color: white;
+	font-family: Goudy Trajan Medium;
+	text-shadow: 0px 0px 1px 2.0 rgba( 22, 22, 22, 0.9 );
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: 0.3s;
+}
+
+#MinigameMessage.Visible {
+	opacity: 1;
+}
+
+#MinigameMessage.Red {
+	color: rgb( 200, 30, 30 );
+}

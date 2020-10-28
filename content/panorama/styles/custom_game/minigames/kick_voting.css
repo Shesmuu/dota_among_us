@@ -1,0 +1,57 @@
+.KickVotingContainer {
+	flow-children: down;
+}
+
+.KickVotingContainer #Button {
+	horizontal-align: center;
+	width: 90px;
+	height: 90px;
+	margin-top: 20px;
+	background-image: url( "file://{images}/spellicons/techies_focused_detonate.png" );
+	background-size: 100%;
+	border: 2px solid black;
+}
+
+.KickVotingContainer #Button:hover {
+	border: 1px solid white;
+}
+
+.KickVotingContainer #KickVotingState {
+	width: 330px;
+	margin: 20px 20px 0px 20px;
+}
+
+.KickVotingContainer #IsCooldown {
+	horizontal-align: center;
+	vertical-align: center;
+	flow-children: right;
+}
+
+.KickVotingContainer Label {
+	vertical-align: center;
+	text-align: center;
+	font-family: Radiance;
+	text-transform: uppercase;
+	color: white;
+	font-size: 18px;
+}
+
+.KickVotingContainer #IsCooldown, .KickVotingContainer #IsReady, .KickVotingContainer #IsSabotage {
+	horizontal-align: center;
+}
+
+.KickVotingContainer #Countdown {
+	width: 32px;
+}
+
+.KickVotingContainer #IsSabotage {
+	animation-duration: 0.6s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-name: SabotageText;
+}
+
+.KickVotingContainer #KickCount {
+	horizontal-align: center;
+	margin-bottom: 20px;
+}

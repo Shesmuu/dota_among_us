@@ -1,0 +1,8 @@
+english
+{
+	material materials/overviews/english.vmat
+	pos_x -9472
+	pos_y 9472
+	scale 18.500
+}
+

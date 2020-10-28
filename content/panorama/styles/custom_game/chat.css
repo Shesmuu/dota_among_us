@@ -1,0 +1,179 @@
+#ChatButton {
+	horizontal-align: right;
+	vertical-align: bottom;
+	margin: 20px;
+	width: 120px;
+	height: 120px;
+	background-image: url( "s2r://panorama/images/topbar/notification_icon_off_psd.vtex" );
+	background-size: 100%;
+}
+
+#NewMessage {
+	horizontal-align: right;
+	vertical-align: bottom;
+	background-color: white;
+	margin-right: 8px;
+	margin-bottom: 22px;
+	border-radius: 50%;
+	width: 26px;
+	height: 26px;
+	border: 5px solid rgb( 255, 80, 80 );
+}
+
+#NewMessage.Animation {
+	animation-duration: 0.3s;
+	animation-timing-function: linear;
+	animation-name: NewMessage;
+}
+
+#ChatButton:hover {
+	margin: 18px;
+	width: 124px;
+	height: 124px;
+}
+
+#Chat {
+	horizontal-align: right;
+	vertical-align: center;
+	margin-right: 15px;
+	width: 600px;
+	padding: 5px;
+	transform: translate3d( 100px, 400px, 0px );
+	transition-property: opacity, transform;
+	transition-duration: 0.3s;
+	border: 2px solid black;
+	background-color: rgba( 200, 200, 200, 0.3 );
+	border-radius: 10px;
+	opacity: 0;
+	flow-children: down;
+}
+
+#Chat.Visible {
+	transform: translate3d( 0px, 0px, 0px );
+	opacity: 1;
+}
+
+#TopChat {
+	width: 100%;
+	height: 700px;
+}
+
+#MessagesContainer {
+	width: 100%;
+	height: 100%;
+	overflow: clip scroll;
+	flow-children: down;
+}
+
+#MessagesContainer VerticalScrollBar {
+	horizontal-align: right;
+	width: 8px;
+	height: 100%;
+	transition-property: transform;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+	layout-position: fixed;
+}
+
+#MessagesContainer #ScrollThumb {
+	min-height: 90px;
+	background-color: white;
+	width: 8px;
+	border-radius: 4px;
+	transition-property: transform, position;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}
+
+#ChatLine {
+	width: 100%;
+	height: 40px;
+	padding: 5px;
+	background-color: rgb( 44, 44, 44 );
+	border-radius: 10px;
+	flow-children: right;
+}
+
+#ChatEntry {
+	vertical-align: center;
+	width: fill-parent-flow( 1.0 );
+	height: 22px;
+	color: white;
+	font-family: Radiance;
+	font-size: 20px;
+	text-overflow: clip;
+}
+
+#ChatSmilesButton {
+	horizontal-align: right;
+	vertical-align: center;
+	width: 30px;
+	height: 30px;
+	background-image: url( "s2r://panorama/images/control_icons/emoticon_icon_psd.vtex" );
+	background-size: 20px;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	wash-color: #737f83;
+}
+
+#ChatSmilesList {
+	vertical-align: bottom;
+	margin: 20px;
+	width: 100%;
+	height: 300px;
+	padding: 5px;
+	background-color: rgb( 44, 44, 44 );
+	border-radius: 10px;
+	transition-property: opacity;
+	transition-duration: 0.3s;
+	opacity: 0;
+	flow-children: right-wrap;
+}
+
+#ChatSmiledList.Visible {
+	opacity: 1;
+}
+
+.ChatMessage {
+	flow-children: right;
+}
+
+.ChatMessage.LocalPlayer {
+	horizontal-align: right;
+	margin-right: 8px;
+	flow-children: left;
+}
+
+.ChatMessage #HeroImage {
+	margin: 2px;
+	vertical-align: center;
+	width: 60px;
+	height: 60px;
+}
+
+.ChatMessage #HeroImage.Died {
+	saturation: 0;
+}
+
+.ChatMessage #Message {
+	vertical-align: center;
+	max-width: 400px;
+	margin-left: 10px;
+	color: white;
+	font-size: 28px;
+	font-family: Radiance;
+}
+
+@keyframes 'NewMessage' {
+	0% {
+		transform: translateY( 0px );
+	}
+
+	50% {
+		transform: translateY( -20px );
+	}
+
+	100% {
+		transform: translateY( 0px );
+	}
+}

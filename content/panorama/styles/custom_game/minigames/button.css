@@ -1,0 +1,29 @@
+.ButtonContainer {
+	margin: 50px;
+	flow-children: down;
+}
+
+.ButtonContainer #Button {
+	horizontal-align: center;
+	width: 90px;
+	height: 90px;
+	background-image: url( "file://{images}/spellicons/techies_focused_detonate.png" );
+	background-size: 100%;
+	border: 2px solid black;
+}
+
+.ButtonContainer #Button:hover {
+	border: 1px solid white;
+}
+
+.ButtonContainer #ProgressContainer {
+	width: 100%;
+	height: 20px;
+	background-color: rgb( 88, 88, 88 );
+	border: 1px solid rgb( 44, 44, 44 );
+}
+
+.ButtonContainer #Progress {
+	height: 100%;
+	background-color: rgb( 255, 255, 90 );
+}

@@ -1,0 +1,17 @@
+"AddonInfo"
+{
+	"maps"					"russian english"
+	"IsPlayable"			"1"
+	"PenaltiesEnabled"		"0"
+	"CheckAFKPlayers"		"0"
+
+	"russian"
+	{
+		"MaxPlayers"		"10"
+	}
+
+	"english"
+	{
+		"MaxPlayers"		"10"
+	}
+}

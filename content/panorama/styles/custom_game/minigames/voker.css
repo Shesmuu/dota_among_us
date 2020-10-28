@@ -1,0 +1,97 @@
+.MinigameVoker {
+	width: 500px;
+	flow-children: down;
+}
+
+.MinigameVoker #TopLine {
+	width: 100%;
+	height: 100px;
+	margin-top: 10px;
+	background-color: rgba( 22, 22, 22, 0.9 );
+}
+
+.MinigameVoker #SpheresLine {
+	vertical-align: center;
+	width: 100%;
+}
+
+.MinigameVoker #SpheresLine Image {
+	width: 48px;
+	height: 48px;
+	border-radius: 5px;
+	opacity: 1;
+	transition-property: opacity;
+	transition-duration: 1s;
+}
+
+.MinigameVoker #SpheresLine Image.Hidden {
+	opacity: 0;
+}
+
+.MinigameVoker #CenterTarget {
+	horizontal-align: center;
+	vertical-align: center;
+	width: 64px;
+	height: 64px;
+	border-radius: 7px;
+	border: 3px solid rgba( 111, 111, 22, 0.7 );
+}
+
+.MinigameVoker #BottomLine {
+	width: 100%;
+}
+
+.MinigameVoker #ScorePanel {
+	horizontal-align: center;
+	width: 200px;
+	flow-children: right;
+}
+
+.MinigameVoker #ScorePanel Label {
+	color: white;
+	font-family: Radiance;
+	font-size: 22px;
+}
+
+.MinigameVoker #ScoreCount {
+	width: 30px;
+	text-align: center;
+}
+
+.MinigameVoker #Buttons {
+	horizontal-align: center;
+	margin-top: 20px;
+	padding: 10px;
+	flow-children: right;
+}
+
+.MinigameVoker #Buttons Button {
+	vertical-align: center;
+	width: 64px;
+	height: 64px;
+	margin: 3px;
+	background-size: 100%;
+	box-shadow: black 0px 0px 5px 0px;
+}
+
+.MinigameVoker #Buttons Button:hover {
+	box-shadow: white 0px 0px 5px 0px;
+}
+
+.MinigameVoker #Buttons Button:active {
+	width: 56px; 
+	height: 56px;
+	margin: 7px;
+}
+
+.MinigameVoker #Quas {
+	background-image: url( "file://{images}/spellicons/invoker_quas.png" );
+}
+
+.MinigameVoker #Wex {
+	background-image: url( "file://{images}/spellicons/invoker_wex.png" );
+}
+
+.MinigameVoker #Exort {
+	background-image: url( "file://{images}/spellicons/invoker_exort.png" );
+}

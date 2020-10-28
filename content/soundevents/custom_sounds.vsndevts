@@ -1,0 +1,186 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	Game.KickVotingButton = {
+		type = "dota_update_default"
+		volume = 2
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 81.000000
+		mixgroup = "Ultimates"
+		spread_radius = 900.000000
+		vsnd_files = [
+			"sounds/weapons/hero/mars/enc/arena_of_blood.vsnd",
+		]
+	}
+	Game.FoundCorpse = {
+		type = "dota_update_block_n_start"
+		volume = 2
+		soundlevel = 81.000000
+		mixgroup = "Stingers"
+		spread_radius = 600.000000
+		start_name = "Game.FoundCorpseS"
+		start_delay = 2.000000
+		vsnd_files = [
+			"sounds/weapons/hero/skeleton_king/reincarnate_arcana.vsnd",
+		]
+	}
+	Game.FoundCorpseS = {
+		type = "dota_update_default"
+		volume = 1
+		soundlevel = 81.000000
+		mixgroup = "Stingers"
+		spread_radius = 900.000000
+		vsnd_files = [
+			"sounds/weapons/hero/skeleton_king/arcana_stinger.vsnd",
+		]
+	}
+	Game.Eclipse = {
+		type = "dota_update_default"
+		volume = 1.4
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 81.000000
+		mixgroup = "Ultimates"
+		spread_radius = 900.000000
+		vsnd_files = [
+			"sounds/weapons/hero/nightstalker/darkness.vsnd",
+		]
+	}
+	Game.Alert = {
+		type = "dota_src1_3d"
+		vsnd_files = [
+			"sounds/weapons/hero/dark_willow/ley_counter.vsnd",
+		]
+		volume = "1.000000"
+		pitch = "1.500000"
+		soundlevel = "84.000000"
+		mixgroup = "Weapons"
+		spread_radius = "300.000000"
+	}
+	Minigame.Invoke = {
+		type = "dota_src1_3d"
+		volume = 1.000000
+		pitch = 1.000000
+		soundlevel = 81.000000
+		mixgroup = "Weapons"
+		spread_radius = 300.000000
+		block_duration = 0
+		vsnd_files = [
+			"sounds/weapons/hero/invoker/invoke.vsnd",
+		]
+	}
+	Minigame.Familiar = {
+		type = "dota_src1_3d"
+		vsnd_files = [
+			"sounds/weapons/hero/visage/stun.vsnd",
+		]
+		volume = 2
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 81.000000
+		mixgroup = "Weapons"
+		spread_radius = 300.000000
+	}
+	Minigame.Wisp = {
+		type = "dota_src1_3d"
+		volume = 0.699707
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 81.000000
+		distance_max = 2500.000000
+		limiter_on = 0.000000
+		vsnd_files = [
+			"sounds/weapons/hero/wisp/spirit_target.vsnd",
+		]
+	}
+	Minigame.EarthSpirit = {
+		type = "dota_src1_3d"
+		vsnd_files = [
+			"sounds/weapons/hero/earth_spirit/stone_remnant.vsnd",
+		]
+		volume = 2.6
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 81.000000
+		mixgroup = "Weapons"
+		spread_radius = 150.000000
+	}
+	Minigame.Meepo = {
+		type = "dota_src1_3d"
+		volume = 1.000000
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 78.000000
+		mixgroup = "BaseAttacks"
+		distance_max = 2500.000000
+		soundevent_layer2 = "Minigame.MeepoI"
+		soundevent_layer2_on = 1.000000
+		soundevent_layer3 = "Minigame.MeepoP"
+		soundevent_layer3_on = 1.000000
+		vsnd_files = 
+		[
+			"sounds/weapons/hero/omniknight/attack01.vsnd",
+			"sounds/weapons/hero/omniknight/attack02.vsnd",
+			"sounds/weapons/hero/omniknight/attack03.vsnd",
+		]
+	}
+	Minigame.Meepo = {
+		type = "dota_src1_3d"
+		volume = 1.000000
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 78.000000
+		mixgroup = "BaseAttacks"
+		distance_max = 2500.000000
+		soundevent_layer2 = "Minigame.MeepoI"
+		soundevent_layer2_on = 1.000000
+		soundevent_layer3 = "Minigame.MeepoP"
+		soundevent_layer3_on = 1.000000
+		vsnd_files = 
+		[
+			"sounds/weapons/hero/omniknight/attack01.vsnd",
+			"sounds/weapons/hero/omniknight/attack02.vsnd",
+			"sounds/weapons/hero/omniknight/attack03.vsnd",
+		]
+	}
+	Minigame.MeepoI = {
+		type = "dota_src1_3d"
+		volume_rand_min = -0.099976
+		volume_rand_max = 0.099976
+		volume = 0.199951
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 0.850000
+		soundlevel = 75.000000
+		mixgroup = "BaseAttacks"
+		distance_max = 2500.000000
+		soundevent_layer2 = "Damage_Melee.Gore"
+		soundevent_layer2_on = 1.000000
+		vsnd_files = [
+			"sounds/weapons/hero/shared/large_blade/ring01.vsnd",
+			"sounds/weapons/hero/shared/large_blade/ring04.vsnd",
+			"sounds/null.vsnd",
+		]
+	}
+	Minigame.MeepoP = {
+		type = "dota_src1_3d"
+		volume = 1.000000
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 75.000000
+		mixgroup = "BaseAttacks"
+		vsnd_files = [
+			"sounds/weapons/hero/shared/large_blade/follow_thru01.vsnd",
+			"sounds/weapons/hero/shared/large_blade/follow_thru02.vsnd",
+			"sounds/weapons/hero/shared/large_blade/follow_thru03.vsnd",
+		]
+	}
+}

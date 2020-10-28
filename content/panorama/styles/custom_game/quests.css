@@ -1,0 +1,62 @@
+#Quests {
+	margin-top: 80px;
+	margin-left: 20px;
+	flow-children: down;
+}
+
+#TotalTasksCompleted {
+	width: 500px;
+	height: 40px;
+	background-color: rgb( 44, 44, 44 );
+	border: 2px solid rgb( 144, 144, 144 );
+	box-shadow: black 0px 0px 5px 0px;
+}
+
+#TotalTasksCompleted Label {
+	vertical-align: center;
+	margin-left: 4px;
+	font-family: Radiance;
+	font-size: 24px;
+	color: rgb( 211, 211, 211 );
+	text-transform: uppercase;
+	text-shadow: 0px 0px 4px 4 #000a;
+}
+
+#TotalTasksCompleted #TasksProgress {
+	height: 100%;
+	background-color: rgb( 90, 255, 90 );
+	transition-duration: 0.3s;
+	transition-property: width;
+}
+
+#QuestsList, #GlobalQuestsList {
+	margin-top: 4px;
+	margin-left: 2px;
+	flow-children: down;
+}
+
+#QuestsList Label, #GlobalQuestsList Label {
+	font-family: Radiance;
+	font-size: 20px;
+	color: rgb( 233, 233, 233 );
+	text-shadow: 0px 0px 4px 4 #000a;
+	max-height: 30px;
+	opacity: 0;
+	transition-property: color, opacity;
+	transition-duration: 0.4s;
+}
+
+#QuestsList Label.Completed {
+	color: rgb( 90, 255, 90 );
+}
+
+#QuestsList Label.Visible, #GlobalQuestsList Label.Visible {
+	opacity: 1;
+}
+
+#GlobalQuestsList Label {
+	animation-duration: 0.6s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-name: SabotageText;
+}

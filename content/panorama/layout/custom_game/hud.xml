@@ -1,0 +1,256 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/debug.css" />
+		<include src="file://{resources}/styles/custom_game/hud.css" />
+		<include src="file://{resources}/styles/custom_game/top_bar.css" />
+		<include src="file://{resources}/styles/custom_game/quests.css" />
+		<include src="file://{resources}/styles/custom_game/hero_bar.css" />
+		<include src="file://{resources}/styles/custom_game/settings.css" />
+		<include src="file://{resources}/styles/custom_game/chat.css" />
+		<include src="file://{resources}/styles/custom_game/minigames.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/button.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/bottle.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/familiar.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/x_mark.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/voker.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/fireballs.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/meepo.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/suns.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/wisp.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/search.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/faceless.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/interference.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/eclipse.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/oxygen.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/kick_voting.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/utils.js" />
+		<include src="file://{resources}/scripts/custom_game/debug.js" />
+		<include src="file://{resources}/scripts/custom_game/sounds.js" />
+		<include src="file://{resources}/scripts/custom_game/minigame.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/button.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/bottle.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/familiar.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/x_mark.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/voker.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/fireballs.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/meepo.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/suns.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/wisp.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/search.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/faceless.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/interference.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/eclipse.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/oxygen.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/kick_voting.js" />
+		<include src="file://{resources}/scripts/custom_game/hero_bar.js" />
+		<include src="file://{resources}/scripts/custom_game/top_bar.js" />
+		<include src="file://{resources}/scripts/custom_game/quests.js" />
+		<include src="file://{resources}/scripts/custom_game/kick_voting_timer.js" />
+		<include src="file://{resources}/scripts/custom_game/chat.js" />
+		<include src="file://{resources}/scripts/custom_game/settings.js" />
+		<include src="file://{resources}/scripts/custom_game/hud.js" />
+	</scripts>
+
+	<snippets>
+		<snippet name="MinigameKickVoting">
+			<Panel class="KickVotingContainer">
+				<Button id="Button" />
+				<Panel id="KickVotingState">
+					<Panel id="IsCooldown">
+						<Label text="#kick_voting_cooldown" />
+						<Label id="Countdown" />
+					</Panel>
+					<Panel id="IsReady">
+						<Label id="FullReady" text="#kick_voting_full_ready" />
+						<Label id="NonReady" text="#kick_voting_non_ready" />
+					</Panel>
+					<Label id="IsSabotage" text="#kick_voting_sabotage" />
+				</Panel>
+				<Label id="KickCount" />
+			</Panel>
+		</snippet>
+
+		<snippet name="MinigameFireballs">
+			<Panel class="FireballsContainer">
+				<Panel id="FireballsContainer" />
+				<Panel id="ScorePanel">
+					<Label text="#au_minigame_fireballs_score" />
+					<Label id="ScoreCount" />
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="MinigameMeepo">
+			<Panel class="MeepoContainer">
+				<Panel id="MeepoContainer">
+					<Image id="Meepo" />
+				</Panel>
+				<Panel id="ScorePanel">
+					<Label text="#au_minigame_meepo_score" />
+					<Label id="ScoreCount" />
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="MinigameOxygen">
+			<Panel class="OxygenContainer">
+				<Panel id="Center">
+					<Panel id="NumbersEntry">
+						<Label id="Entry" />
+					</Panel>
+					<Panel id="Buttons" />
+				</Panel>
+				<Label id="CodeText" />
+			</Panel>
+		</snippet>
+
+		<snippet name="MinigameVoker">
+			<Panel class="MinigameVoker">
+				<Panel id="TopLine">
+					<Panel id="SpheresLine" />
+					<Panel id="CenterTarget" />
+				</Panel>
+				<Panel id="BottomLine">
+					<Panel id="Buttons">
+						<Button id="Quas" />
+						<Button id="Wex" />
+						<Button id="Exort" />
+					</Panel>
+					<Panel id="ScorePanel">
+						<Label text="#au_minigame_voker_score" />
+						<Label id="ScoreCount" />
+					</Panel>
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="MinigameXMark">
+			<Panel class="XMarkContainer">
+				<Panel id="XMarkButton" />
+				<Panel id="Target">
+					<Image id="TargetImage" />
+				</Panel>
+				<Panel id="XMarkLine" hittest="false" />
+				<Label id="XMark" text="X" hittest="false" />
+			</Panel>
+		</snippet>
+
+		<snippet name="MinigameButton">
+			<Panel class="ButtonContainer">
+				<Button id="Button" />
+				<Panel id="ProgressContainer">
+					<Panel id="Progress" />
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="TopBarPlayer">
+			<Panel class="TopBarPlayer">
+				<DOTAHeroImage id="HeroImage" />
+				<Panel id="Disconnected" />
+				<Panel id="Impostor" />
+			</Panel>
+		</snippet>
+
+		<snippet name="ChatMessage">
+			<Panel class="ChatMessage">
+				<Image id="HeroImage" />
+				<Label id="Message" html="true" />
+			</Panel>
+		</snippet>
+	</snippets>
+
+	<Panel class="Hud" hittest="false">
+		<Panel id="HeroBarsContainer" />
+		<Panel id="SabotageDurning" />
+		<Panel id="MorphHeroSelectPanel">
+			<Panel id="Header">
+				<Label id="Title" text="#au_morph_transform_title" />
+				<Button id="CloseButton" onactivate="HideMorphTransform()" />
+			</Panel>
+			<Panel id="HeroesContainer" />
+		</Panel>
+		<Button id="ChatButton" onactivate="Chat_.ToggleChat()">
+			<Panel id="NewMessage" />
+		</Button>
+
+		<Panel id="TopBar">
+			<Panel id="Players">
+				<Panel id="LeftFlare" />
+				<Panel id="PlayersContainer" />
+				<Panel id="RightFlare" />
+			</Panel>
+			<Label id="ImpostorsRemaining" />
+		</Panel>
+
+		<Panel id="RedCenterMessage" hittest="false">
+			<Label id="RedCenterMessageText" />
+		</Panel>
+
+		<Panel id="WhiteCenterMessage" hittest="false">
+			<Label id="WhiteCenterMessageText" />
+		</Panel>
+
+		<Label id="AFKKillDelay" />
+
+		<Panel id="Quests">
+			<Panel id="TotalTasksCompleted">
+				<Panel id="TasksProgress" />
+				<Label text="#au_total_tasks_completed" />
+			</Panel>
+			<Panel id="QuestsList" />
+			<Panel id="GlobalQuestsList" />
+		</Panel>
+
+		<Panel id="Minigame">
+			<Label id="MinigameTitle" />
+			<Panel id="MinigameContent">
+				<Panel id="MinigameContainer" />
+				<Label id="MinigameMessage" />
+			</Panel>
+		</Panel>
+
+		<Panel id="DebugPanel">
+			<Panel id="Header">
+				<Label text="Send it to developers" />
+				<Button onactivate="$( '#DebugPanel' ).visible = false" />
+			</Panel>
+			<Panel id="ErrorContainer" />
+		</Panel>
+
+		<Panel id="KickVotingTimer">
+			<Label text="#kick_voting_remaining" />
+			<Label id="KickVotingCountdown" />
+		</Panel>
+
+		<Panel id="Settings" hittest="false">
+			<Panel id="SettingsPanel">
+				<Label id="Title" text="#au_settings_title" />
+				<Label id="FeatureContent" text="#au_settings_content" />
+				<Label id="Countdown" />
+				<Panel id="CustomSettingsContainer" />
+			</Panel>
+		</Panel>
+
+		<Panel id="Chat">
+			<Panel id="TopChat">
+				<Panel id="MessagesContainer" />
+				<Panel id="ChatSmilesList" />
+			</Panel>
+			<Panel id="ChatLine">
+				<TextEntry id="ChatEntry" multiline="false" textmode="normal" maxchars="72" />
+				<Button id="ChatSmilesButton" />
+			</Panel>
+		</Panel>
+
+		<Panel style="visibility: collapse;">
+			<!--
+			<Image src="file://{images}/custom_game/stone_remnant.png" />
+			<Image src="file://{images}/custom_game/smiles/EZ.png" />
+			-->
+		</Panel>
+	</Panel>
+</root>

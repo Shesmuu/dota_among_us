@@ -1,0 +1,167 @@
+"" {
+	"au_vote_kick" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/vote_kick/au_vote_kick"
+		"AbilityTextureName" "bristleback_viscous_nasal_goo"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"MaxLevel" "1"
+		"AbilityCastAnimation" "ACT_DOTA_ATTACK"
+		"AbilityCastPoint" "0.3"
+	}
+	"au_impostor_kill" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/kill/au_impostor_kill"
+		"AbilityTextureName" "axe_culling_blade"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel" "1"
+		"AbilityCastAnimation" "ACT_DOTA_ATTACK"
+		"AbilitySpecial" { "1" { "var_type"	"FIELD_INTEGER" "cooldown" "30" } }
+	}
+	"au_impostor_sabotage_eclipse" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/sabotage/eclipse"
+		"AbilityTextureName" "eclipse"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel" "1"
+	}
+	"au_impostor_sabotage_interference" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/sabotage/interference"
+		"AbilityTextureName" "interference"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel" "1"
+	}
+	"au_impostor_sabotage_oxygen" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/sabotage/oxygen"
+		"AbilityTextureName" "oxygen"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel" "1"
+	}
+	"au_impostor_sabotage_reactor" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/sabotage/reactor"
+		"AbilityTextureName" "reactor"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel" "1"
+	}
+	"au_impostor_invoker_invis" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/invoker/au_impostor_invoker_invis"
+		"AbilityTextureName" "invoker_ghost_walk"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel" "1"
+		"AbilityCooldown" "40"
+		"AbilitySpecial" {
+			"1" { "var_type" "FIELD_INTEGER" "duration" "3" }
+			"2" { "var_type" "FIELD_INTEGER" "movespeed" "1200" }
+		}
+	}
+	"au_impostor_tinker_rearm" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/tinker/au_impostor_tinker_rearm"
+		"AbilityTextureName" "tinker_rearm"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"MaxLevel" "1"
+		"AbilityCastAnimation" "ACT_DOTA_TINKER_REARM1"
+		"AbilityChannelAnimation" "ACT_DOTA_CHANNEL_ABILITY_4"
+		"AbilityCastPoint" "0.53"
+		"AbilityChannelTime" "3"
+		"AbilityCooldown" "50"
+		"AbilitySpecial" { "1" { "var_type"	"FIELD_INTEGER" "duration" "3" } }
+	}
+	"au_impostor_sf_souls" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/sf/au_impostor_sf_souls"
+		"AbilityTextureName" "nevermore_necromastery"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel" "1"
+		"AbilitySpecial" { "1" { "var_type"	"FIELD_INTEGER" "duration" "10" } }
+	}
+	"au_impostor_mk_mischief" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/mk/au_impostor_mk_mischief"
+		"AbilityTextureName" "monkey_king_mischief"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"MaxLevel" "1"
+		"AbilitySpecial" { "1" { "var_type"	"FIELD_INTEGER" "cooldown" "3" } }
+	}
+	"au_impostor_storm_remnant" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/storm/au_impostor_storm_remnant"
+		"AbilityTextureName" "storm_spirit_static_remnant"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel" "1"
+		"AbilityCharges" "3"
+		"AbilityChargeRestoreTime" "3.5"
+		"AbilitySpecial" { "1" { "var_type" "FIELD_INTEGER" "duration" "12" } }
+	}
+	"au_impostor_rubick_kill" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/rubick/au_impostor_rubick_kill"
+		"AbilityTextureName" "rubick_spell_steal"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"MaxLevel" "1"
+		"AbilityCooldown" "3"
+		"AbilityCastAnimation" "ACT_DOTA_CAST_ABILITY_7"
+	}
+	"au_impostor_pudge_eat" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/pudge/au_impostor_pudge_eat"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel" "1"
+		"AbilitySpecial" {
+			"1" { "var_type" "FIELD_INTEGER" "cooldown" "30" }
+			"2" { "var_type" "FIELD_INTEGER" "duration" "15" }
+		}
+	}
+	"au_impostor_meepo_clone" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/meepo/au_impostor_meepo_clone"
+		"AbilityTextureName" "meepo_divided_we_stand"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel" "1"
+		"AbilityCooldown" "40"
+		"AbilitySpecial" {
+			"1" { "var_type" "FIELD_INTEGER" "duration" "15" }
+			"2" { "var_type" "FIELD_INTEGER" "invis_duration" "3" }
+		}
+	}
+	"au_impostor_ember_remnant" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/ember/au_impostor_ember_remnant"
+		"AbilityTextureName" "ember_spirit_fire_remnant"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel" "1"
+		"AbilitySpecial" {
+			"1" { "var_type" "FIELD_INTEGER" "cooldown" "40" }
+			"2" { "var_type" "FIELD_INTEGER" "duration" "20" }
+		}
+	}
+	"au_impostor_morph_transform" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/morph/au_impostor_morph_transform"
+		"AbilityTextureName" "morphling_replicate"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel" "1"
+		"AbilitySpecial" {
+			"1" { "var_type" "FIELD_INTEGER" "cooldown" "30" }
+			"2" { "var_type" "FIELD_INTEGER" "duration" "20" }
+		}
+	}
+	"au_impostor_zuus_global" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/zuus/au_impostor_zuus_global"
+		"AbilityTextureName" "zuus_thundergods_wrath"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"MaxLevel" "1"
+		"AbilityCastPoint" "0.4"
+		"AbilityCastAnimation" "ACT_DOTA_CAST_ABILITY_5"
+		"AbilitySpecial" {
+			"1" { "var_type" "FIELD_INTEGER" "duration" "4" }
+		}
+		"AbilityCooldown" "70"
+	}
+}

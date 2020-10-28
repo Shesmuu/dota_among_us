@@ -1,0 +1,49 @@
+.WispContainer {
+	width: 600px;
+	height: 600px;
+}
+
+.WispContainer #Wisp {
+	horizontal-align: center;
+	vertical-align: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 40%;
+	background-image: url( "file://{images}/heroes/icons/npc_dota_hero_wisp.png" );
+	background-size: 100%;
+	opacity: 1;
+}
+
+.WispContainer #Wisp:hover {
+	width: 36px;
+	height: 36px;
+}
+
+.WispContainer #Wisp.Clicked {
+	background-color: rgb( 44, 99, 44 );
+	box-shadow: rgb( 44, 99, 44 ) 0px 0px 5px 0px;
+}
+
+.WispContainer .Wisp {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background-image: url( "file://{images}/spellicons/invoker_quas.png" );
+	background-size: 100%;
+	opacity: 1;
+}
+
+.WispContainer .WispTarget {
+	width: 32px;
+	height: 32px;
+}
+
+.WispContainer .WispBase {
+	opacity: 1;
+	transition-property: opacity;
+	transition-duration: 0.4s;
+}
+
+.WispContainer .WispBase.Destoyed {
+	opacity: 0;
+}

@@ -1,0 +1,190 @@
+"DOTAUnits" {
+	"npc_dota_units_base" {
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackAcquisitionRange"	"0"
+		"AttackRange"				"0"
+		"RingRadius"				"40"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"0"			
+		"VisionDaytimeRange"		"0"
+		"VisionNighttimeRange"		"0"
+	}
+	"npc_au_kick_voting_vision" {
+		"Model"						"models/development/invisiblebox.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"VisionDaytimeRange"		"3000"
+		"VisionNighttimeRange"		"3000"
+	}
+	"npc_au_kick_voting_voter" {
+		"Model"						"models/development/invisiblebox.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"Ability1"					"au_vote_kick"
+	}
+	"npc_au_tower_killer" {
+		"Model"						"models/props_structures/rock_golem/tower_dire_rock_golem.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"2.03"
+	}
+	"npc_au_camera_dummy" {
+		"Model"						"models/development/invisiblebox.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"0.9"
+		"MovementSpeed"				"550"			
+		"VisionDaytimeRange"		"9999"
+		"VisionNighttimeRange"		"9999"
+	}
+	"npc_au_ghost" {
+		"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_frost.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"0.9"
+		"MovementSpeed"				"550"
+	}
+	"npc_au_tomb" {
+		"Model"						"models/tomb/tomb.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"0.9"
+	}
+	"npc_au_skip_voting_dummy" {
+		"Model"						"models/props_gameplay/dummy/dummy.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"5"
+	}
+	"npc_au_quest_suicide" {
+		"Model"						"models/heroes/techies/techies.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1" { "ItemDef" "490" }
+				"Wearable2" { "ItemDef" "487" }
+				"Wearable3" { "ItemDef" "489" }
+				"Wearable4" { "ItemDef" "491" }
+				"Wearable5" { "ItemDef" "492" }
+			}
+		}
+	}
+	"npc_au_quest_kick_voting" {
+		"Model"						"models/kick_voting/kick_voting.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+	}
+	"npc_au_quest_wisp" {
+		"Model"						"models/wisp/wisp.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+	}
+	"npc_au_quest_search" {
+		"Model"						"models/search_table/search_table.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+	}
+	"npc_au_quest_faceless" {
+		"Model"						"models/faceless/faceless.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+	}
+	"npc_au_quest_meepo" {
+		"Model"						"models/meepo_table/meepo_table.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"0.7"
+	}
+	"npc_au_quest_suns" {
+		"Model"						"models/items/wards/megagreevil_ward/megagreevil_ward.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"2.23"
+	}
+	"npc_au_quest_meteorites_1" {
+		"Model"						"models/heroes/gyro/gyro_missile.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"2.39"
+	}
+	"npc_au_quest_meteorites_2" {
+		"Model"						"models/meteorites_2/meteorites_2.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"30"
+	}
+	"npc_au_quest_bottle_1" {
+		"Model"						"models/bottle/bottle.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+	}
+	"npc_au_quest_bottle_2" {
+		"Model"						"models/props_gameplay/rune_arcane.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1.41"
+	}
+	"npc_au_quest_bottle_3" {
+		"Model"						"models/props_gameplay/rune_invisibility01.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1.41"
+	}
+	"npc_au_quest_stone" {
+		"Model"						"models/stone/stone.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+	}
+	"npc_au_quest_voker" {
+		"Model"						"models/voker/voker.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+	}
+	"npc_au_quest_cog" {
+		"Model"						"models/items/rattletrap/frostivus2018_lighter_fighter_cog/frostivus2018_lighter_fighter_cog.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1.59097"
+	}
+	"npc_au_quest_reactor" {
+		"Model"						"models/reactor/reactor.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+	}
+	"npc_au_quest_interference" {
+		"Model"						"models/items/rattletrap/mechanised_pilgrim_cog/mechanised_pilgrim_cog.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"3.37"
+	}
+	"npc_au_quest_eclipse" {
+		"Model"						"models/eclipse/eclipse.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+	}
+	"npc_au_quest_oxygen_1" {
+		"Model"						"models/items/courier/corsair_ship/corsair_ship_flying.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"2.39866"
+	}
+	"npc_au_quest_oxygen_2" {
+		"Model"						"models/items/courier/corsair_ship/corsair_ship_flying.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"2.39866"
+	}
+	"npc_au_storm_remnant" {
+		"Model"						"models/development/invisiblebox.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"VisionDaytimeRange"		"2000"
+		"VisionNighttimeRange"		"2000"
+	}
+	"npc_au_ember_remnant" {
+		"Model"						"models/heroes/ember_spirit/ember_spirit.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"VisionDaytimeRange"		"2000"
+		"VisionNighttimeRange"		"2000"
+	}
+	"npc_au_vision_hero" {
+		"Model"						"models/development/invisiblebox.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"VisionDaytimeRange"		"2000"
+		"VisionNighttimeRange"		"2000"
+	}
+}
