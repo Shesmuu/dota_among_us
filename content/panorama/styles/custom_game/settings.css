@@ -3,6 +3,17 @@
 	height: 100%;
 }
 
+#Settings #Warning {
+	horizontal-align: center;
+	margin: 180px;
+	max-width: 1000px;
+	text-align: center;
+	font-size: 38px;
+	color: rgb( 200, 30, 30 );
+	font-family: Goudy Trajan Medium;
+	text-shadow: 0px 0px 1px 2.0 rgba( 22, 22, 22, 0.9 );
+}
+
 #Settings #Countdown {
 	horizontal-align: center;
 	margin: 17px;

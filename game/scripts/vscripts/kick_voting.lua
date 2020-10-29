@@ -223,7 +223,7 @@ function KickVoting:End()
 	if onceTop then
 		local player = GameMode.players[top]
 
-		player:Kill( false )
+		player:Kill( false, nil, false, false )
 
 		GameMode.lastKicked = player.id
 

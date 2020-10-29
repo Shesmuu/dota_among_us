@@ -92,6 +92,10 @@ GameEvents.Subscribe( "au_emit_sound", data => {
 	Sounds_.EmitSound( data.sound )
 } )
 
+GameEvents.Subscribe( "au_dedicated_server_key", data => {
+	$.Msg( data.key )
+} )
+
 function RedCenterMessage( data ) {
 	$( "#RedCenterMessage" ).SetHasClass( "Visible", true )
 

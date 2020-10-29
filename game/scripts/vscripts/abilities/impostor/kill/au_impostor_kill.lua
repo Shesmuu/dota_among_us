@@ -41,7 +41,7 @@ function au_impostor_kill:OnSpellStart()
 		caster:SetClearSpaceOrigin( pos + dir * -100 )
 		caster:SetForwardVector( dir )
 
-		self.target:Kill( true )
+		self.target:Kill( true, caster.player, false, true )
 
 		self:StartCooldown( self:GetSpecialValueFor( "cooldown" ) )
 	end )

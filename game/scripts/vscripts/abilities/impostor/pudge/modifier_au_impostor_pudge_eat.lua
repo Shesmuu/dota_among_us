@@ -35,7 +35,7 @@ function modifier_au_impostor_pudge_eat:OnDestroy()
 	parent:SetAbsOrigin( pos )
 
 	Debug:Execute( function()
-		parent.player:Kill( true )
+		parent.player:Kill( true, caster.player, false, true )
 	end )
 
 	ability.hero = nil

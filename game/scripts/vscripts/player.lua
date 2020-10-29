@@ -48,11 +48,26 @@ Player = class( {} )
 function Player:constructor( id )
 	self.id = id
 	self.alive = true
+	self.steamID = tostring( PlayerResource:GetSteamID( id ) )
 	self.team = PlayerResource:GetTeam( self.id )
 	self.role = AU_ROLE_PEACE
 	self.muteNominateCount = 1
 	self.kickVotingCount = 1
 	self.quests = {}
+	self.stats = {
+		low_priority = 0,
+		peace_streak = 0,
+		rank = 1,
+		roleRank = 1,
+		imposterVotes = 0,
+		kills = 0,
+		leaveBeforeDeath = false,
+		totalWins = 0,
+		totalLoses = 0,
+		rating = 0,
+		killed = false,
+		kicked = false
+	}
 
 	PlayerResource:SetCustomPlayerColor( self.id, 255, 255, 255 )
 	SetTeamCustomHealthbarColor( self.team, 255, 255, 255 )
@@ -113,7 +128,7 @@ function Player:Update( now )
 		local time = killTime + ( IsTest() and 20 or 70 )
 
 		if now >= time then
-			self:Kill( false, true )
+			self:Kill( false, nil, true, true )
 
 			CustomGameEventManager:Send_ServerToAllClients( "au_red_center_message", {
 				afk_killed = self.id,
@@ -159,7 +174,7 @@ function Player:Update( now )
 
 		--Quests:AddTaskPoints( 0 )
 		if self.alive then
-			self:Kill( false, true )
+			self:Kill( false, nil, true, true )
 
 			CustomGameEventManager:Send_ServerToAllClients( "au_red_center_message", {
 				afk_killed = self.id,
@@ -300,10 +315,37 @@ function Player:GetUnit()
 	return self.hero
 end
 
-function Player:Kill( spawnTomb, instaCalc )
+function Player:GetRank( anyRole )
+	local rank = 0
+
+	for _, player in pairs( GameMode.players ) do
+		if player.alive and ( anyRole or player.role == self.role ) then
+			rank = rank + 1
+		end
+	end
+
+	return rank
+end
+
+function Player:Kill( spawnTomb, killer, afkDeath, instaCalc )
 	if not self.hero or not self.alive then
 		return
 	end
+
+	if killer then
+		killer.stats.kills = killer.stats.kills + 1
+
+		self.stats.killed = true
+	else
+		self.stats.kicked = false
+	end
+
+	if afkDeath then
+		self.stats.leaveBeforeDeath = true
+	end
+
+	self.stats.rank = self:GetRank( false )
+	self.stats.roleRank = self:GetRank( true )
 
 	self:SetMinigame()
 

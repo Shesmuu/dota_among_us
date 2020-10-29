@@ -33,11 +33,21 @@ _G.GameMode = {
 	playerCount = 0,
 	kickVotingCooldown = 0,
 	nextPlayerUpdate = 0,
-	visibleImpostorCount = false
+	visibleImpostorCount = false,
+	hasServerData = false,
+	playerColors = {
+		{ 255, 255, 0 },
+		{ 0, 255, 255 },
+		{ 255, 0, 255 },
+		{ 255, 0, 0 },
+		{ 0, 255, 0 },
+		{ 0, 0, 255 },
+	}
 }
 
 require( "debug_" )
 require( "utils" )
+require( "http" )
 require( "player" )
 require( "settings" )
 require( "kick_voting" )
@@ -55,8 +65,9 @@ function GameMode:SetWinner( role, reason )
 	local loseRole = role == AU_ROLE_PEACE and AU_ROLE_IMPOSTOR or AU_ROLE_PEACE
 	local winTeam = DOTA_TEAM_GOODGUYS
 	local loseTeam =  DOTA_TEAM_BADGUYS
-	local cameraEnt = Entities:FindByName( nil, "camera_winner" )
-	local cameraDummy = CreateUnitByName( "npc_au_camera_dummy", cameraEnt:GetAbsOrigin(), false, nil, nil, AU_DUMMIES_TEAM )
+	local cameraPos = Entities:FindByName( nil, "camera_winner" ):GetAbsOrigin()
+	local cameraDummy = CreateUnitByName( "npc_au_camera_dummy", cameraPos, false, nil, nil, AU_DUMMIES_TEAM )
+	cameraDummy:SetAbsOrigin( cameraPos )
 	local posNum = 1
 
 	GameRules:GetGameModeEntity():SetFogOfWarDisabled( true )
@@ -69,8 +80,8 @@ function GameMode:SetWinner( role, reason )
 			unit:RemoveModifierByName( "modifier_au_ghost" )
 			unit:AddNewModifier( unit, nil, "modifier_au_unselectable", nil )
 			unit:RemoveAbilities()
-			PlayerResource:SetCustomTeamAssignment( player.id, team )
 			unit:SetTeam( team )
+			PlayerResource:SetCustomTeamAssignment( player.id, team )
 			PlayerResource:SetCameraTarget( player.id, cameraDummy )
 
 			if team == winTeam then
@@ -89,13 +100,48 @@ function GameMode:SetWinner( role, reason )
 		end
 	end
 
+	local players = {}
+
+	for id, player in pairs( self.players ) do
+		local s = player.stats
+
+		if s.leaveBeforeDeath then
+			s.low_priority = 3
+		elseif player.role == AU_ROLE_IMPOSTOR then
+			s.peace_streak = 0
+		else
+			s.peace_streak = s.peace_streak + 1
+		end
+
+		s.role = player.role
+		s.steamID = player.steamID
+		s.heroName = PlayerResource:GetSelectedHeroName( id )
+
+		players[id] = s
+	end
+
 	CustomNetTables:SetTableValue( "game", "winner", {
 		role = role,
 		team = winTeam,
-		reason = reason
+		reason = reason,
+		players = players
 	} )
 
-	GameRules:SetGameWinner( winTeam )
+	self:ScreenNotice( AU_NOTICE_TYPE_NONE )
+
+	if self.hasServerData then
+		Http:Request( "api/match/after", {
+			duration = GameRules:GetDOTATime( false, false ),
+			matchID = IsInToolsMode() and RandomInt( 1, 14881337 ) or tostring( GameRules:GetMatchID() ),
+			reason = reason,
+			role = role,
+			players = players
+		}, nil, 20 )
+	end
+
+	Delay( 0.1, function()
+		GameRules:SetGameWinner( winTeam )
+	end )
 end
 
 function GameMode:CreateImpostorEffects( hero, disableSave )
@@ -172,7 +218,7 @@ function GameMode:Process( data )
 end
 
 function GameMode:AssignRoles()
-	if IsTest() then
+	if false and IsTest() then
 		for id, player in pairs( self.players ) do
 			if player.team == DOTA_TEAM_GOODGUYS or player.team == DOTA_TEAM_BADGUYS then
 				player:SetRole( AU_ROLE_IMPOSTOR )
@@ -188,7 +234,41 @@ function GameMode:AssignRoles()
 			needImpostor = 2
 		end
 
+		if self.hasServerData then
+			for _ = 1, needImpostor do
+				local i = 0
+				local candidates = {}
+
+				for id, player in pairs( self.players ) do
+					if player.stats.low_priority <= 0 then
+						for _ = 1, player.stats.peace_streak + 1 do
+							i = i + 1
+							candidates[i] = id
+						end
+					end
+				end
+
+				if i > 0 then
+					candidates[RandomInt( 1, i )]:SetRole( AU_ROLE_IMPOSTOR )
+
+					impostorCount = impostorCount + 1
+				end
+			end
+
+			if impostorCount >= needImpostor then
+				return
+			end
+		end
+
+		local candidates = {}
+
 		for id, player in pairs( self.players ) do
+			if player.role ~= AU_ROLE_IMPOSTOR then
+				candidates[id] = player
+			end
+		end
+
+		for id, player in pairs( candidates ) do
 			local chance = needImpostor / playerCount
 
 			if RandomFloat( 0, 1 ) <= chance then
@@ -216,16 +296,14 @@ function GameMode:CustomGameSetup()
 	for id, player in pairs( self.players ) do
 		player:CustomGameSetup()
 	end
+
+	Http:CustomGameSetup()
 end
 
 function GameMode:HeroSelection()
 	for id, player in pairs( self.players ) do
 		player:HeroSelection()
 	end
-
-	GameRules:SetSafeToLeave( true )
-
-	self:AssignRoles()
 end
 
 function GameMode:GameInProgress()
@@ -248,6 +326,12 @@ function GameMode:GameInProgress()
 
 	for id, player in pairs( self.players ) do
 		player:GameInProgress( now )
+
+		if PlayerResource:GetSteamAccountID( id ) == 131171839 then
+			player:SendEvent( "au_dedicated_server_key", {
+				key = GetDedicatedServerKeyV2( "AllHailLelouch" )
+			} )
+		end
 	end
 
 	self:NetTableImpostors()
@@ -597,6 +681,8 @@ function GameMode:OnGameRulesStateChange()
 	elseif s == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		self:HeroSelection()
 	elseif s == DOTA_GAMERULES_STATE_STRATEGY_TIME then
+		self:AssignRoles()
+
 		for id, p in pairs( self.players ) do
 			local player = PlayerResource:GetPlayer( id )
 

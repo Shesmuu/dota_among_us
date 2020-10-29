@@ -8,8 +8,24 @@
 		<include src="file://{resources}/scripts/custom_game/end_screen.js" />
 	</scripts>
 
+	<snippets>
+		<snippet name="RolePlayersList">
+			<Panel class="RolePlayersList">
+				<Panel id="Header">
+					<Label id="RoleName" />
+					<Panel id="StatNames" />
+				</Panel>
+				<Panel id="PlayersContainer" />
+			</Panel>
+		</snippet>
+	</snippets>
+
 	<Panel class="Hud" hittest="false">
 		<Label id="Reason" />
+		<Panel id="Players">
+			<Panel id="Imposters" />
+			<Panel id="Peaces" />
+		</Panel>
 		<TextButton id="CloseButton" text="#close_game" onactivate="Game.FinishGame()" />
 	</Panel>
 </root>

@@ -227,6 +227,7 @@
 		</Panel>
 
 		<Panel id="Settings" hittest="false">
+			<Label id="Warning" text="#au_low_priority_warning" />
 			<Panel id="SettingsPanel">
 				<Label id="Title" text="#au_settings_title" />
 				<Label id="FeatureContent" text="#au_settings_content" />

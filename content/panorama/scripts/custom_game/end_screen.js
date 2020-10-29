@@ -15,6 +15,9 @@ cameraChangeDuration = 2
 cameraStartTime = Game.GetGameTime()
 cameraEndTime = Game.GetGameTime() + cameraChangeDuration
 
+impostersPanel = $( "#Imposters" )
+peacessPanel = $( "#Peaces" )
+
 function NetTableWinner( data ) {
 	let reason = $( "#Reason" )
 	let texts = []

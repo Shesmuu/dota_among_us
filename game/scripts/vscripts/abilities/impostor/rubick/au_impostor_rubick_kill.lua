@@ -35,7 +35,7 @@ function au_impostor_rubick_kill:OnSpellStart()
 
 		player.abilitiesHeroName = self.target.hero:GetUnitName()
 
-		self.target:Kill( true )
+		self.target:Kill( true, player, false, true )
 
 		Projectile( caster, self.target.hero, "particles/units/heroes/hero_rubick/rubick_spell_steal.vpcf" , 1200 )
 
