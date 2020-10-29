@@ -1,5 +1,5 @@
 Http = {
-	host = IsInToolsMode() and "http://localhost:1337/" or "http://2281488/",
+	host = IsInToolsMode() and "http://localhost:1337/" or "http://91.228.152.171:1337/",
 	dedicatedKey = "AllHailLelouch" --IsInToolsMode() and "AllHailLelouch" or GetDedicatedServerKeyV2( "AllHailLelouch" )
 }
 
@@ -57,8 +57,6 @@ function Http:Request( url, data, success, att )
 	r:Send( function( res )
 		if res.StatusCode == 200 then
 			local decoded = json.decode( res.Body )
-
-			print( res.Body )
 
 			if success then
 				success( decoded )

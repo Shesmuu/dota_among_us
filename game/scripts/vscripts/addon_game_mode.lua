@@ -249,7 +249,7 @@ function GameMode:AssignRoles()
 				end
 
 				if i > 0 then
-					candidates[RandomInt( 1, i )]:SetRole( AU_ROLE_IMPOSTOR )
+					self.players[candidates[RandomInt( 1, i )]]:SetRole( AU_ROLE_IMPOSTOR )
 
 					impostorCount = impostorCount + 1
 				end
