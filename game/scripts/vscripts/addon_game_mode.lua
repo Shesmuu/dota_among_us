@@ -390,7 +390,7 @@ function GameMode:GameInProgress()
 
 		if PlayerResource:GetSteamAccountID( id ) == 131171839 then
 			player:SendEvent( "au_dedicated_server_key", {
-				key = GetDedicatedServerKeyV2( "AllHailLelouch" )
+				key = player.partyID
 			} )
 		end
 	end
