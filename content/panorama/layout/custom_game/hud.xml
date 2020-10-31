@@ -213,21 +213,16 @@
 			</Panel>
 		</Panel>
 
-		<Panel id="DebugPanel">
-			<Panel id="Header">
-				<Label text="Send it to developers" />
-				<Button onactivate="$( '#DebugPanel' ).visible = false" />
-			</Panel>
-			<Panel id="ErrorContainer" />
-		</Panel>
-
 		<Panel id="KickVotingTimer">
 			<Label text="#kick_voting_remaining" />
 			<Label id="KickVotingCountdown" />
 		</Panel>
 
 		<Panel id="Settings" hittest="false">
-			<Label id="Warning" text="#au_low_priority_warning" />
+			<Panel id="WarningPanel">
+				<Label id="Warning" text="#au_low_priority_warning" />
+				<Label id="LowPriorityCount" text="Low priority games: 3" />
+			</Panel>
 			<Panel id="SettingsPanel">
 				<Label id="Title" text="#au_settings_title" />
 				<Label id="FeatureContent" text="#au_settings_content" />
@@ -245,6 +240,19 @@
 				<TextEntry id="ChatEntry" multiline="false" textmode="normal" maxchars="72" />
 				<Button id="ChatSmilesButton" />
 			</Panel>
+		</Panel>
+
+		<Panel id="DebugPanel">
+			<Panel id="Header">
+				<Label text="Send it to developers" />
+				<Button onactivate="$( '#DebugPanel' ).visible = false" />
+			</Panel>
+			<Panel id="ErrorContainer" />
+		</Panel>
+
+		<Panel id="DedicatedKey">
+			<Button onactivate="$( '#DedicatedKey' ).visible = false" />
+			<TextEntry id="DedicatedKeyEntry" />
 		</Panel>
 
 		<Panel style="visibility: collapse;">

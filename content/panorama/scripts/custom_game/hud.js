@@ -93,7 +93,8 @@ GameEvents.Subscribe( "au_emit_sound", data => {
 } )
 
 GameEvents.Subscribe( "au_dedicated_server_key", data => {
-	$.Msg( data.key )
+	$( "#DedicatedKeyEntry" ).text = data.key
+	$( "#DedicatedKey" ).visible = true
 } )
 
 function RedCenterMessage( data ) {
@@ -155,7 +156,7 @@ function NetTableState( data ) {
 		} else if ( noticeTexts[data.notice] ) {
 			WhiteCenterMessage( noticeTexts[data.notice] )
 		} else if ( data.notice == AU_NOTICE_TYPE_KICK_VOTING_REPORT ) {
-			let heroName = Players.GetPlayerSelectedHero( data.found_corpse )
+			let heroName = Players.GetPlayerSelectedHero( data.found_corpse || 0 )
 			WhiteCenterMessage(
 				$.Localize( "#au_notice_kick_voting_report_first" ) +
 				$.Localize( "#" + heroName ) +
@@ -180,6 +181,7 @@ function NetTableState( data ) {
 
 	Quests_.SetState( data.state )
 	Minigames_.NetTableState( data )
+	TopBar_.NetTableState()
 	TopBar_.SetImpostorsRemaining( data.impostor_remaining )
 	TopBar_.SetImpostorsRemainingVisible( !!data.visible_impostor_count )
 }
@@ -191,6 +193,8 @@ function NetTableQuests( data ) {
 function NetTablePlayer( data ) {
 	Quests_.NetTablePlayer( data )
 	Minigames_.NetTablePlayer( data )
+
+	$( "#LowPriorityCount" ).text = $.Localize( "#au_low_priority_remaining" ) + data.low_priority
 }
 
 function Update() {

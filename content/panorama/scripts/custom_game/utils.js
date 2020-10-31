@@ -37,3 +37,14 @@ function UnmuteAll() {
 		Game.SetPlayerMuted( id, false )
 	}
 }
+
+function CreateLabel( parent, text, style ) {
+	let label = $.CreatePanel( "Label", parent, "" )
+	label.text = text
+
+	if ( style ) {
+		label.AddClass( style )
+	}
+
+	return label
+}

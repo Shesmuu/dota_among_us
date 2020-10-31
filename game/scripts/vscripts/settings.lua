@@ -110,7 +110,7 @@ function Settings:SetVoted( name, option )
 		end
 	end
 
-	if skip then
+	if false then
 		self.endTime = math.min( GameRules:GetGameTime() + 3, self.endTime )
 		self:NetTableState()
 	end

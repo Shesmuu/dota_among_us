@@ -1,9 +1,19 @@
-#DebugPanel {
+#DebugPanel, #DedicatedKey {
 	horizontal-align: right;
 	vertical-align: center;
 	background-color: rgb( 33, 33, 33 );
 	margin-right: 40px;
 	flow-children: down;
+}
+
+#DedicatedKey {
+	horizontal-align: center;
+	margin-right: 0px;
+}
+
+#DedicatedKeyEntry {
+	height: 30px;
+	width: 200px;
 }
 
 #DebugPanel #Header {
@@ -18,7 +28,7 @@
 	font-size: 24px;
 }
 
-#DebugPanel #Header Button {
+#DebugPanel #Header Button, #DedicatedKey Button {
 	horizontal-align: right;
 	vertical-align: center;
 	width: 24px;
@@ -35,7 +45,7 @@
 	flow-children: down;
 }
 
-#ErrorContainer Label {
+#ErrorContainer Label, #DedicatedKey Label {
 	color: white;
 	font-size: 17px;
 	padding: 3px;

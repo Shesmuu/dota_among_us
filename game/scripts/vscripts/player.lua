@@ -60,11 +60,16 @@ function Player:constructor( id )
 		rank = 1,
 		roleRank = 1,
 		imposterVotes = 0,
+		skipVotes = 0,
+		wrongVotes = 0,
 		kills = 0,
 		leaveBeforeDeath = false,
 		totalWins = 0,
 		totalLoses = 0,
 		rating = 0,
+		ratingImposter = 0,
+		ratingPeace = 0,
+		ratingChange = 0,
 		killed = false,
 		kicked = false
 	}
@@ -86,7 +91,12 @@ function Player:Update( now )
 		return
 	end
 
-	if not self.alive and self.role == AU_ROLE_PEACE and now >= self.nextQuestTime then
+	if
+		not self.alive and
+		self.role == AU_ROLE_PEACE and
+		now >= self.nextQuestTime and
+		GameMode.state == AU_GAME_STATE_PROCESS
+	then
 		for _, quest in pairs( self.quests ) do
 			if not quest.completed then
 				quest:Complete()
@@ -215,7 +225,8 @@ function Player:NetTable()
 		quests = {},
 		alive = self.alive,
 		mute_count = self.muteNominateCount,
-		kick_count = self.kickVotingCount
+		kick_count = self.kickVotingCount,
+		low_priority = self.stats.low_priority
 	}
 
 	for i, quest in pairs( self.quests ) do
@@ -344,8 +355,8 @@ function Player:Kill( spawnTomb, killer, afkDeath, instaCalc )
 		self.stats.leaveBeforeDeath = true
 	end
 
-	self.stats.rank = self:GetRank( false )
-	self.stats.roleRank = self:GetRank( true )
+	self.stats.rank = self:GetRank( true )
+	self.stats.roleRank = self:GetRank( false )
 
 	self:SetMinigame()
 
@@ -395,7 +406,7 @@ function Player:Kill( spawnTomb, killer, afkDeath, instaCalc )
 	end
 
 	self.alive = false
-	self.nextQuestTime = GameRules:GetGameTime() + 20
+	self.nextQuestTime = GameRules:GetGameTime() + 30
 
 	self:RoleAbilities()
 

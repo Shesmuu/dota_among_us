@@ -6,6 +6,7 @@ class TopBarPlayer {
 		this.impostorPanel = this.panel.FindChildTraverse( "Impostor" )
 		this.impostorPanel.visible = false
 		this.disconnected = this.panel.FindChildTraverse( "Disconnected" )
+		this.disconnected.visible = false
 		this.id = id
 	}
 
@@ -17,16 +18,27 @@ class TopBarPlayer {
 		this.impostorPanel.visible = bool
 	}
 
-	Update() {
-		let heroName = Players.GetPlayerSelectedHero( this.id )
-		this.heroImage.heroname = heroName
-
+	UpdateConnection() {
 		let cs = Game.GetPlayerInfo( this.id ).player_connection_state
 
 		this.disconnected.visible = (
 			cs == DOTAConnectionState_t.DOTA_CONNECTION_STATE_DISCONNECTED ||
 			cs == DOTAConnectionState_t.DOTA_CONNECTION_STATE_ABANDONED
 		)
+	}
+
+	Update() {
+		let heroName = Players.GetPlayerSelectedHero( this.id )
+		this.heroImage.heroname = heroName
+
+		let cs = Game.GetPlayerInfo( this.id ).player_connection_state
+
+		if (
+			cs != DOTAConnectionState_t.DOTA_CONNECTION_STATE_DISCONNECTED &&
+			cs != DOTAConnectionState_t.DOTA_CONNECTION_STATE_ABANDONED
+		) {
+			this.disconnected.visible = false
+		}
 	}
 }
 
@@ -69,6 +81,12 @@ class TopBar {
 	NetTableDied( data ) {
 		for ( let id in this.players ) {
 			this.players[id].SetDied( !!data[id] )
+		}
+	}
+
+	NetTableState( data ) {
+		for ( let id in this.players ) {
+			this.players[id].UpdateConnection()
 		}
 	}
 

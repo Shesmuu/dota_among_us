@@ -2,6 +2,8 @@ if GameMode then
 	return
 end
 
+_G.PRODUCTION_MODE = true
+
 _G.AU_GAME_STATE_NONE = 0
 _G.AU_GAME_STATE_SETTINGS = 1
 _G.AU_GAME_STATE_PROCESS = 2
@@ -109,8 +111,10 @@ function GameMode:SetWinner( role, reason )
 			s.low_priority = 3
 		elseif player.role == AU_ROLE_IMPOSTOR then
 			s.peace_streak = 0
-		else
+		elseif s.low_priority <= 0 then
 			s.peace_streak = s.peace_streak + 1
+		elseif s.low_priority > 0 then
+			s.low_priority = s.low_priority - 1
 		end
 
 		s.role = player.role
@@ -218,30 +222,43 @@ function GameMode:Process( data )
 end
 
 function GameMode:AssignRoles()
-	if false and IsTest() then
+	if IsTest() then
 		for id, player in pairs( self.players ) do
 			if player.team == DOTA_TEAM_GOODGUYS or player.team == DOTA_TEAM_BADGUYS then
 				player:SetRole( AU_ROLE_IMPOSTOR )
 			end
 		end
 	else
-		local count = self.playerCount
-		local playerCount = count
+		local playerCount = self.playerCount
 		local needImpostor = 1
 		local impostorCount = 0
 
-		if count > 5 then
+		if self.playerCount > 5 then
 			needImpostor = 2
 		end
 
 		if self.hasServerData then
+			local avgStreak = 0 
+
+			for id, p in pairs( self.players ) do
+				if p.role ~= AU_ROLE_IMPOSTOR then
+					avgStreak = avgStreak + p.stats.peace_streak + 1
+				end
+			end
+
+			avgStreak = avgStreak / self.playerCount
+
 			for _ = 1, needImpostor do
 				local i = 0
 				local candidates = {}
 
 				for id, player in pairs( self.players ) do
-					if player.stats.low_priority <= 0 then
-						for _ = 1, player.stats.peace_streak + 1 do
+					if player.stats.low_priority <= 0 and player.role ~= AU_ROLE_IMPOSTOR then
+						local chance = math.floor( ( player.stats.peace_streak + 1 / avgStreak ) ^ 5 * 10 )
+
+						chance = math.min( chance, 200 )
+
+						for __ = 1, chance do
 							i = i + 1
 							candidates[i] = id
 						end
@@ -656,7 +673,7 @@ function GameMode:OnNPCSpawned( data )
 
 		if self.players[id] then
 			self.players[id]:HeroSpawned( unit )
-		elseif GameRules:IsCheatMode() or IsInToolsMode() then
+		elseif IsTest() then
 			Player( id ):HeroSpawned( unit )
 		end
 	elseif unit:GetUnitName() == "npc_au_ghost" then

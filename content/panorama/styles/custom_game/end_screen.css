@@ -4,6 +4,7 @@
 	opacity: 0;
 	transition-property: opacity;
 	transition-duration: 0.3s;
+	background-color: gradient( linear, 100% 0%, 100% 100%, from( #192229 ), to( #000000 ) );
 }
 
 .Hud.Visible {
@@ -22,6 +23,156 @@
 
 #Reason.Red {
 	color: rgb( 200, 30, 30 );
+}
+
+#Imposters {
+	horizontal-align: left;
+	vertical-align: center;
+}
+
+#Peaces {
+	horizontal-align: right;
+	vertical-align: center;
+}
+
+.RolePlayersList {
+	flow-children: down;
+}
+
+#Header {
+	flow-children: right;
+}
+
+#RoleName, #PlayerInfo {
+	width: 350px;
+}
+
+#RoleName {
+	font-size: 30px;
+	color: white;
+	font-family: Goudy Trajan Medium;
+	text-shadow: 0px 0px 1px 2.0 rgba( 22, 22, 22, 0.9 );
+}
+
+#Imposters #RoleName {
+	color: rgb( 200, 30, 30 );
+}
+
+#StatTitles {
+	vertical-align: bottom;
+	flow-children: right;
+}
+
+.DefaultStat {
+	width: 100px;
+	vertical-align: center;
+}
+
+.DefaultStat Label {
+	horizontal-align: center;
+	font-size: 28px;
+	color: white;
+	font-family: Radiance;
+}
+
+.TitleVotes {
+	vertical-align: center;
+	flow-children: down;
+}
+
+.TitleVotesHigh {
+	horizontal-align: center;
+	font-size: 16px;
+	color: white;
+	font-family: Radiance;
+	text-align: center;
+}
+
+.VotesRow {
+	flow-children: right;
+	horizontal-align: center;
+}
+
+.VotesRow Label {
+	width: 35px;
+	font-size: 16px;
+	color: white;
+	font-family: Radiance;
+	text-align: center;
+}
+
+.TitleRating {
+	vertical-align: center;
+	width: 200px;
+}
+
+.TitleRating Label {
+	horizontal-align: center;
+	font-size: 28px;
+	color: white;
+	font-family: Radiance;
+}
+
+.ValueRating {
+	vertical-align: center;
+	width: 200px;
+}
+
+.RatingRow {
+	flow-children: right;
+	horizontal-align: center;
+}
+
+.RatingRow Label {
+	font-size: 22px;
+	color: white;
+	font-family: Radiance;
+	text-align: center;
+}
+
+.RatingRow Label.Plus {
+	text-shadow: 0px 0px 1px 2.0 rgb( 22, 222, 22 );
+}
+
+.RatingRow Label.Minus {
+	text-shadow: 0px 0px 1px 2.0 rgb( 222, 22, 22 );
+}
+
+.PlayerRow {
+	width: 100%;
+	background-color: rgb( 11, 11, 11 );
+	border: 2px solid rgb( 22, 22, 22 );
+	flow-children: right;
+}
+
+#PlayerInfo {
+	flow-children: right;
+	height: 46px;
+	padding: 3px;
+}
+
+#AvatarContainer {
+	height: 100%;
+	width: height-percentage( 100% );
+}
+
+#HeroImage {
+	height: 100%;
+	width: height-percentage( 178% );
+	margin-left: 5px;
+}
+
+#Nickname {
+	vertical-align: center;
+	margin-left: 5px;
+	font-size: 28px;
+	color: white;
+	font-family: Radiance;
+}
+
+#PlayerStats {
+	vertical-align: center;
+	flow-children: right;
 }
 
 #CloseButton {

@@ -1,5 +1,5 @@
 Http = {
-	host = IsInToolsMode() and "http://localhost:1337/" or "http://91.228.152.171:1337/",
+	host = "http://91.228.152.171:1337/", --IsInToolsMode() and "http://localhost:1337/" or "http://91.228.152.171:1337/",
 	dedicatedKey = "AllHailLelouch" --IsInToolsMode() and "AllHailLelouch" or GetDedicatedServerKeyV2( "AllHailLelouch" )
 }
 
@@ -21,6 +21,8 @@ function Http:CustomGameSetup()
 					player.stats.peace_streak = p.peace_streak
 					player.stats.low_priority = p.low_priority_
 					player.stats.rating = p.rating
+
+					player:NetTable()
 				end
 			end
 		end
@@ -30,11 +32,15 @@ function Http:CustomGameSetup()
 end
 
 function Http:IsValidGame()
+	if not PRODUCTION_MODE then
+		return true
+	end
+
 	if not IsInToolsMode() and GameRules:IsCheatMode() then
 		return false
 	end
 
-	if not IsTest() and GameMode.playerCount < 9 then
+	if not IsTest() and GameMode.playerCount < 10 then
 		return false
 	end
 
@@ -51,6 +57,7 @@ function Http:Request( url, data, success, att )
 	r:SetHTTPRequestHeaderValue( "dedicated_server_key", self.dedicatedKey )
 
 	if data then
+		data.productionDataBase = PRODUCTION_MODE
 		r:SetHTTPRequestRawPostBody( "application/json", json.encode( data ) )
 	end
 

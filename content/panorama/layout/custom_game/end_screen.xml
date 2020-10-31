@@ -9,11 +9,24 @@
 	</scripts>
 
 	<snippets>
+		<snippet name="PlayerRow">
+			<Panel class="PlayerRow">
+				<Panel id="PlayerInfo">
+					<Panel id="AvatarContainer">
+						<DOTAAvatarImage id="AvatarImage" />
+					</Panel>
+					<DOTAHeroImage id="HeroImage" />
+					<Label id="Nickname" />
+				</Panel>
+				<Panel id="PlayerStats" />
+			</Panel>
+		</snippet>
+
 		<snippet name="RolePlayersList">
 			<Panel class="RolePlayersList">
 				<Panel id="Header">
 					<Label id="RoleName" />
-					<Panel id="StatNames" />
+					<Panel id="StatTitles" />
 				</Panel>
 				<Panel id="PlayersContainer" />
 			</Panel>
@@ -22,10 +35,8 @@
 
 	<Panel class="Hud" hittest="false">
 		<Label id="Reason" />
-		<Panel id="Players">
-			<Panel id="Imposters" />
-			<Panel id="Peaces" />
-		</Panel>
+		<Panel id="Imposters" />
+		<Panel id="Peaces" />
 		<TextButton id="CloseButton" text="#close_game" onactivate="Game.FinishGame()" />
 	</Panel>
 </root>

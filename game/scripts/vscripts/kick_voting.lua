@@ -129,6 +129,12 @@ function KickVoting:Vote( voter, player )
 		)
 	end
 
+	if player.role == AU_ROLE_IMPOSTOR then
+		voter.stats.imposterVotes = voter.stats.imposterVotes + 1
+	else
+		voter.stats.wrongVotes = voter.stats.wrongVotes + 1
+	end
+
 	ParticleManager:SetParticleControl( self.voteStacks[id], 1, Vector( 0, self.votes[id] ) )
 
 	self:ReduceEndTime()
@@ -147,6 +153,8 @@ function KickVoting:Skip( voter )
 	self.skipCount = self.skipCount + 1
 
 	ParticleManager:SetParticleControl( self.skipStacks, 1, Vector( 0, self.skipCount ) )
+
+	voter.stats.skipVotes = voter.stats.skipVotes + 1
 
 	self:ReduceEndTime()
 	self:Projectile( voter.hero, self.skipDummy )

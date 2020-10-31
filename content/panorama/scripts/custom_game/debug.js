@@ -29,6 +29,7 @@ function NetTableDebugErrors( data ) {
 	}
 }
 
+$( "#DedicatedKey" ).visible = false
 $( "#DebugPanel" ).visible = false
 
 SubscribeNetTable( "debug", "errors", NetTableDebugErrors )
