@@ -145,7 +145,13 @@ function GameMode:SetWinner( role, reason )
 		end
 
 		if s.party then
-			s.ratingChange = s.ratingChange - 10
+			if s.ratingChange > 0 then
+				s.ratingChange = s.ratingChange * 0.66
+			elseif s.ratingChange < 0 then
+				s.ratingChange = s.ratingChange * 1.33
+			end
+
+			s.ratingChange = math.floor( s.ratingChange )
 		end
 
 		if player.role == AU_ROLE_IMPOSTOR then
@@ -166,8 +172,6 @@ function GameMode:SetWinner( role, reason )
 	} )
 
 	self:ScreenNotice( AU_NOTICE_TYPE_NONE )
-
-	print( "EKKE", self.hasServerData )
 
 	if self.hasServerData then
 		Http:Request( "api/match/after", {
@@ -349,11 +353,13 @@ function GameMode:CustomGameSetup()
 	for id, player in pairs( self.players ) do
 		player:CustomGameSetup()
 
-		for i, p in pairs( self.players ) do
-			if player.partyID == p.partyID and player ~= p then
-				player.stats.party = true
+		if tonumber( player.partyID ) ~= 0 then
+			for i, p in pairs( self.players ) do
+				if player.partyID == p.partyID and player ~= p then
+					player.stats.party = true
 
-				break
+					break
+				end
 			end
 		end
 	end

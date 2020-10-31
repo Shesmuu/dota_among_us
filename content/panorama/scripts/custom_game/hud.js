@@ -24,6 +24,8 @@ noticeTexts[AU_NOTICE_TYPE_NONE] = ""
 AU_ROLE_PEACE = 0
 AU_ROLE_IMPOSTOR = 1
 
+$( "#LowPriorityCount" ).text = $.Localize( "#au_low_priority_remaining" ) + 0
+
 GameEvents.Subscribe( "dota_player_update_query_unit", () => {
 	let id = Players.GetLocalPlayer()
 	let unit = Players.GetLocalPlayerPortraitUnit()

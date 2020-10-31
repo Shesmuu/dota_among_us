@@ -221,7 +221,7 @@
 		<Panel id="Settings" hittest="false">
 			<Panel id="WarningPanel">
 				<Label id="Warning" text="#au_low_priority_warning" />
-				<Label id="LowPriorityCount" text="Low priority games: 3" />
+				<Label id="LowPriorityCount" text="" />
 			</Panel>
 			<Panel id="SettingsPanel">
 				<Label id="Title" text="#au_settings_title" />
