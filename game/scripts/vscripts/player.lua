@@ -49,7 +49,7 @@ function Player:constructor( id )
 	self.id = id
 	self.alive = true
 	self.steamID = tostring( PlayerResource:GetSteamID( id ) )
-	self.partyID = PlayerResource:GetPartyID( id )
+	self.partyID = tostring( PlayerResource:GetPartyID( id ) )
 	self.team = PlayerResource:GetTeam( self.id )
 	self.role = AU_ROLE_PEACE
 	self.muteNominateCount = 1
@@ -228,7 +228,8 @@ function Player:NetTable()
 		alive = self.alive,
 		mute_count = self.muteNominateCount,
 		kick_count = self.kickVotingCount,
-		low_priority = self.stats.low_priority
+		low_priority = self.stats.low_priority,
+		stats = self.stats
 	}
 
 	for i, quest in pairs( self.quests ) do
@@ -302,6 +303,8 @@ function Player:Process()
 
 		PlayerResource:SetCustomTeamAssignment( self.id, self.alive and self.team or GameMode.ghostTeam )
 	end
+
+	self.nextQuestTime = GameRules:GetGameTime() + 5
 
 	self:DeathTime()
 	self:RoleAbilities()

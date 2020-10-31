@@ -146,18 +146,16 @@ function GameMode:SetWinner( role, reason )
 
 		if s.party then
 			if s.ratingChange > 0 then
-				s.ratingChange = s.ratingChange * 0.66
+				s.ratingChange = math.ceil( s.ratingChange * 0.66 )
 			elseif s.ratingChange < 0 then
-				s.ratingChange = s.ratingChange * 1.33
+				s.ratingChange = math.floor( s.ratingChange * 1.33 )
 			end
-
-			s.ratingChange = math.floor( s.ratingChange )
 		end
 
 		if player.role == AU_ROLE_IMPOSTOR then
-			s.ratingImposter = s.ratingImposter + s.ratingChange
+			s.ratingImposter = math.max( s.ratingImposter + s.ratingChange, 0 )
 		else
-			s.ratingPeace = s.ratingPeace + s.ratingChange
+			s.ratingPeace = math.max( s.ratingPeace + s.ratingChange, 0 )
 		end
 
 		players[id] = s
@@ -353,7 +351,7 @@ function GameMode:CustomGameSetup()
 	for id, player in pairs( self.players ) do
 		player:CustomGameSetup()
 
-		if tonumber( player.partyID ) ~= 0 then
+		if player.partyID ~= "0" then
 			for i, p in pairs( self.players ) do
 				if player.partyID == p.partyID and player ~= p then
 					player.stats.party = true
@@ -555,7 +553,7 @@ function GameMode:Activate()
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_6, 1 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_7, 1 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_8, 1 )
-	GameRules:SetCustomGameSetupAutoLaunchDelay( IsTest() and 30 or 0 )
+	GameRules:SetCustomGameSetupAutoLaunchDelay( IsTest() and 30 or 10 )
 	GameRules:SetFirstBloodActive( false )
 	GameRules:SetGoldPerTick( 0 )
 	GameRules:SetPostGameTime( 60 )
