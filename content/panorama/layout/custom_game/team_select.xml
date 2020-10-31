@@ -19,6 +19,13 @@
 					<Panel id="TeamListHeader">
 						<Label id="TeamListHeaderLabel" text="#custom_game_team_select" />
 						<Image id="TeamListLockedIcon" src="file://{images}/control_icons/lock_small.png" />
+						<Panel id="RatingContainerLabel">
+							<Label class="RatingLabel2" text="Rating" />
+							<Label class="LeftLabel" text="Civilian" />
+							<Label class="RightLabel" text="Imposter" />
+						</Panel>
+						<Label class="TopLabe3" text="Games" />
+						<Label class="TopLabe3" text="Hero" />
 					</Panel>
 					<Panel id="TeamsListRoot" />
 					<Button id="ShuffleTeamAssignmentButton" onactivate="OnShufflePlayersPressed()">
