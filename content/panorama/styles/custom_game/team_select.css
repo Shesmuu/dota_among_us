@@ -678,6 +678,18 @@ DOTAAvatarImage
     horizontal-align: right;
 }
 
+.Info
+{
+    margin-top: 25px;
+
+    font-size: 14px;
+    letter-spacing: 1px;
+    
+    brightness: 1.0;
+    
+	color: #ffffff;
+	font-weight: semi-bold;
+}
 
 .TopLabel
 {

@@ -28,10 +28,7 @@
 						<Label class="TopLabe3" text="Hero" />
 					</Panel>
 					<Panel id="TeamsListRoot" />
-					<Button id="ShuffleTeamAssignmentButton" onactivate="OnShufflePlayersPressed()">
-						<Label text="#custom_game_team_select_shuffle" />
-						<Image src="file://{images}/control_icons/shuffle.psd" />
-					</Button>
+					<Label class="Info" text="#rating_info" />
 				</Panel>
 			</Panel>
 
@@ -74,6 +71,11 @@
 					<Button id="AutoAssignButton" onactivate="OnAutoAssignPressed()">
 						<Image src="file://{images}/control_icons/double_arrow_left.png" />
 						<Label text="#custom_game_team_select_auto_assign" />
+					</Button>
+
+					<Button id="ShuffleTeamAssignmentButton" onactivate="OnShufflePlayersPressed()">
+						<Label text="#custom_game_team_select_shuffle" />
+						<Image src="file://{images}/control_icons/shuffle.psd" />
 					</Button>
 				</Panel>
 				
