@@ -8,7 +8,7 @@ cameraHeightEnd = 256
 cameraPitchStart = 70
 cameraPitchEnd = 1
 cameraYawStart = 10
-cameraYawEnd = 70
+cameraYawEnd = 48
 cameraDistanceStart = 1134
 cameraDistanceEnd = 400
 cameraChangeDuration = 2
@@ -99,19 +99,23 @@ function NetTableWinner( data ) {
 
 	reason.text = $.Localize( texts[data.reason] )
 
-	let rankFunc = ( panel, value, data ) => {
+	let rankFunc = ( panel, value, d ) => {
 		let values = $.CreatePanel( "Panel", panel, "" )
 		values.AddClass( "RatingRow" )
 
-		CreateLabel( values, value )
-		CreateLabel( values, "" + data.ratingChange, data.ratingChange < 0 ? "Minus" : "Plus" )
+		let preStr = ""
+		let style = "Minus"
+
+		if ( d.ratingChange >= 0 ) {
+			preStr = "+"
+			style = "Plus"
+		}
+
+		CreateLabel( values, value - d.ratingChange )
+		CreateLabel( values, preStr + d.ratingChange, style )
 	}
 
 	let statsForm = [
-		{
-			name: "#au_end_screen_stats_name_rank",
-			param: "rank"
-		},
 		{
 			role: 0,
 			titleStyle: "TitleVotes",
@@ -126,13 +130,13 @@ function NetTableWinner( data ) {
 				CreateLabel( names, "W" )
 				CreateLabel( names, "S" )
 			},
-			playerFunc: ( panel, data ) => {
+			playerFunc: ( panel, d ) => {
 				let values = $.CreatePanel( "Panel", panel, "" )
 				values.AddClass( "VotesRow" )
 
-				CreateLabel( values, data.imposterVotes )
-				CreateLabel( values, data.skipVotes )
-				CreateLabel( values, data.wrongVotes )
+				CreateLabel( values, d.imposterVotes )
+				CreateLabel( values, d.skipVotes )
+				CreateLabel( values, d.wrongVotes )
 			}
 		},
 		{
@@ -141,18 +145,37 @@ function NetTableWinner( data ) {
 			param: "kills"
 		},
 		{
+			name: "#au_end_screen_stats_name_death",
+			playerFunc: ( panel, d ) => {
+				let pos = data.playerCount - d.rank + 1
+				let text = ""
+
+				if ( d.killed == 1 ) {
+					text = "#au_end_screen_stats_killed"
+				} else if ( d.kicked == 1 ) {
+					text = "#au_end_screen_stats_kicked"
+				} else if ( d.leaveBeforeDeath == 1 ) {
+					text = "#au_end_screen_stats_afk"
+				} else {
+					return
+				}
+
+				CreateLabel( panel, $.Localize( text ) + pos )
+			}
+		},
+		{
 			role: 1,
 			name: "#au_end_screen_stats_rating",
 			titleStyle: "TitleRating",
 			playerStyle: "ValueRating",
-			playerFunc: ( panel, data ) => rankFunc( panel, data.ratingImposter, data )
+			playerFunc: ( panel, d ) => rankFunc( panel, d.ratingImposter, d )
 		},
 		{
 			role: 0,
 			name: "#au_end_screen_stats_rating",
 			titleStyle: "TitleRating",
 			playerStyle: "ValueRating",
-			playerFunc: ( panel, data ) => rankFunc( panel, data.ratingPeace, data )
+			playerFunc: ( panel, d ) => rankFunc( panel, d.ratingPeace, d )
 		}
 	]
 

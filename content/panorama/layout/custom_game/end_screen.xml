@@ -35,8 +35,10 @@
 
 	<Panel class="Hud" hittest="false">
 		<Label id="Reason" />
-		<Panel id="Imposters" />
-		<Panel id="Peaces" />
+		<Panel id="RolesContainer">
+			<Panel id="Imposters" />
+			<Panel id="Peaces" />
+		</Panel>
 		<TextButton id="CloseButton" text="#close_game" onactivate="Game.FinishGame()" />
 	</Panel>
 </root>

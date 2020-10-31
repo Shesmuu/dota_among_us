@@ -49,6 +49,7 @@ function Player:constructor( id )
 	self.id = id
 	self.alive = true
 	self.steamID = tostring( PlayerResource:GetSteamID( id ) )
+	self.partyID = PlayerResource:GetPartyID( id )
 	self.team = PlayerResource:GetTeam( self.id )
 	self.role = AU_ROLE_PEACE
 	self.muteNominateCount = 1
@@ -66,12 +67,13 @@ function Player:constructor( id )
 		leaveBeforeDeath = false,
 		totalWins = 0,
 		totalLoses = 0,
-		rating = 0,
-		ratingImposter = 0,
-		ratingPeace = 0,
+		ratingImposter = 1000,
+		ratingPeace = 1000,
 		ratingChange = 0,
 		killed = false,
-		kicked = false
+		kicked = false,
+		favoriteHero = "",
+		party = false
 	}
 
 	PlayerResource:SetCustomPlayerColor( self.id, 255, 255, 255 )

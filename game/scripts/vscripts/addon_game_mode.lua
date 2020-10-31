@@ -2,7 +2,7 @@ if GameMode then
 	return
 end
 
-_G.PRODUCTION_MODE = true
+_G.PRODUCTION_MODE = false
 
 _G.AU_GAME_STATE_NONE = 0
 _G.AU_GAME_STATE_SETTINGS = 1
@@ -78,12 +78,13 @@ function GameMode:SetWinner( role, reason )
 		local team = player.role == winRole and winTeam or loseTeam
 		local unit = player:GetUnit()
 
+		PlayerResource:SetCustomTeamAssignment( player.id, team )
+
 		if unit then
 			unit:RemoveModifierByName( "modifier_au_ghost" )
 			unit:AddNewModifier( unit, nil, "modifier_au_unselectable", nil )
 			unit:RemoveAbilities()
 			unit:SetTeam( team )
-			PlayerResource:SetCustomTeamAssignment( player.id, team )
 			PlayerResource:SetCameraTarget( player.id, cameraDummy )
 
 			if team == winTeam then
@@ -121,6 +122,34 @@ function GameMode:SetWinner( role, reason )
 		s.steamID = player.steamID
 		s.heroName = PlayerResource:GetSelectedHeroName( id )
 
+		if player.role == AU_ROLE_IMPOSTOR then
+			if AU_ROLE_IMPOSTOR == winRole and s.rank < 8 then
+				s.ratingChange = 30
+			else
+				s.ratingChange = -30
+			end
+		else
+			if AU_ROLE_PEACE == winRole then
+				if player.alive then
+					s.ratingChange = 30
+				else
+					s.ratingChange = 15
+				end
+			else
+				s.ratingChange = -30
+			end
+		end
+
+		if s.party then
+			s.ratingChange = s.ratingChange - 10
+		end
+
+		if player.role == AU_ROLE_IMPOSTOR then
+			s.ratingImposter = s.ratingImposter + s.ratingChange
+		else
+			s.ratingPeace = s.ratingPeace + s.ratingChange
+		end
+
 		players[id] = s
 	end
 
@@ -128,10 +157,13 @@ function GameMode:SetWinner( role, reason )
 		role = role,
 		team = winTeam,
 		reason = reason,
-		players = players
+		players = players,
+		playerCount = self.playerCount
 	} )
 
 	self:ScreenNotice( AU_NOTICE_TYPE_NONE )
+
+	print( "EKKE", self.hasServerData )
 
 	if self.hasServerData then
 		Http:Request( "api/match/after", {
@@ -312,6 +344,14 @@ function GameMode:CustomGameSetup()
 
 	for id, player in pairs( self.players ) do
 		player:CustomGameSetup()
+
+		for i, p in pairs( self.players ) do
+			if player.partyID == p.partyID and player ~= p then
+				player.stats.party = true
+
+				break
+			end
+		end
 	end
 
 	Http:CustomGameSetup()

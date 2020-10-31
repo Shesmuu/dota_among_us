@@ -9,6 +9,8 @@ declare type SqlTableName =
 
 declare type SqlKV = { [key: string]: number | string }
 
+declare type KV = { [key: string]: any }
+
 declare type SqlCallBack = ( data: any[] ) => void
 
 declare const enum RequestTypes {

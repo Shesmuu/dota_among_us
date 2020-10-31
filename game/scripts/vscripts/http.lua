@@ -1,6 +1,6 @@
 Http = {
-	host = "http://91.228.152.171:1337/", --IsInToolsMode() and "http://localhost:1337/" or "http://91.228.152.171:1337/",
-	dedicatedKey = "AllHailLelouch" --IsInToolsMode() and "AllHailLelouch" or GetDedicatedServerKeyV2( "AllHailLelouch" )
+	host = PRODUCTION_MODE and "http://91.228.152.171:1337/" or "http://91.228.152.171:1488/",
+	dedicatedKey = PRODUCTION_MODE and GetDedicatedServerKeyV2( "AllHailLelouch" ) or "AllHailLelouch"
 }
 
 function Http:CustomGameSetup()
@@ -15,12 +15,21 @@ function Http:CustomGameSetup()
 			return
 		end
 
-		for _, p in pairs( data ) do
+		for steamID, heroName in pairs( data.favoriteHeroes ) do
+			for id, player in pairs( GameMode.players ) do
+				if player.steamID == steamID then
+					player.stats.favoriteHero = heroName
+				end
+			end
+		end
+
+		for _, p in pairs( data.players ) do
 			for id, player in pairs( GameMode.players ) do
 				if player.steamID == p.steam_id then
 					player.stats.peace_streak = p.peace_streak
 					player.stats.low_priority = p.low_priority_
-					player.stats.rating = p.rating
+					player.stats.ratingImposter = p.imposter_rating
+					player.stats.ratingPeace = p.peace_rating
 
 					player:NetTable()
 				end
@@ -57,7 +66,6 @@ function Http:Request( url, data, success, att )
 	r:SetHTTPRequestHeaderValue( "dedicated_server_key", self.dedicatedKey )
 
 	if data then
-		data.productionDataBase = PRODUCTION_MODE
 		r:SetHTTPRequestRawPostBody( "application/json", json.encode( data ) )
 	end
 

@@ -1,16 +1,17 @@
 /// <reference path="../types/mysql2.d.ts" />
 
 import mySql from "mysql2"
+import serverSettings from "../../server_settings"
 
 export class DataBase {
 	private connection: mySql.Connection
 
 	constructor() {
 		this.connection = mySql.createPool( {
-			host: "localhost",
-			user: "root",
-			password: "",
-			database: "shsm_among_us"
+			host: serverSettings.DB_HOST,
+			user: serverSettings.DB_USER,
+			password: serverSettings.DB_PASS,
+			database: serverSettings.DB_NAME
 		} )
 
 		console.log( "DataBase created" )
@@ -36,7 +37,7 @@ export class DataBase {
 
 	Update( tN: SqlTableName, where: SqlKV, row: SqlKV ): void {
 		this.Get( tN, where, ( data: any[] ) => {
-			if ( data[0] && data[0]["count(*)"] > 0 ) {
+			if ( data[0] && data[0]["count( * )"] > 0 ) {
 				let str: string = "update " + tN + " set "
 				let preStr: string = ""
 
@@ -51,11 +52,24 @@ export class DataBase {
 			} else {
 				this.Add( tN, row )
 			}
-		}, "count(*)" )
+		}, "count( * )" )
 	}
 
 	Get( tN: SqlTableName, where: SqlKV, func?: SqlCallBack, what?: string ): void {
 		this.Query( "select " + ( what || "*" ) + " from " + tN + this.WhereString( where ), [], func )
+	}
+
+	GetByPlayers( tN: SqlTableName, params: string, steamIDs: any[], func: SqlCallBack ): void {
+		let str = "select " + params + " from " + tN + " where "
+		let preStr = ""
+
+		for ( let k in steamIDs ) {
+			let steamID = steamIDs[k]
+			str += preStr + "steam_id=" + steamID
+			preStr = " or "
+		}
+
+		this.Query( str, [], func )
 	}
 
 	private Query( str: string, a: any[], func?: SqlCallBack ): void {

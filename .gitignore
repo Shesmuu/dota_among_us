@@ -1,11 +1,10 @@
 server/node_modules
 server/prod
 server/package-lock.json
+server/server_settings.js
 
 *.png
 *.fbx
-*.vmap
-*.vpk
 *.vmat_c
 *.vanim_c
 *.vmdl_c
