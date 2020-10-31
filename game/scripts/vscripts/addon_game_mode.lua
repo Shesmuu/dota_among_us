@@ -2,7 +2,7 @@ if GameMode then
 	return
 end
 
-_G.PRODUCTION_MODE = false
+_G.PRODUCTION_MODE = true
 
 _G.AU_GAME_STATE_NONE = 0
 _G.AU_GAME_STATE_SETTINGS = 1
@@ -138,6 +138,10 @@ function GameMode:SetWinner( role, reason )
 			else
 				s.ratingChange = -30
 			end
+		end
+
+		if player.leaveBeforeDeath then
+			s.ratingChange = -30
 		end
 
 		if s.party then

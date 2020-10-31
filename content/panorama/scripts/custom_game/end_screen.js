@@ -111,8 +111,8 @@ function NetTableWinner( data ) {
 			style = "Plus"
 		}
 
-		CreateLabel( values, value - d.ratingChange )
-		CreateLabel( values, preStr + d.ratingChange, style )
+		CreateLabel( values, value )
+		CreateLabel( values, "(" + preStr + d.ratingChange + ")", style )
 	}
 
 	let statsForm = [

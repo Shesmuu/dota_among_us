@@ -71,6 +71,7 @@
 
 .TitleVotes {
 	vertical-align: center;
+	width: 130px;
 	flow-children: down;
 }
 
