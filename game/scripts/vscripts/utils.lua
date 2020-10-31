@@ -9,6 +9,17 @@ function CreateEventUnit( unitName, pos, func, radius )
 	return unit
 end
 
+function MathRound( n )
+	local a = n % math.abs( n )
+	local d = ( n / math.abs( n ) )
+
+	if a > 0.5 then
+		return math.ceil( math.abs( n ) ) * d
+	else
+		return math.floor( math.abs( n ) ) * d
+	end
+end
+
 function Add( t, o )
 	local i = 1
 

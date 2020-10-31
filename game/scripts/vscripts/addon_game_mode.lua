@@ -146,9 +146,9 @@ function GameMode:SetWinner( role, reason )
 
 		if s.party then
 			if s.ratingChange > 0 then
-				s.ratingChange = math.ceil( s.ratingChange * 0.66 )
+				s.ratingChange = MathRound( s.ratingChange * 0.66 )
 			elseif s.ratingChange < 0 then
-				s.ratingChange = math.floor( s.ratingChange * 1.33 )
+				s.ratingChange = MathRound( s.ratingChange * 1.33 )
 			end
 		end
 
@@ -553,7 +553,7 @@ function GameMode:Activate()
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_6, 1 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_7, 1 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_8, 1 )
-	GameRules:SetCustomGameSetupAutoLaunchDelay( IsTest() and 30 or 10 )
+	GameRules:SetCustomGameSetupAutoLaunchDelay( IsTest() and 30 or 15 )
 	GameRules:SetFirstBloodActive( false )
 	GameRules:SetGoldPerTick( 0 )
 	GameRules:SetPostGameTime( 60 )

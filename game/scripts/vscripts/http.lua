@@ -30,9 +30,9 @@ function Http:CustomGameSetup()
 					player.stats.low_priority = p.low_priority_
 					player.stats.ratingImposter = p.imposter_rating
 					player.stats.ratingPeace = p.peace_rating
-
-					player:NetTable()
 				end
+
+				player:NetTable()
 			end
 		end
 
