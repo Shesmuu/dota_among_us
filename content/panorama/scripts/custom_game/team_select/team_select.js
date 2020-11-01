@@ -97,7 +97,7 @@ function FindOrCreatePanelForPlayer( playerId, parent )
 	// Create a new player panel for the specified player id if an existing one was not found
 	var newPlayerPanel = $.CreatePanel( "Panel", parent, "player_root" );
 	newPlayerPanel.SetAttributeInt( "player_id", playerId );
-	newPlayerPanel.BLoadLayout( "file://{resources}/layout/custom_game/team_select_player.xml", false, false );
+	newPlayerPanel.BLoadLayout( "file://{resources}/layout/custom_game/team_select/team_select_player.xml", false, false );
 
 	// Add the panel to the global list of player planels so that we will find it next time
 	g_PlayerPanels.push( newPlayerPanel );
@@ -158,7 +158,7 @@ function UpdateTeamPanel( teamPanel )
 		if ( playerSlot.GetChildCount() == 0 )
 		{
 			var empty_slot = $.CreatePanel( "Panel", playerSlot, "player_root" );
-			empty_slot.BLoadLayout( "file://{resources}/layout/custom_game/team_select_empty_slot.xml", false, false );
+			empty_slot.BLoadLayout( "file://{resources}/layout/custom_game/team_select/team_select_empty_slot.xml", false, false );
 		}
 	}
 
@@ -329,7 +329,7 @@ function UpdateTimer()
 		var teamNode = $.CreatePanel( "Panel", teamsListRootNode, "" );
 		teamNode.AddClass( "team_" + teamId ); // team_1, etc.
 		teamNode.SetAttributeInt( "team_id", teamId );
-		teamNode.BLoadLayout( "file://{resources}/layout/custom_game/team_select_team.xml", false, false );
+		teamNode.BLoadLayout( "file://{resources}/layout/custom_game/team_select/team_select_team.xml", false, false );
 
 		// Add the team panel to the global list so we can get to it easily later to update it
 		g_TeamPanels.push( teamNode );

@@ -722,14 +722,14 @@ DOTAAvatarImage
     margin: 3px;
     white-space: nowrap;
 
-	font-size: 14px;
+	font-size: 17px;
 	letter-spacing: 1px;
 	brightness: 1.0;
 	color: #ffffff;
 	font-weight: semi-bold;
 	text-align: right; 
 
-    margin-left: 14%;
+    margin-left: 11%;
 }
 
 .Hidden
@@ -739,6 +739,8 @@ DOTAAvatarImage
 
 #FavHero
 {
+    height: 100%;
+    width: height-percentage( 100% );
     margin-left: 12%;
 }
 

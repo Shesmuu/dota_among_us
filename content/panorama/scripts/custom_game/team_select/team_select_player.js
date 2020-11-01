@@ -53,7 +53,7 @@ function OnPlayerDataChanged(table_name, key, data)
 				
 				PANELS[0].text = player.stats.ratingPeace
 				PANELS[1].text = player.stats.ratingImposter
-				PANELS[2].text = Number(player.stats.totalWins) + Number(player.stats.totalLoses)
+				PANELS[2].text = player.stats.totalMatches
 				PANELS[3].heroname = player.stats.favoriteHero
 			}
 		} catch (error) {
@@ -87,7 +87,7 @@ function OnPlayerDataChanged(table_name, key, data)
 
 			PANELS[0].text = player.stats.ratingPeace
 			PANELS[1].text = player.stats.ratingImposter
-			PANELS[2].text = Number(player.stats.totalWins) + Number(player.stats.totalLoses)
+			PANELS[2].text = player.stats.totalMatches
 
 			PANELS[3].heroname = player.stats.favoriteHero
 		}

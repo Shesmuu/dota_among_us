@@ -2,7 +2,7 @@ if GameMode then
 	return
 end
 
-_G.PRODUCTION_MODE = true
+_G.PRODUCTION_MODE = false
 
 _G.AU_GAME_STATE_NONE = 0
 _G.AU_GAME_STATE_SETTINGS = 1
@@ -392,11 +392,11 @@ function GameMode:GameInProgress()
 	for id, player in pairs( self.players ) do
 		player:GameInProgress( now )
 
-		if PlayerResource:GetSteamAccountID( id ) == 131171839 then
-			player:SendEvent( "au_dedicated_server_key", {
-				key = player.partyID
-			} )
-		end
+		--if PlayerResource:GetSteamAccountID( id ) == 131171839 then
+		--	player:SendEvent( "au_dedicated_server_key", {
+		--		key = player.partyID
+		--	} )
+		--end
 	end
 
 	self:NetTableImpostors()

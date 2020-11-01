@@ -23,17 +23,25 @@ function Http:CustomGameSetup()
 			end
 		end
 
-		for _, p in pairs( data.players ) do
+		for steamID, count in pairs( data.totalMatches ) do
 			for id, player in pairs( GameMode.players ) do
+				if player.steamID == steamID then
+					player.stats.totalMatches = count
+				end
+			end
+		end
+
+		for id, player in pairs( GameMode.players ) do
+			for _, p in pairs( data.players ) do
 				if player.steamID == p.steam_id then
 					player.stats.peace_streak = p.peace_streak
 					player.stats.low_priority = p.low_priority_
 					player.stats.ratingImposter = p.imposter_rating
 					player.stats.ratingPeace = p.peace_rating
 				end
-
-				player:NetTable()
 			end
+
+			player:NetTable()
 		end
 
 		GameMode.hasServerData = true

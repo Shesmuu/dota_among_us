@@ -67,6 +67,7 @@ function Player:constructor( id )
 		leaveBeforeDeath = false,
 		totalWins = 0,
 		totalLoses = 0,
+		totalMatches = 0,
 		ratingImposter = 1000,
 		ratingPeace = 1000,
 		ratingChange = 0,
@@ -353,7 +354,7 @@ function Player:Kill( spawnTomb, killer, afkDeath, instaCalc )
 
 		self.stats.killed = true
 	else
-		self.stats.kicked = false
+		self.stats.kicked = true
 	end
 
 	if afkDeath then

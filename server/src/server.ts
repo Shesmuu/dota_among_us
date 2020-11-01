@@ -75,7 +75,8 @@ const Server = new ( class {
 				"npc_dota_hero_tinker"
 			] 
 			const sendData: KV = {
-				favoriteHeroes: {}
+				favoriteHeroes: {},
+				totalMatches: {}
 			}
 			const promises = []
 
@@ -138,7 +139,17 @@ const Server = new ( class {
 
 				i++
 
-				if ( i > 20 ) {
+				promises.push( new Promise( r => this.database.Get( "player_matches", {
+					steam_id: steamID
+				}, ( data ) => {
+					sendData.totalMatches[steamID] = data[0]["count( * )"]
+
+					r( i )
+				}, "count( * )" ) ) )
+
+				i++
+
+				if ( i > 150 ) {
 					break
 				}
 			}
