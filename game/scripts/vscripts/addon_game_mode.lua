@@ -2,7 +2,7 @@ if GameMode then
 	return
 end
 
-_G.PRODUCTION_MODE = false
+_G.PRODUCTION_MODE = true
 
 _G.AU_GAME_STATE_NONE = 0
 _G.AU_GAME_STATE_SETTINGS = 1
@@ -157,6 +157,8 @@ function GameMode:SetWinner( role, reason )
 		else
 			s.ratingPeace = math.max( s.ratingPeace + s.ratingChange, 0 )
 		end
+
+		s.rating = math.max( s.rating + s.ratingChange, 0 )
 
 		players[id] = s
 	end

@@ -50,14 +50,13 @@ function OnPlayerDataChanged(table_name, key, data)
 			{
 				RATING_PANEL.SetHasClass("Hidden", false)
 				PANELS[3].SetHasClass("Hidden", false)
-				
-				PANELS[0].text = player.stats.ratingPeace
-				PANELS[1].text = player.stats.ratingImposter
+	
+				PANELS[1].text = player.stats.rating
 				PANELS[2].text = player.stats.totalMatches
 				PANELS[3].heroname = player.stats.favoriteHero
 			}
 		} catch (error) {
-			$.Msg(error)	
+			$.Msg(error + " ERRRR")	
 		}
 	}
 }
@@ -85,13 +84,12 @@ function OnPlayerDataChanged(table_name, key, data)
 			RATING_PANEL.SetHasClass("Hidden", false)
 			PANELS[3].SetHasClass("Hidden", false)
 
-			PANELS[0].text = player.stats.ratingPeace
-			PANELS[1].text = player.stats.ratingImposter
+			PANELS[1].text = player.stats.rating
 			PANELS[2].text = player.stats.totalMatches
 
 			PANELS[3].heroname = player.stats.favoriteHero
 		}
 	} catch (error) {
-		$.Msg(error)	
+		$.Msg(error + " ERRRR")	
 	}
 })();

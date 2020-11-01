@@ -610,6 +610,8 @@
     flow-children: right;
     vertical-align: middle;
 
+    margin-left: 70px;
+
     width: fill-parent-flow( 1 );
 }
 
@@ -666,10 +668,14 @@ DOTAAvatarImage
     horizontal-align: left;
 }
 
-.TopLabe3
+.TopLabe3, .TopLabe1
 {
     vertical-align: bottom;
     margin-left: 4%;
+}
+
+.TopLabe1 {
+    margin-left: 170px;
 }
 
 .RightLabel

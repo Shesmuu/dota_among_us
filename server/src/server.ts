@@ -37,7 +37,8 @@ const Server = new ( class {
 					low_priority_: p.low_priority,
 					peace_streak: p.peace_streak,
 					imposter_rating: p.ratingImposter,
-					peace_rating: p.ratingPeace
+					peace_rating: p.ratingPeace,
+					rating: p.rating
 				} )
 
 				this.database.Add( "player_matches", {

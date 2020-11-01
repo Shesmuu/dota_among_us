@@ -11,8 +11,7 @@
 		<Label id="PlayerIsHostPanel" />
 		<Label id="PlayerName" text="PLAYER_NAME" />
 		<Panel id="RatingPanel" class="PanelClass">
-			<Label id="Rating1" class="Green LBStyle" text="1000" />
-			<Label id="Rating2" class="Red LBStyle" text="1000" />
+			<Label id="Rating2" class="Green LBStyle" text="1000" />
 			<Label id="TotalGames" class="Yellow LBStyle" text="500" />
 			<DOTAHeroImage id="FavHero" heroname="" heroimagestyle="icon" />
 		</Panel>

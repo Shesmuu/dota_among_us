@@ -70,6 +70,7 @@ function Player:constructor( id )
 		totalMatches = 0,
 		ratingImposter = 1000,
 		ratingPeace = 1000,
+		rating = 1000,
 		ratingChange = 0,
 		killed = false,
 		kicked = false,

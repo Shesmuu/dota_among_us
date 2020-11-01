@@ -127,7 +127,7 @@ function NetTableWinner( data ) {
 				names.AddClass( "VotesRow" )
 
 				CreateLabel( names, "T" )
-				CreateLabel( names, "W" )
+				CreateLabel( names, "F" )
 				CreateLabel( names, "S" )
 			},
 			playerFunc: ( panel, d ) => {
@@ -135,8 +135,8 @@ function NetTableWinner( data ) {
 				values.AddClass( "VotesRow" )
 
 				CreateLabel( values, d.imposterVotes )
-				CreateLabel( values, d.skipVotes )
 				CreateLabel( values, d.wrongVotes )
+				CreateLabel( values, d.skipVotes )
 			}
 		},
 		{
@@ -150,12 +150,12 @@ function NetTableWinner( data ) {
 				let pos = data.playerCount - d.rank + 1
 				let text = ""
 
-				if ( d.killed == 1 ) {
+				if ( d.leaveBeforeDeath == 1 ) {
+					text = "#au_end_screen_stats_afk"
+				} else if ( d.killed == 1 ) {
 					text = "#au_end_screen_stats_killed"
 				} else if ( d.kicked == 1 ) {
 					text = "#au_end_screen_stats_kicked"
-				} else if ( d.leaveBeforeDeath == 1 ) {
-					text = "#au_end_screen_stats_afk"
 				} else {
 					return
 				}
@@ -164,19 +164,19 @@ function NetTableWinner( data ) {
 			}
 		},
 		{
-			role: 1,
+		//	role: 1,
 			name: "#au_end_screen_stats_rating",
 			titleStyle: "TitleRating",
 			playerStyle: "ValueRating",
-			playerFunc: ( panel, d ) => rankFunc( panel, d.ratingImposter, d )
+			playerFunc: ( panel, d ) => rankFunc( panel, d.rating, d )
 		},
-		{
-			role: 0,
-			name: "#au_end_screen_stats_rating",
-			titleStyle: "TitleRating",
-			playerStyle: "ValueRating",
-			playerFunc: ( panel, d ) => rankFunc( panel, d.ratingPeace, d )
-		}
+		//{
+		//	role: 0,
+		//	name: "#au_end_screen_stats_rating",
+		//	titleStyle: "TitleRating",
+		//	playerStyle: "ValueRating",
+		//	playerFunc: ( panel, d ) => rankFunc( panel, d.ratingPeace, d )
+		//}
 	]
 
 	RolePlayers( impostersPanel, "#au_imposters", 1, statsForm, data.players )
