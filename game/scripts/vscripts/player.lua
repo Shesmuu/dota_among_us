@@ -1,4 +1,18 @@
+local peaceAbilities = {
+	npc_dota_hero_ogre_magi = {
+		"au_ogre_bloodlust"
+	}
+}
+
 local impostorAbilities = {
+	npc_dota_hero_night_stalker = {
+		"au_impostor_kill",
+		"au_impostor_ns_fly"
+	},
+	npc_dota_hero_ogre_magi = {
+		"au_impostor_kill",
+		"au_ogre_bloodlust"
+	},
 	npc_dota_hero_zuus = {
 		"au_impostor_kill",
 		"au_impostor_zuus_global"
@@ -159,6 +173,8 @@ function Player:Update( now )
 		else
 			self:SendEvent( "au_afk_kill_delay_close", {} )
 		end
+	else
+		self:SendEvent( "au_afk_kill_delay_close", {} )
 	end
 
 	local ability = self.hero:FindAbilityByName( "au_vote_kick" )
@@ -466,11 +482,17 @@ function Player:RoleAbilities()
 
 	self.hero:RemoveAbilities()
 
-	if self.role == AU_ROLE_IMPOSTOR and self.alive then
-		for i, abilityName in pairs( impostorAbilities[self.abilitiesHeroName] or {} ) do
-			self.hero:Ability( abilityName, i - 1, 20 )
-		end
-		
+	if not self.alive then
+		return
+	end
+
+	local abilities = self.role == AU_ROLE_IMPOSTOR and impostorAbilities or peaceAbilities
+
+	for i, abilityName in pairs( abilities[self.abilitiesHeroName] or {} ) do
+		self.hero:Ability( abilityName, i - 1, 20 )
+	end
+
+	if self.role == AU_ROLE_IMPOSTOR then
 		Sabotage:Abilities( self.hero )
 	end
 end

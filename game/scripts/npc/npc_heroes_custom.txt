@@ -1,2 +1,7 @@
 "" {
+	"npc_dota_hero_ogre_magi" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+	}
 }

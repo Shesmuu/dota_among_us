@@ -164,4 +164,29 @@
 		}
 		"AbilityCooldown" "70"
 	}
+	"au_impostor_ns_fly" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/ns/au_impostor_ns_fly"
+		"AbilityTextureName" "night_stalker_darkness"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"MaxLevel" "1"
+		"AbilityCooldown" "5"
+	}
+	"au_ogre_bloodlust" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/ogre/au_ogre_bloodlust"
+		"AbilityTextureName" "ogre_magi_bloodlust"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"MaxLevel" "1"
+		"AbilityCastPoint" "0.15"
+		"AbilityCastAnimation" "ACT_DOTA_CAST_ABILITY_3"
+		"AbilityManaCost" "20"
+		"AbilitySpecial" {
+			"1" { "var_type" "FIELD_INTEGER" "duration" "10" }
+			"2" { "var_type" "FIELD_FLOAT" "movespeed" "18.2" }
+			"3" { "var_type" "FIELD_INTEGER" "vision" "20" }
+			"4" { "var_type" "FIELD_INTEGER" "night_vision" "70" }
+		}
+		"AbilityCooldown" "5"
+	}
 }

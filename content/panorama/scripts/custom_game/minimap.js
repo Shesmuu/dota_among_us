@@ -124,5 +124,5 @@ $.Schedule( 1, () => {
 	SubscribeNetTable( "game", "quests", NetTableQuests )
 	SubscribeNetTable( "player", Players.GetLocalPlayer().toString(), NetTablePlayer )
 
-	Update()
+	//Update()
 } )

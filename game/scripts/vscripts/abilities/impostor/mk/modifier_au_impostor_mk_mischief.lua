@@ -14,6 +14,12 @@ if IsClient() then
 	return
 end
 
+function modifier_au_impostor_mk_mischief:CheckState()
+	return {
+		[MODIFIER_STATE_ROOTED] = true
+	}
+end
+
 function modifier_au_impostor_mk_mischief:OnCreated()
 	local parent = self:GetParent()
 

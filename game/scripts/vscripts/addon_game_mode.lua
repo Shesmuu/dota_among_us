@@ -517,10 +517,6 @@ function GameMode:NetTableState()
 end
 
 function GameMode:KickVoting( reason, starter )
-	for _, quest in pairs( Quests.globalQuests ) do
-		quest:Destroy( true )
-	end
-
 	self:ScreenNotice( reason )
 
 	KickVoting:Preparing()
@@ -558,12 +554,12 @@ function GameMode:Activate()
 	GameRules:SetCustomGameSetupAutoLaunchDelay( IsTest() and 30 or 15 )
 	GameRules:SetFirstBloodActive( false )
 	GameRules:SetGoldPerTick( 0 )
-	GameRules:SetPostGameTime( 60 )
+	GameRules:SetPostGameTime( 300 )
 	GameRules:SetPreGameTime( 999998 )
 	GameRules:SetSafeToLeave( false )
 	GameRules:SetShowcaseTime( 0 )
-	GameRules:SetStartingGold( 0 )
 	GameRules:SetStrategyTime( 5 )
+	GameRules:SetStartingGold( 0 )
 	GameRules:SetTimeOfDay( 0 )
 	GameRules:SetHeroRespawnEnabled( true )
 	GameRules:SetPostGameTime( IsTest() and 9999 or 300 )
@@ -577,6 +573,7 @@ function GameMode:Activate()
 	ent:SetDaynightCycleDisabled( true )
 	ent:SetExecuteOrderFilter( self.ExecuteOrderFilter, self )
 	ent:SetPauseEnabled( IsTest() )
+	--ent:SetCustomGameForceHero( "npc_dota_hero_ogre_magi" )
 
 	self:Convars()
 	self:DefaultDay()
@@ -666,7 +663,12 @@ function GameMode:ExecuteOrderFilter( data )
 			time = GameRules:GetGameTime()
 		}
 
+
 		if unit.player then
+			if not IsTest() and data.issuer_player_id_const ~= unit.player.id then
+				return
+			end
+
 			unit.player:Order( data )
 		end
 	end

@@ -58,10 +58,8 @@ function BaseSabotage:End( interrupted )
 		player:Sabotage( false )
 	end
 
-	if self.duration then
-		if interrupted then
-
-		else
+	if self.duration and not interrupted then
+		if not interrupted then
 			GameMode:SetWinner( AU_ROLE_IMPOSTOR, AU_WIN_REASON_SABOTAGE )
 		end
 	end
@@ -135,7 +133,7 @@ function BaseSabotage:Update( now )
 		return
 	end
 
-	if self.duration and now >= self.endTime then
+	if self.duration and now >= self.endTime and GameMode.state == AU_GAME_STATE_PROCESS then
 		self:End( false )
 	end
 end

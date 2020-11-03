@@ -51,3 +51,13 @@ function CDOTA_BaseNPC:Ability( name, index, cooldown )
 
 	return ability
 end
+
+function CDOTA_BaseNPC:AbilitiesRemovePreparing()
+	for i = 31, 0, -1 do
+		local ability = self:GetAbilityByIndex( i )
+
+		if ability then
+			ability:RemovePreapring()
+		end
+	end
+end

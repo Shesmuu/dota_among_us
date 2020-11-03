@@ -37,6 +37,10 @@ function KickVoting:Start( starter )
 
 	GameMode.state = AU_GAME_STATE_KICK_VOTING
 
+	for _, quest in pairs( Quests.globalQuests ) do
+		quest:Destroy( true )
+	end
+
 	for i, effect in pairs( self.unitEffects ) do
 		ParticleManager:DestroyParticle( effect, false )
 	end
@@ -259,10 +263,6 @@ function KickVoting:End()
 end
 
 function KickVoting:Preparing()
-	for _, sabotage in pairs( Sabotage.sabotages ) do
-		sabotage:End( true )
-	end
-
 	for id, player in pairs( GameMode.players ) do
 		local unit = player:GetUnit()
 
@@ -293,6 +293,7 @@ function KickVoting:Preparing()
 				table.insert( self.unitEffects, effect )
 			end
 
+			unit:AbilitiesRemovePreparing()
 			unit:Stop()
 		end
 
