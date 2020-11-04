@@ -3,6 +3,13 @@
 	height: 100%;
 }
 
+#HudButtons {
+	horizontal-align: right;
+	vertical-align: bottom;
+	margin: 18px;
+	flow-children: right;
+}
+
 #RedCenterMessage, #WhiteCenterMessage {
 	horizontal-align: center;
 	vertical-align: center;

@@ -26,6 +26,7 @@ class HeroBar {
 
 		if ( hero == -1 || !Entities.IsAlive( hero ) || this.died ) {
 			this.SetEnabled( false )
+
 			return
 		}
 

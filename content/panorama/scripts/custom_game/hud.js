@@ -24,6 +24,9 @@ noticeTexts[AU_NOTICE_TYPE_NONE] = ""
 AU_ROLE_PEACE = 0
 AU_ROLE_IMPOSTOR = 1
 
+currentState = AU_GAME_STATE_NONE
+localDied = false
+
 $( "#LowPriorityCount" ).text = $.Localize( "#au_low_priority_remaining" ) + 0
 
 GameEvents.Subscribe( "dota_player_update_query_unit", () => {
@@ -124,16 +127,9 @@ function WhiteCenterMessage( text ) {
 }
 
 function NetTableDied( data ) {
-	if ( data[Players.GetLocalPlayer()] ) {
-		UnmuteAll()
-	} else {
-		for ( let id = 0; id < 24; id++ ) {
-			if ( data[id] ) {
-				Game.SetPlayerMuted( id, true )
-			}
-		}
-	}
+	localDied = data[Players.GetLocalPlayer()] == 1
 
+	Chat_.NetTableDied( data )
 	TopBar_.NetTableDied( data )
 	HeroBarSystem_.NetTableDied( data )
 }
@@ -144,6 +140,8 @@ function NetTableImpostors( data ) {
 }
 
 function NetTableState( data ) {
+	currentState = data.state
+
 	if ( data.state == AU_GAME_STATE_SCREEN_NOTICE ) { 
 		if (
 			data.notice == AU_NOTICE_TYPE_PEACE_KICKED ||
@@ -266,8 +264,18 @@ SubscribeNetTable( "game", "state", NetTableState )
 SubscribeNetTable( "game", "quests", NetTableQuests )
 SubscribeNetTable( "player", Players.GetLocalPlayer().toString(), NetTablePlayer )
 
+GameUI.SetMouseCallback( ( event, button ) => {
+	if ( GameUI.IsAltDown() ) {
+		if ( currentState == AU_GAME_STATE_KICK_VOTING && localDied ) {
+			return true
+		}
+	}
+
+	return false
+} )
+
 ;( function() {
-	let hudElemnts = 
+	let hudElements = 
 		$.GetContextPanel()
 		.GetParent()
 		.GetParent()
@@ -275,7 +283,7 @@ SubscribeNetTable( "player", Players.GetLocalPlayer().toString(), NetTablePlayer
 		.FindChildTraverse( "HUDElements" )
 
 	if ( customChatEnabled ) {
-		let hudChat = hudElemnts.FindChildTraverse( "HudChat" )
+		let hudChat = hudElements.FindChildTraverse( "HudChat" )
 		hudChat.style.opacity = "0"
 	
 		let chatInput = hudChat.FindChildTraverse( "ChatInput" )
@@ -288,7 +296,7 @@ SubscribeNetTable( "player", Players.GetLocalPlayer().toString(), NetTablePlayer
 	}
 
 	let minimap =
-		hudElemnts
+		hudElements
 		.FindChildTraverse( "minimap_block" )
 		.FindChildTraverse( "minimap" )
 	minimap.BLoadLayout(
@@ -298,5 +306,4 @@ SubscribeNetTable( "player", Players.GetLocalPlayer().toString(), NetTablePlayer
 	)
 } )()
 
-UnmuteAll()
 Update()

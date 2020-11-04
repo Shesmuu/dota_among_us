@@ -92,8 +92,11 @@ function Player:constructor( id )
 		party = false
 	}
 
-	PlayerResource:SetCustomPlayerColor( self.id, 255, 255, 255 )
-	SetTeamCustomHealthbarColor( self.team, 255, 255, 255 )
+	PlayerResource:SetCustomPlayerColor(
+		self.id,
+		unpack( GameMode.playerColors[self.id] or { 0, 0, 0 } )
+	)
+	--SetTeamCustomHealthbarColor( self.team, 255, 255, 255 )
 
 	ListenToClient( "au_minigame_result", Debug:F( self.MinigameRusult ), self, id )
 	ListenToClient( "au_morph_transform_select", Debug:F( self.MorphTransformSelect ), self, id )

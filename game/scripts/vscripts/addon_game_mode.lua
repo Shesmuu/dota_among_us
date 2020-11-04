@@ -2,7 +2,7 @@ if GameMode then
 	return
 end
 
-_G.PRODUCTION_MODE = true
+_G.PRODUCTION_MODE = false
 
 _G.AU_GAME_STATE_NONE = 0
 _G.AU_GAME_STATE_SETTINGS = 1
@@ -38,12 +38,16 @@ _G.GameMode = {
 	visibleImpostorCount = false,
 	hasServerData = false,
 	playerColors = {
-		{ 255, 255, 0 },
-		{ 0, 255, 255 },
-		{ 255, 0, 255 },
-		{ 255, 0, 0 },
-		{ 0, 255, 0 },
-		{ 0, 0, 255 },
+		[0] = { 255, 255, 0 },
+		[1] = { 0, 255, 255 },
+		[2] = { 255, 0, 255 },
+		[3] = { 255, 0, 0 },
+		[4] = { 0, 255, 0 },
+		[5] = { 0, 0, 255 },
+		[6] = { 111, 255, 0 },
+		[7] = { 0, 255, 111 },
+		[8] = { 111, 0, 255 },
+		[9] = { 0, 111, 255 },
 	}
 }
 
@@ -103,6 +107,13 @@ function GameMode:SetWinner( role, reason )
 		end
 	end
 
+	local deadPeaceRating = {}
+	deadPeaceRating[8] = 5
+	deadPeaceRating[7] = 10
+	deadPeaceRating[6] = 15
+	deadPeaceRating[5] = 15
+	deadPeaceRating[4] = 20
+	deadPeaceRating[3] = 25
 	local players = {}
 
 	for id, player in pairs( self.players ) do
@@ -124,7 +135,7 @@ function GameMode:SetWinner( role, reason )
 
 		if player.role == AU_ROLE_IMPOSTOR then
 			if AU_ROLE_IMPOSTOR == winRole and s.rank < 8 then
-				s.ratingChange = 30
+				s.ratingChange = 40
 			else
 				s.ratingChange = -30
 			end
@@ -133,7 +144,7 @@ function GameMode:SetWinner( role, reason )
 				if player.alive then
 					s.ratingChange = 30
 				else
-					s.ratingChange = 15
+					s.ratingChange = deadPeaceRating[s.roleRank] or 15
 				end
 			else
 				s.ratingChange = -30
@@ -254,7 +265,7 @@ function GameMode:Process( data )
 		player:Process()
 	end
 
-	self.kickVotingCooldown = GameRules:GetGameTime() + ( data.kickVoting or 25 )
+	self.kickVotingCooldown = GameRules:GetGameTime() + ( data.kickVotingCooldown or 25 )
 
 	self:ClearCorpses()
 	self:NetTableDied()
@@ -402,7 +413,9 @@ function GameMode:GameInProgress()
 	end
 
 	self:NetTableImpostors()
-	self:Process()
+	self:Process( {
+		kickVotingCooldown = 60
+	} )
 end
 
 function GameMode:Update_()

@@ -145,8 +145,8 @@ Sabotage = {
 function Sabotage:Activate( value )
 	self.sabotages[AU_SABOTAGE_ECLIPSE] = SabotageEclipse( AU_SABOTAGE_ECLIPSE, "eclipse" )
 	self.sabotages[AU_SABOTAGE_INTERFERENCE] = SabotageInterference( AU_SABOTAGE_INTERFERENCE, "interference" )
-	self.sabotages[AU_SABOTAGE_OXYGEN] = SabotageOxygen( AU_SABOTAGE_OXYGEN, "oxygen", 50, true )
-	self.sabotages[AU_SABOTAGE_REACTOR] = SabotageReactor( AU_SABOTAGE_REACTOR, "reactor", 50, true )
+	self.sabotages[AU_SABOTAGE_OXYGEN] = SabotageOxygen( AU_SABOTAGE_OXYGEN, "oxygen", 43, true )
+	self.sabotages[AU_SABOTAGE_REACTOR] = SabotageReactor( AU_SABOTAGE_REACTOR, "reactor", 43, true )
 end
 
 function Sabotage:IsActive()
