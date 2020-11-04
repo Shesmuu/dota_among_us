@@ -45,6 +45,12 @@ function Http:CustomGameSetup()
 			player:NetTable()
 		end
 
+
+		CustomNetTables:SetTableValue( "game", "global_matches", {
+			peace_wins = data.peaceWins,
+			imposter_wins = data.imposterWins
+		} )
+
 		GameMode.hasServerData = true
 	end, 5 )
 end

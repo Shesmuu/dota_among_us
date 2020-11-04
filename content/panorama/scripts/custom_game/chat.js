@@ -47,10 +47,25 @@ class Chat {
 
 		GameEvents.Subscribe( "au_chat_message", data => this.Message( data ) )
 
+		let colors = []
+		colors[0] = [255, 255, 0]
+		colors[1] = [0, 255, 255]
+		colors[2] = [255, 0, 255]
+		colors[3] = [255, 0, 0]
+		colors[4] = [0, 255, 0]
+		colors[5] = [0, 0, 255]
+		colors[6] = [111, 255, 0]
+		colors[7] = [0, 255, 111]
+		colors[8] = [111, 0, 255]
+		colors[9] = [0, 111, 255]
+
 		for ( let id = 0; id < 24; id++ ) {
-			if ( Players.IsValidPlayerID( id ) && id !== Players.GetLocalPlayer() ) {
+			if ( Players.IsValidPlayerID( id ) ) {
 				let image = $.CreatePanel( "DOTAHeroImage", this.mutePanel, "" )
 				image.heroname = Players.GetPlayerSelectedHero( id )
+				let c = colors[id] || [0, 0, 0]
+				let color = $.CreatePanel( "Panel", image, "" )
+				color.style["background-color"] = "rgb( " + c[0] + ", " + c[1] + ", " + c[2] + " )"
 
 				this.muteButtons[id] = $.CreatePanel( "Button", image, "" )
 				this.muteButtons[id].SetPanelEvent( "onactivate", () => {

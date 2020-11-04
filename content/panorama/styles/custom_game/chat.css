@@ -84,6 +84,11 @@
 	opacity: 0.8;
 }
 
+#MuteList Panel {
+	width: 8px;
+	height: 100%;
+}
+
 #MuteList Button.Muted {
 	background-image: url( "file://{images}/custom_game/button_audio_off.psd" );
 }

@@ -15,6 +15,68 @@
 #TeamsSelectEmptySpace
 {
     width: fill-parent-flow(1);
+    height: 100%;
+}
+
+#GlobalWinrates {
+    horizontal-align: center;
+    vertical-align: center;
+    margin-bottom: 320px;
+    background-color: gradient( linear, 100% 0%, 100% 100%, from( #192229 ), to( #000000 ) );
+    padding: 10px;
+    flow-children: down;
+}
+
+#GlobalWinrates Label {
+    text-align: center;
+    font-size: 23px;
+    width: 100%;
+}
+
+#WinrateColumns {
+    flow-children: right;
+}
+
+.WinrateColumn {
+    width: 130px;
+    margin: 4px;
+    background-color: rgb( 0, 0, 0 );
+    padding: 4px;
+    flow-children: down;
+}
+
+#WinrateChangesInfo
+{
+    horizontal-align: center;
+    margin-bottom: 320px;
+    letter-spacing: 1px;
+    padding: 13px;
+    brightness: 1.0;
+    flow-children: down;
+    background-color: gradient( linear, 100% 0%, 100% 100%, from( #192229 ), to( #000000 ) );
+    color: #ffffff;
+    font-weight: semi-bold;
+    vertical-align: bottom;
+}
+
+#WinrateChangesInfo Label {
+    font-size: 22px;
+}
+
+#WinHeader {
+    color: green;
+    font-size: 23px;
+}
+
+#LoseHeader {
+    margin-top: 20px;
+    color: red;
+    font-size: 23px;
+}
+
+#PartyDecscription {
+    margin-top: 20px;
+    color: orange;
 }
 
 #TeamsList
@@ -682,19 +744,6 @@ DOTAAvatarImage
 {
     vertical-align: bottom;
     horizontal-align: right;
-}
-
-.Info
-{
-    margin-top: 25px;
-
-    font-size: 14px;
-    letter-spacing: 1px;
-    
-    brightness: 1.0;
-    
-	color: #ffffff;
-	font-weight: semi-bold;
 }
 
 .TopLabel

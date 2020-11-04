@@ -290,6 +290,13 @@ function UpdateTimer()
 	$.Schedule( 0.1, UpdateTimer );
 }
 
+function NetTableGlobalMatches( data ) {
+	let sum = data.peace_wins + data.imposter_wins
+
+	$( "#PeaceWinrate" ).text = ( data.peace_wins / sum * 100 ).toFixed( 0 ) + "%"
+	$( "#ImposterWinrate" ).text = ( data.imposter_wins / sum * 100 ).toFixed( 0 ) + "%"
+}
+
 
 //--------------------------------------------------------------------------------------------------
 // Entry point called when the team select panel is created
@@ -298,6 +305,8 @@ function UpdateTimer()
 {
 	var bShowSpectatorTeam = false;
 	var bAutoAssignTeams = true;
+
+	SubscribeNetTable( "game", "global_matches", NetTableGlobalMatches )
 
 	// get any custom config
 	if ( GameUI.CustomUIConfig().team_select )

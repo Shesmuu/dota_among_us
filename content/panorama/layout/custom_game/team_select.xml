@@ -6,12 +6,34 @@
 		<include src="file://{resources}/styles/custom_game/team_select.css" />
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/custom_game/utils.js" />
 		<include src="file://{resources}/scripts/custom_game/team_select/team_select.js" />
 	</scripts>
 	<Panel hittest="false" class="TeamSelect">
 		<Panel hittest="false" id="TeamSelectContainer" selectionpos="auto">`
 			<!--Empty space to let the loading screen and chat be visible-->
-			<Panel hittest="false" id="TeamsSelectEmptySpace" />
+			<Panel hittest="false" id="TeamsSelectEmptySpace">
+				<Panel id="GlobalWinrates">
+					<Label id="Header" text="#au_global_winrates_header" />
+					<Panel id="WinrateColumns">
+						<Panel class="WinrateColumn">
+							<Label text="#au_peaces" />
+							<Label id="PeaceWinrate" />
+						</Panel>
+						<Panel class="WinrateColumn">
+							<Label text="#au_imposters" />
+							<Label id="ImposterWinrate" />
+						</Panel>
+					</Panel>
+				</Panel>
+				<Panel id="WinrateChangesInfo">
+					<Label id="WinHeader" text="#au_rating_info_win_header" />
+					<Label id="WinDecscription" text="#au_rating_info_win_description" />
+					<Label id="LoseHeader" text="#au_rating_info_lose_header" />
+					<Label id="LoseDecscription" text="#au_rating_info_lose_description" />
+					<Label id="PartyDecscription" text="#au_rating_info_party_description" />
+				</Panel>
+			</Panel>
 
 			<!--Teams List, left hand panel-->
 			<Panel id="TeamsList" >
@@ -23,7 +45,6 @@
 						<Label class="TopLabe3" text="Hero" />
 					</Panel>
 					<Panel id="TeamsListRoot" />
-					<Label class="Info" text="#rating_info" />
 				</Panel>
 			</Panel>
 
