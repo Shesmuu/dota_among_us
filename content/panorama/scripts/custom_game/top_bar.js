@@ -44,8 +44,10 @@ class TopBarPlayer {
 
 class TopBar {
 	constructor() {
-		this.container = $( "#PlayersContainer" )
-		this.impostorsRemaining = $( "#ImpostorsRemaining" )
+		let panel = $( "#TopBar" )
+
+		this.container = panel.FindChildTraverse( "TopBarPlayers" )
+		this.impostorsRemaining = panel.FindChildTraverse( "ImpostorsRemaining" )
 		this.container.RemoveAndDeleteChildren()
 		this.players = []
 

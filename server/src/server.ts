@@ -17,6 +17,12 @@ const Server = new ( class {
 		this.expressApp.use( bodyParser() )
 		this.database = new DataBase()
 
+		this.expressApp.post( "/api/leaderboard", ( req: Request, res: Response ) => {
+			this.database.Query( "select steam_id, rating from players order by rating desc limit 0, 100", [], ( data ) => {
+				res.send( JSON.stringify( data ) )
+			} )
+		} )
+
 		this.Request( "/api/match/after", ( req: Request, res: Response ) => {
 			let matchData = {
 				match_id: req.body.matchID,

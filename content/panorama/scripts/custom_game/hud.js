@@ -52,6 +52,7 @@ KickVotingTimer_ = new KickVotingTimer()
 HeroBarSystem_ = new HeroBarSystem()
 Sounds_ = new Sounds()
 Chat_ = new Chat()
+Profile_ = new Profile()
 Settings_ = new Settings()
 AFKKillDelay = new ( class {
 	constructor() {

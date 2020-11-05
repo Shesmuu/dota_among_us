@@ -72,7 +72,7 @@ export class DataBase {
 		this.Query( str, [], func )
 	}
 
-	private Query( str: string, a: any[], func?: SqlCallBack ): void {
+	Query( str: string, a: any[], func?: SqlCallBack ): void {
 		this.connection.query( str, a, ( err: string, data: any[] ) => {
 			if ( err ) {
 				console.log( err )

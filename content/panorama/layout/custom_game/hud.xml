@@ -7,6 +7,7 @@
 		<include src="file://{resources}/styles/custom_game/hero_bar.css" />
 		<include src="file://{resources}/styles/custom_game/settings.css" />
 		<include src="file://{resources}/styles/custom_game/chat.css" />
+		<include src="file://{resources}/styles/custom_game/profile.css" />
 		<include src="file://{resources}/styles/custom_game/minigames.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/button.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/bottle.css" />
@@ -51,10 +52,24 @@
 		<include src="file://{resources}/scripts/custom_game/kick_voting_timer.js" />
 		<include src="file://{resources}/scripts/custom_game/chat.js" />
 		<include src="file://{resources}/scripts/custom_game/settings.js" />
+		<include src="file://{resources}/scripts/custom_game/profile.js" />
 		<include src="file://{resources}/scripts/custom_game/hud.js" />
 	</scripts>
 
 	<snippets>
+		<snippet name="LeaderboardPlayerRow">
+			<Panel class="PlayerRow">
+				<Label id="Place" />
+				<Panel id="Player">
+					<Panel id="AvatarContainer">
+						<DOTAAvatarImage id="Avatar" />
+					</Panel>
+					<DOTAUserName id="Nickname" />
+				</Panel>
+				<Label id="Rating" />
+			</Panel>
+		</snippet>
+
 		<snippet name="MinigameKickVoting">
 			<Panel class="KickVotingContainer">
 				<Button id="Button" />
@@ -178,12 +193,13 @@
 				<Panel id="NewMessage" />
 			</Button>
 			<Button id="MuteButton" onactivate="Chat_.ToggleMuteList()" />
+			<Button id="ProfileButton" onactivate="Profile_.Toggle()" />
 		</Panel>
 
 		<Panel id="TopBar">
 			<Panel id="Players">
 				<Panel id="LeftFlare" />
-				<Panel id="PlayersContainer" />
+				<Panel id="TopBarPlayers" />
 				<Panel id="RightFlare" />
 			</Panel>
 			<Label id="ImpostorsRemaining" />
@@ -231,6 +247,35 @@
 				<Label id="FeatureContent" text="#au_settings_content" />
 				<Label id="Countdown" />
 				<Panel id="CustomSettingsContainer" />
+			</Panel>
+		</Panel>
+
+		<Panel id="Profile">
+			<Panel id="PlayerStats">
+				<Panel id="PlayerHeader">
+					<Panel id="AvatarContainer">
+						<DOTAAvatarImage id="Avatar" />
+					</Panel>
+					<Label id="Nickname" />
+				</Panel>
+				<Panel id="Stats">
+					<Panel class="StatsRow">
+						<Label class="StatText" text="#au_profile_rating" />
+						<Label id="Rating" />
+					</Panel>
+					<Panel class="StatsRow">
+						<Label class="StatText" text="#au_profile_total_matches" />
+						<Label id="TotalMatches" />
+					</Panel>
+					<Panel class="StatsRow">
+						<Label class="StatText" text="#au_profile_favorite_hero" />
+						<DOTAHeroImage id="FavoriteHero" heroname="" heroimagestyle="icon" />
+					</Panel>
+				</Panel>
+			</Panel>
+			<Panel id="Leaderboard">
+				<Label id="Header" text="#au_profile_leaderboard" />
+				<Panel id="LeaderboardPlayers" />
 			</Panel>
 		</Panel>
 

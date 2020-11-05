@@ -273,7 +273,7 @@ function GameMode:Process( data )
 end
 
 function GameMode:AssignRoles()
-	if IsTest() then
+	if false and IsTest() then
 		for id, player in pairs( self.players ) do
 			if player.team == DOTA_TEAM_GOODGUYS or player.team == DOTA_TEAM_BADGUYS then
 				player:SetRole( AU_ROLE_IMPOSTOR )
@@ -289,6 +289,39 @@ function GameMode:AssignRoles()
 		end
 
 		if self.hasServerData then
+			local largeStreaks = {}
+			local streakPlayers = {}
+
+			for id, p in pairs( self.players ) do
+				local streak = p.stats.peace_streak
+				
+				if streak > 10 and p.stats.low_priority <= 0 then
+					for i, lS in pairs( largeStreaks ) do
+						if streak > lS then
+							table.insert( largeStreaks, i, streak )
+							table.insert( streakPlayers, i, id )
+
+							goto next_streak
+						end
+					end
+
+					table.insert( largeStreaks, streak )
+					table.insert( streakPlayers, id )
+
+					::next_streak::
+				end
+			end
+
+			for _, id in pairs( streakPlayers ) do
+				self.players[id]:SetRole( AU_ROLE_IMPOSTOR )
+
+				impostorCount = impostorCount + 1
+
+				if impostorCount >= needImpostor then
+					return
+				end
+			end
+
 			local avgStreak = 0 
 
 			for id, p in pairs( self.players ) do
@@ -307,11 +340,13 @@ function GameMode:AssignRoles()
 					if player.stats.low_priority <= 0 and player.role ~= AU_ROLE_IMPOSTOR then
 						local chance = math.floor( ( player.stats.peace_streak + 1 / avgStreak ) ^ 5 * 10 )
 
-						chance = math.min( chance, 200 )
+						chance = math.min( chance, 300 )
 
-						for __ = 1, chance do
-							i = i + 1
-							candidates[i] = id
+						if chance > 0 then
+							for __ = 1, chance do
+								i = i + 1
+								candidates[i] = id
+							end
 						end
 					end
 				end

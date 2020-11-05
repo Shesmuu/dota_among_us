@@ -10,6 +10,22 @@
 	flow-children: right;
 }
 
+#HudButtons Button {
+	margin: 2px;
+	width: 100px;
+	height: 100px;
+}
+
+#HudButtons Button:hover {
+	margin: 0px;
+	width: 104px;
+	height: 104px;
+}
+
+.HUDFlipped #HudButtons {
+	horizontal-align: left;
+}
+
 #RedCenterMessage, #WhiteCenterMessage {
 	horizontal-align: center;
 	vertical-align: center;

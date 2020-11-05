@@ -1,32 +1,14 @@
 #MuteButton {
-	margin: 2px;
-	width: 100px;
-	height: 100px;
 	background-image: url( "file://{images}/custom_game/mute_button.png" );
 	background-size: 70%;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 }
 
-#MuteButton:hover {
-	margin: 0px;
-	width: 104px;
-	height: 104px;
-}
-
 #ChatButton {
-	margin: 2px;
-	width: 100px;
-	height: 100px;
 	background-image: url( "s2r://panorama/images/topbar/notification_icon_off_psd.vtex" );
 	background-size: 120%;
 	background-position: 50% 50%;
-}
-
-#ChatButton:hover {
-	margin: 0px;
-	width: 104px;
-	height: 104px;
 }
 
 #NewMessage {
