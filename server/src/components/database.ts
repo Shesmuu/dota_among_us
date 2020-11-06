@@ -1,7 +1,8 @@
 /// <reference path="../types/mysql2.d.ts" />
 
 import mySql from "mysql2"
-import serverSettings from "../../server_settings"
+
+const serverSettings = require( "../../server_settings" ) as KV
 
 export class DataBase {
 	private connection: mySql.Connection

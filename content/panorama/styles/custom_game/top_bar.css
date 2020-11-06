@@ -20,7 +20,7 @@
 	transform: scale3d( -1, -1, 0 );
 }
 
-#TopBar #PlayersContainer {
+#TopBar #TopBarPlayers {
 	flow-children: right;
 	background-color: rgb( 22, 22, 22 );
 }

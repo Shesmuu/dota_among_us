@@ -2,7 +2,7 @@ if GameMode then
 	return
 end
 
-_G.PRODUCTION_MODE = false
+_G.PRODUCTION_MODE = true
 
 _G.AU_GAME_STATE_NONE = 0
 _G.AU_GAME_STATE_SETTINGS = 1

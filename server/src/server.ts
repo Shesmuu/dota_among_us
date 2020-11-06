@@ -1,9 +1,10 @@
 import express, { Application, Request, Response } from "express"
 import http from "http"
 import bodyParser from "body-parser"
-import serverSettings from "../server_settings"
 
 import { DataBase } from "./components/database"
+
+const serverSettings = require( "../server_settings" ) as KV
 
 const Server = new ( class {
 	private expressApp: express.Application

@@ -20,10 +20,14 @@ class Profile {
 
 		this.leaderboardPlayers = this.panel.FindChildTraverse( "LeaderboardPlayers" )
 
-		let stats = CustomNetTables.GetTableValue( "player", id.toString() ).stats
-		this.playerStats.FindChildTraverse( "Rating" ).text = stats.rating
-		this.playerStats.FindChildTraverse( "TotalMatches" ).text = stats.totalMatches
-		this.playerStats.FindChildTraverse( "FavoriteHero" ).heroname = stats.favoriteHero
+		let table = CustomNetTables.GetTableValue( "player", id.toString() )
+
+		if ( table ) {
+			let stats = table.stats
+			this.playerStats.FindChildTraverse( "Rating" ).text = stats.rating
+			this.playerStats.FindChildTraverse( "TotalMatches" ).text = stats.totalMatches
+			this.playerStats.FindChildTraverse( "FavoriteHero" ).heroname = stats.favoriteHero
+		}
 
 		this.UpdateLeaderboard()
 	}
@@ -52,7 +56,7 @@ class Profile {
 	}
 
 	UpdateLeaderboard() {
-		$.AsyncWebRequest( "http://91.228.152.171:1488/api/leaderboard", { type: "POST", 
+		$.AsyncWebRequest( "http://91.228.152.171:1337/api/leaderboard", { type: "POST", 
 			success: ( jsonData ) => {
 				let data = JSON.parse( jsonData )
 		
