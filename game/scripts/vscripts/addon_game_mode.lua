@@ -355,12 +355,13 @@ function GameMode:AssignRoles()
 					self.players[candidates[RandomInt( 1, i )]]:SetRole( AU_ROLE_IMPOSTOR )
 
 					impostorCount = impostorCount + 1
+
+					if impostorCount >= needImpostor then
+						return
+					end
 				end
 			end
 
-			if impostorCount >= needImpostor then
-				return
-			end
 		end
 
 		local candidates = {}
