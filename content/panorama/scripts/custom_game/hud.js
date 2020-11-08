@@ -26,6 +26,7 @@ AU_ROLE_IMPOSTOR = 1
 
 currentState = AU_GAME_STATE_NONE
 localDied = false
+minimapBlocker = null
 
 $( "#LowPriorityCount" ).text = $.Localize( "#au_low_priority_remaining" ) + 0
 
@@ -216,6 +217,15 @@ function Update() {
 	if ( !Game.GameStateIs( DOTA_GameState.DOTA_GAMERULES_STATE_POST_GAME ) ) {
 		$.Schedule( 0, Update )
 	}
+
+	let minimapBlockerSize = "0px"
+
+	if ( currentState == AU_GAME_STATE_KICK_VOTING && localDied ) {
+		minimapBlockerSize = "100%"
+	}
+
+	minimapBlocker.style.width = minimapBlockerSize
+	minimapBlocker.style.height = minimapBlockerSize
 }
 
 function HideMorphTransform() {
@@ -296,15 +306,21 @@ GameUI.SetMouseCallback( ( event, button ) => {
 		} )
 	}
 
-	let minimap =
-		hudElements
-		.FindChildTraverse( "minimap_block" )
-		.FindChildTraverse( "minimap" )
+	let minimapBlock = hudElements.FindChildTraverse( "minimap_block" )
+	let minimap = minimapBlock.FindChildTraverse( "minimap" )
 	minimap.BLoadLayout(
 		"file://{resources}/layout/custom_game/minimap.xml",
 		false,
 		false
 	)
+
+	let queryUnit = hudElements.FindChildTraverse( "QueryUnit" )
+	queryUnit.style.width = "0px"
+	queryUnit.style.height = "0px"
+
+	minimapBlocker = $.CreatePanel( "Button", minimapBlock, "" )
+	minimapBlocker.style.width = "100%"
+	minimapBlocker.style.height = "100%"
 } )()
 
 Update()
