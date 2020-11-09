@@ -7,6 +7,7 @@
 		<include src="file://{resources}/styles/custom_game/hero_bar.css" />
 		<include src="file://{resources}/styles/custom_game/settings.css" />
 		<include src="file://{resources}/styles/custom_game/chat.css" />
+		<include src="file://{resources}/styles/custom_game/mutes.css" />
 		<include src="file://{resources}/styles/custom_game/profile.css" />
 		<include src="file://{resources}/styles/custom_game/minigames.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/button.css" />
@@ -51,12 +52,23 @@
 		<include src="file://{resources}/scripts/custom_game/quests.js" />
 		<include src="file://{resources}/scripts/custom_game/kick_voting_timer.js" />
 		<include src="file://{resources}/scripts/custom_game/chat.js" />
+		<include src="file://{resources}/scripts/custom_game/mutes.js" />
 		<include src="file://{resources}/scripts/custom_game/settings.js" />
 		<include src="file://{resources}/scripts/custom_game/profile.js" />
 		<include src="file://{resources}/scripts/custom_game/hud.js" />
 	</scripts>
 
 	<snippets>
+		<snippet name="MutesPlayerRow">
+			<Panel class="PlayerRow">
+				<Panel id="ReportButtons" />
+				<DOTAHeroImage id="HeroImage">
+					<Panel id="Color" />
+					<Button id="Mute" />
+				</DOTAHeroImage>
+			</Panel>
+		</snippet>
+
 		<snippet name="LeaderboardPlayerRow">
 			<Panel class="PlayerRow">
 				<Label id="Place" />
@@ -189,10 +201,10 @@
 			<Panel id="HeroesContainer" />
 		</Panel>
 		<Panel id="HudButtons">
-			<Button id="ChatButton" onactivate="Chat_.ToggleChat()">
+			<Button id="ChatButton" onactivate="Chat_.Toggle()">
 				<Panel id="NewMessage" />
 			</Button>
-			<Button id="MuteButton" onactivate="Chat_.ToggleMuteList()" />
+			<Button id="MuteButton" onactivate="Mutes_.Toggle()" />
 			<Button id="ProfileButton" onactivate="Profile_.Toggle()" />
 		</Panel>
 
@@ -215,6 +227,16 @@
 
 		<Label id="AFKKillDelay" />
 
+		<Panel id="ReportsState">
+			<Label id="ReportsWarning" />
+			<Label id="ReportsSituation" />
+		</Panel>
+
+		<Panel id="KickVotingTimer">
+			<Label text="#kick_voting_remaining" />
+			<Label id="KickVotingCountdown" />
+		</Panel>
+
 		<Panel id="Quests">
 			<Panel id="TotalTasksCompleted">
 				<Panel id="TasksProgress" />
@@ -230,11 +252,6 @@
 				<Panel id="MinigameContainer" />
 				<Label id="MinigameMessage" />
 			</Panel>
-		</Panel>
-
-		<Panel id="KickVotingTimer">
-			<Label text="#kick_voting_remaining" />
-			<Label id="KickVotingCountdown" />
 		</Panel>
 
 		<Panel id="Settings" hittest="false">
@@ -290,7 +307,33 @@
 			</Panel>
 		</Panel>
 
-		<Panel id="MuteList" />
+		<Panel id="Mutes">
+			<Panel id="Unbanned">
+				<!-- <Label id="ReportsUpdateCountdown" text="Your reports in 15 matches (1/15)" /> -->
+				<Label text="#au_your_reports_1" />
+				<Panel id="Reports">
+					<Panel>
+						<Image src="file://{images}/custom_game/report_button_toxic.png" />
+						<Label id="ToxicReports" />
+					</Panel>
+					<Panel>
+						<Image src="file://{images}/custom_game/report_button_cheater.png" />
+						<Label id="CheatReports" />
+					</Panel>
+					<Panel>
+						<Image src="file://{images}/custom_game/report_button_party.png" />
+						<Label id="PartyReports" />
+					</Panel>
+				</Panel>
+				<Label text="#au_reports_to_ban" />
+				<Label id="ReportsRemaining" />
+			</Panel>
+			<Panel id="Banned">
+				<Label text="#au_reports_warning_banned" />
+				<Label id="BanRemainings" />
+			</Panel>
+			<Panel id="MuteList" />
+		</Panel>
 
 		<Panel id="DebugPanel">
 			<Panel id="Header">
@@ -307,6 +350,9 @@
 
 		<Panel style="visibility: collapse;">
 			<!--
+			<Image src="file://{images}/custom_game/report_button_toxic.png" />
+			<Image src="file://{images}/custom_game/report_button_party.png" />
+			<Image src="file://{images}/custom_game/report_button_cheater.png" />
 			<Image src="file://{images}/custom_game/mute_button.png" />
 			<Image src="file://{images}/custom_game/stone_remnant.png" />
 			<Image src="file://{images}/custom_game/smiles/EZ.png" />

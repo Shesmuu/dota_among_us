@@ -51,9 +51,9 @@ function OnPlayerDataChanged(table_name, key, data)
 				RATING_PANEL.SetHasClass("Hidden", false)
 				PANELS[3].SetHasClass("Hidden", false)
 	
-				PANELS[1].text = player.stats.rating
-				PANELS[2].text = player.stats.totalMatches
-				PANELS[3].heroname = player.stats.favoriteHero
+				PANELS[1].text = player.rating
+				PANELS[2].text = player.total_matches
+				PANELS[3].heroname = player.favorite_hero
 			}
 		} catch (error) {
 			$.Msg(error + " ERRRR")	
@@ -84,10 +84,9 @@ function OnPlayerDataChanged(table_name, key, data)
 			RATING_PANEL.SetHasClass("Hidden", false)
 			PANELS[3].SetHasClass("Hidden", false)
 
-			PANELS[1].text = player.stats.rating
-			PANELS[2].text = player.stats.totalMatches
-
-			PANELS[3].heroname = player.stats.favoriteHero
+			PANELS[1].text = player.rating
+			PANELS[2].text = player.total_matches
+			PANELS[3].heroname = player.favorite_hero
 		}
 	} catch (error) {
 		$.Msg(error + " ERRRR")	

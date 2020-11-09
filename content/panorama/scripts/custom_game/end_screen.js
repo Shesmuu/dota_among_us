@@ -19,10 +19,14 @@ function PlayerRow( parent, id, data, stats ) {
 	let panel = $.CreatePanel( "Panel", parent, "" )
 	panel.BLoadLayoutSnippet( "PlayerRow" )
 
+	let playerInfo = Game.GetPlayerInfo( Number( id ) )
 	let avatar = panel.FindChildTraverse( "AvatarImage" )
-	avatar.steamid = Game.GetPlayerInfo( Number( id ) ).player_steamid
 	avatar.style.width = "100%"
 	avatar.style.height = "100%"
+
+	if ( playerInfo ) {
+		avatar.steamid = playerInfo.player_steamid
+	}
 
 	panel.FindChildTraverse( "HeroImage" ).heroname = Players.GetPlayerSelectedHero( Number( id ) )
 	panel.FindChildTraverse( "Nickname" ).text = Players.GetPlayerName( Number( id ) )
@@ -95,6 +99,8 @@ function NetTableWinner( data ) {
 		data.reason === AU_WIN_REASON_SABOTAGE
 	) {
 		reason.AddClass( "Red" )
+	} else {
+		$( "#RolesContainer" ).AddClass( "PeaceWin" )
 	}
 
 	reason.text = $.Localize( texts[data.reason] )
@@ -106,13 +112,13 @@ function NetTableWinner( data ) {
 		let preStr = ""
 		let style = "Minus"
 
-		if ( d.ratingChange >= 0 ) {
+		if ( d.rating_change >= 0 ) {
 			preStr = "+"
 			style = "Plus"
 		}
 
 		CreateLabel( values, value )
-		CreateLabel( values, "(" + preStr + d.ratingChange + ")", style )
+		CreateLabel( values, "(" + preStr + d.rating_change + ")", style )
 	}
 
 	let statsForm = [
@@ -134,9 +140,9 @@ function NetTableWinner( data ) {
 				let values = $.CreatePanel( "Panel", panel, "" )
 				values.AddClass( "VotesRow" )
 
-				CreateLabel( values, d.imposterVotes )
-				CreateLabel( values, d.wrongVotes )
-				CreateLabel( values, d.skipVotes )
+				CreateLabel( values, d.imposter_votes )
+				CreateLabel( values, d.wrong_votes )
+				CreateLabel( values, d.skip_votes )
 			}
 		},
 		{
@@ -150,7 +156,7 @@ function NetTableWinner( data ) {
 				let pos = data.playerCount - d.rank + 1
 				let text = ""
 
-				if ( d.leaveBeforeDeath == 1 ) {
+				if ( d.leave_before_death == 1 ) {
 					text = "#au_end_screen_stats_afk"
 				} else if ( d.killed == 1 ) {
 					text = "#au_end_screen_stats_killed"

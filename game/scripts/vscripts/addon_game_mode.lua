@@ -2,7 +2,7 @@ if GameMode then
 	return
 end
 
-_G.PRODUCTION_MODE = true
+_G.HTTP_MODE = 0
 
 _G.AU_GAME_STATE_NONE = 0
 _G.AU_GAME_STATE_SETTINGS = 1
@@ -27,6 +27,10 @@ _G.AU_WIN_REASON_TASKS_COMPLETED = 0
 _G.AU_WIN_REASON_SABOTAGE = 1
 _G.AU_WIN_REASON_IMPOSTOR_COUNT = 2
 _G.AU_WIN_REASON_IMPOSTOR_KILLED = 3
+
+_G.AU_REPORT_REASON_TOXIC = 0
+_G.AU_REPORT_REASON_PARTY = 1
+_G.AU_REPORT_REASON_CHEAT = 2
 
 _G.GameMode = {
 	players = {},
@@ -74,24 +78,25 @@ function GameMode:SetWinner( role, reason )
 	local cameraPos = Entities:FindByName( nil, "camera_winner" ):GetAbsOrigin()
 	local cameraDummy = CreateUnitByName( "npc_au_camera_dummy", cameraPos, false, nil, nil, AU_DUMMIES_TEAM )
 	cameraDummy:SetAbsOrigin( cameraPos )
-	local posNum = 1
+	local posNum = 0
 
 	GameRules:GetGameModeEntity():SetFogOfWarDisabled( true )
 
-	for _, player in pairs( self.players ) do
-		local team = player.role == winRole and winTeam or loseTeam
-		local unit = player:GetUnit()
+	for id = 0, 24 do
+		PlayerResource:SetCustomTeamAssignment( id, DOTA_TEAM_GOODGUYS )
+		PlayerResource:SetCameraTarget( id, cameraDummy )
+	end
 
-		PlayerResource:SetCustomTeamAssignment( player.id, team )
+	for id, player in pairs( self.players ) do
+		local unit = player:GetUnit()
 
 		if unit then
 			unit:RemoveModifierByName( "modifier_au_ghost" )
 			unit:AddNewModifier( unit, nil, "modifier_au_unselectable", nil )
 			unit:RemoveAbilities()
-			unit:SetTeam( team )
-			PlayerResource:SetCameraTarget( player.id, cameraDummy )
+			unit:SetTeam( DOTA_TEAM_GOODGUYS )
 
-			if team == winTeam then
+			if player.role == role then
 				posNum = posNum + 1
 
 				local ent = Entities:FindByName( nil, "winner_pos_" .. posNum )
@@ -115,23 +120,10 @@ function GameMode:SetWinner( role, reason )
 	deadPeaceRating[4] = 20
 	deadPeaceRating[3] = 25
 	local players = {}
+	local endScreenPlayers = {}
 
 	for id, player in pairs( self.players ) do
 		local s = player.stats
-
-		if s.leaveBeforeDeath then
-			s.low_priority = 3
-		elseif player.role == AU_ROLE_IMPOSTOR then
-			s.peace_streak = 0
-		elseif s.low_priority <= 0 then
-			s.peace_streak = s.peace_streak + 1
-		elseif s.low_priority > 0 then
-			s.low_priority = s.low_priority - 1
-		end
-
-		s.role = player.role
-		s.steamID = player.steamID
-		s.heroName = PlayerResource:GetSelectedHeroName( id )
 
 		if player.role == AU_ROLE_IMPOSTOR then
 			if AU_ROLE_IMPOSTOR == winRole and s.rank < 8 then
@@ -155,30 +147,47 @@ function GameMode:SetWinner( role, reason )
 			s.ratingChange = -30
 		end
 
-		if s.party then
-			if s.ratingChange > 0 then
-				s.ratingChange = MathRound( s.ratingChange * 0.66 )
-			elseif s.ratingChange < 0 then
-				s.ratingChange = MathRound( s.ratingChange * 1.33 )
-			end
-		end
+		--if s.party then
+		--	if s.ratingChange > 0 then
+		--		s.ratingChange = MathRound( s.ratingChange * 0.66 )
+		--	elseif s.ratingChange < 0 then
+		--		s.ratingChange = MathRound( s.ratingChange * 1.33 )
+		--	end
+		--end
 
-		if player.role == AU_ROLE_IMPOSTOR then
-			s.ratingImposter = math.max( s.ratingImposter + s.ratingChange, 0 )
-		else
-			s.ratingPeace = math.max( s.ratingPeace + s.ratingChange, 0 )
-		end
+		players[player.steamID] = {
+			hero_name = PlayerResource:GetSelectedHeroName( id ),
+			role = player.role,
+			kills = s.kills,
+			imposter_votes = s.imposterVotes,
+			rank = s.rank,
+			role_rank = s.roleRank,
+			killed = s.killed,
+			kicked = s.kicked,
+			rating_changes = s.ratingChange,
+			leave_before_death = s.leaveBeforeDeath
+		}
 
-		s.rating = math.max( s.rating + s.ratingChange, 0 )
-
-		players[id] = s
+		endScreenPlayers[id] = {
+			role = player.role,
+			rank = s.rank,
+			kills = s.kills,
+			imposter_votes = s.imposterVotes,
+			wrong_votes = s.wrongVotes,
+			skip_votes = s.skipVotes,
+			killed = s.killed,
+			kicked = s.kicked,
+			rating = math.max( s.rating + s.ratingChange, 0 ),
+			rating_change = s.ratingChange,
+			leave_before_death = s.leaveBeforeDeath
+		}
 	end
 
 	CustomNetTables:SetTableValue( "game", "winner", {
 		role = role,
 		team = winTeam,
 		reason = reason,
-		players = players,
+		players = endScreenPlayers,
 		playerCount = self.playerCount
 	} )
 
@@ -273,7 +282,7 @@ function GameMode:Process( data )
 end
 
 function GameMode:AssignRoles()
-	if false and IsTest() then
+	if true and IsTest() then
 		for id, player in pairs( self.players ) do
 			if player.team == DOTA_TEAM_GOODGUYS or player.team == DOTA_TEAM_BADGUYS then
 				player:SetRole( AU_ROLE_IMPOSTOR )
@@ -649,6 +658,33 @@ function GameMode:ChatSend( data )
 		return
 	end
 
+	if data.text:sub( 0, 1 ) == "/" then
+		if not player.admin then
+			return
+		end
+
+		local arr = StringToArray( data.text )
+		local c = arr[1]:sub( 2 )
+
+		if (
+			c == "admin" or
+			c == "low_priority" or
+			c == "ban" or
+			c == "peace_streak"
+		) then
+			Http:Request( "api/players/set_" .. c, {
+				steam_id = arr[2],
+				count = tonumber( arr[3] ) or 0
+			} )
+		end
+
+		return
+	end
+
+	if player.stats.ban > 0 then
+		return
+	end
+
 	data.text = tostring( data.text ):sub( 1, 72 )
 	data.alive = player.alive
 
@@ -800,6 +836,20 @@ function GameMode:OnGameRulesStateChange()
 		self:HeroSelection()
 	elseif s == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		self:AssignRoles()
+
+		local roles = {}
+		local send = false
+
+		for id, p in pairs( self.players ) do
+			if p.stats.low_priority <= 0 then
+				send = true
+				roles[p.steamID] = p.role
+			end
+		end
+
+		if send then
+			Http:Request( "api/players/peace_streaks", roles )
+		end
 
 		for id, p in pairs( self.players ) do
 			local player = PlayerResource:GetPlayer( id )

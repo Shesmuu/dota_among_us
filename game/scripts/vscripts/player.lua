@@ -66,8 +66,10 @@ function Player:constructor( id )
 	self.partyID = tostring( PlayerResource:GetPartyID( id ) )
 	self.team = PlayerResource:GetTeam( self.id )
 	self.role = AU_ROLE_PEACE
-	self.muteNominateCount = 1
+	self.admin = false
 	self.kickVotingCount = 1
+	self.reportsRemaining = 0
+	self.reportedPlayers = {}
 	self.quests = {}
 	self.stats = {
 		low_priority = 0,
@@ -89,8 +91,14 @@ function Player:constructor( id )
 		killed = false,
 		kicked = false,
 		favoriteHero = "",
-		party = false
+		party = false,
+		toxic_reports = 0,
+		party_reports = 0,
+		cheat_reports = 0,
+		ban = 0,
+		reports_update_countdown = 0
 	}
+
 
 	PlayerResource:SetCustomPlayerColor(
 		self.id,
@@ -100,6 +108,7 @@ function Player:constructor( id )
 
 	ListenToClient( "au_minigame_result", Debug:F( self.MinigameRusult ), self, id )
 	ListenToClient( "au_morph_transform_select", Debug:F( self.MorphTransformSelect ), self, id )
+	ListenToClient( "au_report_player", Debug:F( self.ReportPlayer ), self, id )
 
 	GameMode.playerCount = GameMode.playerCount + 1
 	GameMode.players[id] = self
@@ -221,6 +230,44 @@ function Player:Update( now )
 	end
 end
 
+function Player:ReportPlayer( data )
+	if (
+		self.reportsRemaining <= 0 or
+		self.reportedPlayers[data.player] or
+		self.stats.ban > 0
+	) then
+		return
+	end
+
+	local player = GameMode.players[data.player]
+	local column = ( {
+		[AU_REPORT_REASON_TOXIC] = "toxic_reports",
+		[AU_REPORT_REASON_PARTY] = "party_reports",
+		[AU_REPORT_REASON_CHEAT] = "cheat_reports"
+	} )[data.reason]
+
+	if not player or not column or player == self then
+		return
+	end
+
+	print( "[Player]:ReportPlayer", data.player, data.reason )
+
+	self.reportsRemaining = self.reportsRemaining - 1
+	self.reportedPlayers[data.player] = true
+
+	self:NetTable()
+
+	Http:Request( "api/players/report", {
+		reporter = self.steamID,
+		to = player.steamID,
+		reason = column
+	}, function( data )
+		self.reportsRemaining = data.reports_remaining
+
+		self:NetTable()
+	end )
+end
+
 function Player:MorphTransformSelect( data )
 	if not self.hero or not self.alive then
 		return
@@ -247,10 +294,18 @@ function Player:NetTable()
 	local t = {
 		quests = {},
 		alive = self.alive,
-		mute_count = self.muteNominateCount,
 		kick_count = self.kickVotingCount,
+		ban = self.stats.ban,
+		reports_remaining = self.reportsRemaining,
+		reported_players = self.reportedPlayers,
 		low_priority = self.stats.low_priority,
-		stats = self.stats
+		rating = self.stats.rating,
+		total_matches = self.stats.totalMatches,
+		favorite_hero = self.stats.favoriteHero,
+		toxic_reports = self.stats.toxic_reports,
+		party_reports = self.stats.party_reports,
+		cheat_reports = self.stats.cheat_reports,
+		reports_update_countdown = self.stats.reports_update_countdown
 	}
 
 	for i, quest in pairs( self.quests ) do
@@ -302,7 +357,9 @@ function Player:KickVoting( pos, skipDummy, dir, team )
 	self:SetCamera( skipDummy )
 
 	if self.hero then
-		PlayerResource:SetCustomTeamAssignment( self.id, team )
+		if self.stats.ban <= 0 then
+			PlayerResource:SetCustomTeamAssignment( self.id, team )
+		end
 
 		self.hero:RemoveAbilities()
 		self.hero:Stop()
@@ -311,6 +368,7 @@ function Player:KickVoting( pos, skipDummy, dir, team )
 
 		if self.alive then
 			self.hero:RemoveModifierByName( "modifier_au_unselectable" )
+
 			self.hero:Ability( "au_vote_kick", 0, IsTest() and 0 or 20 )
 		end
 	end
@@ -379,6 +437,11 @@ function Player:Kill( spawnTomb, killer, afkDeath, instaCalc )
 
 	if afkDeath then
 		self.stats.leaveBeforeDeath = true
+
+		Http:Request( "api/players/add_low_priority", {
+			steam_id = self.steamID,
+			count = 3
+		} )
 	end
 
 	self.stats.rank = self:GetRank( true )

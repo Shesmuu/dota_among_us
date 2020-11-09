@@ -1,4 +1,4 @@
-customChatEnabled = !Game.IsInToolsMode()
+customChatEnabled = true //!Game.IsInToolsMode()
 
 AU_GAME_STATE_NONE = 0
 AU_GAME_STATE_PROCESS = 2
@@ -13,6 +13,13 @@ AU_NOTICE_TYPE_IMPOSTORS_REMAINING = 4
 AU_NOTICE_TYPE_NO_KICKED = 5
 AU_NOTICE_TYPE_NONE = 6
 
+AU_REPORT_REASON_TOXIC = 0
+AU_REPORT_REASON_PARTY = 1
+AU_REPORT_REASON_CHEATS = 2
+
+AU_ROLE_PEACE = 0
+AU_ROLE_IMPOSTOR = 1
+
 noticeTexts = []
 noticeTexts[AU_NOTICE_TYPE_IMPOSTOR_KICKED] = "#au_notice_impostor_kicked"
 noticeTexts[AU_NOTICE_TYPE_PEACE_KICKED] = "#au_notice_peace_kicked"
@@ -21,10 +28,8 @@ noticeTexts[AU_NOTICE_TYPE_IMPOSTORS_REMAINING] = "#au_notice_impostors_remainin
 noticeTexts[AU_NOTICE_TYPE_NO_KICKED] = "#au_notice_no_kicked"
 noticeTexts[AU_NOTICE_TYPE_NONE] = ""
 
-AU_ROLE_PEACE = 0
-AU_ROLE_IMPOSTOR = 1
-
 currentState = AU_GAME_STATE_NONE
+reportState = $( "#ReportsState" )
 localDied = false
 minimapBlocker = null
 
@@ -53,6 +58,7 @@ KickVotingTimer_ = new KickVotingTimer()
 HeroBarSystem_ = new HeroBarSystem()
 Sounds_ = new Sounds()
 Chat_ = new Chat()
+Mutes_ = new Mutes()
 Profile_ = new Profile()
 Settings_ = new Settings()
 AFKKillDelay = new ( class {
@@ -131,7 +137,7 @@ function WhiteCenterMessage( text ) {
 function NetTableDied( data ) {
 	localDied = data[Players.GetLocalPlayer()] == 1
 
-	Chat_.NetTableDied( data )
+	Mutes_.NetTableDied( data )
 	TopBar_.NetTableDied( data )
 	HeroBarSystem_.NetTableDied( data )
 }
@@ -142,6 +148,8 @@ function NetTableImpostors( data ) {
 }
 
 function NetTableState( data ) {
+	const previusState = currentState
+
 	currentState = data.state
 
 	if ( data.state == AU_GAME_STATE_SCREEN_NOTICE ) { 
@@ -173,7 +181,18 @@ function NetTableState( data ) {
 		KickVotingTimer_.SetEndTime( data.kick_voting_end_time )
 		KickVotingTimer_.SetEnabled( true )
 		HeroBarSystem_.SetEnabled( true )
+
+		if ( previusState !== currentState ) {
+			reportState.SetHasClass( "Visible", true )
+
+			if ( !Mutes_.banned ) {
+				$.Schedule( 12, () => {
+					reportState.SetHasClass( "Visible", false )
+				} )	
+			}
+		}
 	} else {
+		reportState.SetHasClass( "Visible", false )
 		KickVotingTimer_.SetEnabled( false )
 	}
 
@@ -195,6 +214,23 @@ function NetTableQuests( data ) {
 function NetTablePlayer( data ) {
 	Quests_.NetTablePlayer( data )
 	Minigames_.NetTablePlayer( data )
+	Mutes_.NetTablePlayer( data )
+
+	let warning = $( "#ReportsWarning" )
+	let situation = $( "#ReportsSituation" )
+	let warningText = "#au_reports_warning"
+	let situationText = "#au_reports_situation"
+
+	if ( data.ban > 0 ) {
+		warningText += "_banned"
+		situationText += "_banned"
+		situation.text = $.Localize( situationText ) + data.ban
+		situation.visible = true
+	} else {
+		situation.visible = false
+	}
+
+	warning.text = $.Localize( warningText )
 
 	$( "#LowPriorityCount" ).text = $.Localize( "#au_low_priority_remaining" ) + data.low_priority
 }
@@ -202,6 +238,7 @@ function NetTablePlayer( data ) {
 function Update() {
 	let now = Game.GetGameTime()
 
+	Mutes_.Update()
 	TopBar_.UpdatePlayers()
 	Minigames_.Update( now )
 	Quests_.Update( now )

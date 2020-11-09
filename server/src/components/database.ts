@@ -1,13 +1,17 @@
 /// <reference path="../types/mysql2.d.ts" />
 
 import mySql from "mysql2"
+import { Server } from "../server"
 
 const serverSettings = require( "../../server_settings" ) as KV
 
 export class DataBase {
 	private connection: mySql.Connection
+	private server: Server
 
-	constructor() {
+	constructor( server: Server ) {
+		this.server = server
+
 		this.connection = mySql.createPool( {
 			host: serverSettings.DB_HOST,
 			user: serverSettings.DB_USER,
@@ -18,62 +22,61 @@ export class DataBase {
 		console.log( "DataBase created" )
 	}
 
-	Add( tN: SqlTableName, row: SqlKV ): void {
-		let a: any[] = []
-		let str: string = "insert into " + tN + " ( "
+	Add( tN: SqlTableName, row: SqlKV, func: SqlCallBack | undefined ): void {
+		const a: any[] = []
+		let str: string = "insert into " + this.KQuotes( tN ) + " ( "
 		let vStr: string = " values ( "
 		let preStr: string = ""
 
 		for ( let k in row ) {
 			vStr += preStr + "?"
-			str += preStr + k
+			str += preStr + this.KQuotes( k )
 			preStr = ", "
 			a.push( row[k] )
 		}
 
 		str += " )" + vStr + " )"
 
-		this.Query( str, a )
+		this.Query( str, a, func )
 	}
 
-	Update( tN: SqlTableName, where: SqlKV, row: SqlKV ): void {
-		this.Get( tN, where, ( data: any[] ) => {
-			if ( data[0] && data[0]["count( * )"] > 0 ) {
-				let str: string = "update " + tN + " set "
-				let preStr: string = ""
+	Update( tN: SqlTableName, row: SqlKV, where: SqlKV, func: SqlCallBack | undefined ): void {
+		const a: any[] = []
+		let str: string = "update " + this.KQuotes( tN ) + " set "
+		let preStr: string = ""
 
-				for ( let k in row ) {
-					str += preStr + k + "=" + row[k]
-					preStr = ", "
-				}
-
-				str += this.WhereString( where )
-
-				this.Query( str, [] )
-			} else {
-				this.Add( tN, row )
-			}
-		}, "count( * )" )
-	}
-
-	Get( tN: SqlTableName, where: SqlKV, func?: SqlCallBack, what?: string ): void {
-		this.Query( "select " + ( what || "*" ) + " from " + tN + this.WhereString( where ), [], func )
-	}
-
-	GetByPlayers( tN: SqlTableName, params: string, steamIDs: any[], func: SqlCallBack ): void {
-		let str = "select " + params + " from " + tN + " where "
-		let preStr = ""
-
-		for ( let k in steamIDs ) {
-			let steamID = steamIDs[k]
-			str += preStr + "steam_id=" + steamID
-			preStr = " or "
+		for ( let k in row ) {
+			str += preStr + this.KQuotes( k ) + "=?"
+			preStr = ", "
+			a.push( row[k] )
 		}
 
-		this.Query( str, [], func )
+		str += this.WhereString( where, a )
+
+		this.Query( str, a, func )
 	}
 
-	Query( str: string, a: any[], func?: SqlCallBack ): void {
+	Get( tN: SqlTableName, where: SqlKV, what: string, func: SqlCallBack ): void {
+		const a: any[] = []
+		this.Query( "select " + what + " from " + this.KQuotes( tN ) + this.WhereString( where, a ), a, func )
+	}
+
+	GetByArray( tN: SqlTableName, what: string, value: string, arr: any[], func: SqlCallBack, ofKey: boolean ): void {
+		const a: any[] = []
+		let str = "select " + what + " from " + tN + " where "
+		let preStr = ""
+
+		for ( let k in arr ) {
+			let steamID = arr[k]
+			str += preStr + value + "=?"
+			preStr = " or "
+			a.push( ofKey ? k : steamID )
+		}
+
+		this.Query( str, a, func )
+	}
+
+	Query( str: string, a: any[], func: SqlCallBack | undefined ): void {
 		this.connection.query( str, a, ( err: string, data: any[] ) => {
 			if ( err ) {
 				console.log( err )
@@ -83,13 +86,18 @@ export class DataBase {
 		} )
 	}
 
-	private WhereString( where: SqlKV ): string {
+	private KQuotes( s: string ) : string {
+		return s
+	}
+
+	private WhereString( where: SqlKV, arr: any[] ): string {
 		let str: string = " where "
 		let preStr: string = ""
 
 		for ( let k in where ) {
-			str += preStr + k + "=" + where[k]
+			str += preStr + this.KQuotes( k ) + "=?"
 			preStr = " and "
+			arr.push( where[k] )
 		}
 
 		return str

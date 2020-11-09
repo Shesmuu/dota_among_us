@@ -1,7 +1,17 @@
-Http = {
-	host = PRODUCTION_MODE and "http://91.228.152.171:1337/" or "http://91.228.152.171:1488/",
-	dedicatedKey = PRODUCTION_MODE and GetDedicatedServerKeyV2( "AllHailLelouch" ) or "AllHailLelouch"
+local hostes = {
+	[0] = "http://91.228.152.171:1337/",
+	[1] = "http://91.228.152.171:1488/",
+	[2] = "http://localhost:1488/",
 }
+
+Http = {
+	host = hostes[HTTP_MODE],
+	dedicatedKey = HTTP_MODE == 0 and GetDedicatedServerKeyV2( "AllHailLelouch" ) or "AllHailLelouch"
+}
+
+function Http:AfterMatch()
+	
+end
 
 function Http:CustomGameSetup()
 	local steamIDs = {}
@@ -36,9 +46,16 @@ function Http:CustomGameSetup()
 				if player.steamID == p.steam_id then
 					player.stats.peace_streak = p.peace_streak
 					player.stats.low_priority = p.low_priority_
-					player.stats.ratingImposter = p.imposter_rating
-					player.stats.ratingPeace = p.peace_rating
+					player.stats.ban = p.ban
 					player.stats.rating = p.rating
+
+					player.stats.toxic_reports = p.toxic_reports
+					player.stats.party_reports = p.party_reports
+					player.stats.cheat_reports = p.cheat_reports
+					player.stats.reports_update_countdown = p.reports_update_countdown
+
+					player.admin = p.admin == 1
+					player.reportsRemaining = p.reports_remaining
 				end
 			end
 
@@ -52,11 +69,11 @@ function Http:CustomGameSetup()
 		} )
 
 		GameMode.hasServerData = true
-	end, 5 )
+	end, 5, true )
 end
 
 function Http:IsValidGame()
-	if not PRODUCTION_MODE then
+	if HTTP_MODE ~= 0 then
 		return true
 	end
 
@@ -71,8 +88,8 @@ function Http:IsValidGame()
 	return true
 end
 
-function Http:Request( url, data, success, att )
-	if not self:IsValidGame() then
+function Http:Request( url, data, success, att, perm )
+	if not self:IsValidGame() or ( not GameMode.hasServerData and not perm ) then
 		return
 	end
 

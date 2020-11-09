@@ -2,7 +2,7 @@
 	"scripts": {
 		"start": "node prod/server.js",
 		"dev": "concurrently \"tsc -p . --watch\" \"nodemon prod/server.js\"",
-		"build": "tsc -p ."
+		"build": "tsc -p . --watch"
 	},
 	"dependencies": {
 		"express": "^4.17.1",

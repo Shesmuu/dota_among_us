@@ -29,6 +29,10 @@
 	flow-children: down;
 }
 
+#RolesContainer.PeaceWin {
+	flow-children: up;
+}
+
 .RolePlayersList {
 	flow-children: down;
 }

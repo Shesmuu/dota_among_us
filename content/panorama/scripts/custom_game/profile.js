@@ -23,10 +23,9 @@ class Profile {
 		let table = CustomNetTables.GetTableValue( "player", id.toString() )
 
 		if ( table ) {
-			let stats = table.stats
-			this.playerStats.FindChildTraverse( "Rating" ).text = stats.rating
-			this.playerStats.FindChildTraverse( "TotalMatches" ).text = stats.totalMatches
-			this.playerStats.FindChildTraverse( "FavoriteHero" ).heroname = stats.favoriteHero
+			this.playerStats.FindChildTraverse( "Rating" ).text = table.rating
+			this.playerStats.FindChildTraverse( "TotalMatches" ).text = table.total_matches
+			this.playerStats.FindChildTraverse( "FavoriteHero" ).heroname = table.favorite_hero
 		}
 
 		this.UpdateLeaderboard()

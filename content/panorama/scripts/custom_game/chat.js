@@ -28,8 +28,6 @@ class ChatMessage {
 
 class Chat {
 	constructor() {
-		this.mutePanel = $( "#MuteList" )
-		this.muteButtons = []
 		this.panel = $( "#Chat" )
 		this.newMessage = $( "#NewMessage" )
 		this.newMessage.visible = false
@@ -38,48 +36,19 @@ class Chat {
 		this.chatBoard = $( "#ChatBoard" )
 		this.entry = $( "#ChatEntry" )
 		this.messages = []
-		this.permanentMutes = []
-		this.mutes = []
 		this.enabled = false
 
 		this.entry.SetPanelEvent( "oninputsubmit", () => this.InputSubmit() )
 		this.entry.SetPanelEvent( "oncancel", () => this.CloseChat() )
 
 		GameEvents.Subscribe( "au_chat_message", data => this.Message( data ) )
-
-		let colors = []
-		colors[0] = [255, 255, 0]
-		colors[1] = [0, 255, 255]
-		colors[2] = [255, 0, 255]
-		colors[3] = [255, 0, 0]
-		colors[4] = [0, 255, 0]
-		colors[5] = [0, 0, 255]
-		colors[6] = [111, 255, 0]
-		colors[7] = [0, 255, 111]
-		colors[8] = [111, 0, 255]
-		colors[9] = [0, 111, 255]
-
-		for ( let id = 0; id < 24; id++ ) {
-			if ( Players.IsValidPlayerID( id ) ) {
-				let image = $.CreatePanel( "DOTAHeroImage", this.mutePanel, "" )
-				image.heroname = Players.GetPlayerSelectedHero( id )
-				let c = colors[id] || [0, 0, 0]
-				let color = $.CreatePanel( "Panel", image, "" )
-				color.style["background-color"] = "rgb( " + c[0] + ", " + c[1] + ", " + c[2] + " )"
-
-				this.muteButtons[id] = $.CreatePanel( "Button", image, "" )
-				this.muteButtons[id].SetPanelEvent( "onactivate", () => {
-					this.TogglePermanentMute( id )
-				} )
-			}
-		}
-
-		UnmuteAll()
-
-		Game.customChat = this
 	}
 
 	Message( data ) {
+		if ( Game.IsPlayerMuted( data.PlayerID ) ) {
+			return
+		}
+
 		this.messages.push( new ChatMessage( this.messagesContainer, data ) )
 
 		$.Schedule( 0.1, () => this.messagesContainer.ScrollToBottom() )
@@ -115,7 +84,7 @@ class Chat {
 		this.mutePanel.ToggleClass( "Visible" )
 	}
 
-	ToggleChat() {
+	Toggle() {
 		if ( this.enabled ) {
 			this.CloseChat()
 		} else {
@@ -134,37 +103,5 @@ class Chat {
 		this.enabled = false
 		this.panel.RemoveClass( "Visible" )
 		$.DispatchEvent( "DropInputFocus", this.entry )
-	}
-
-	SetMute( id, b ) {
-		this.mutes[id] = b
-
-		this.UpdateMute( id )
-	}
-
-	TogglePermanentMute( id ) {
-		this.SetPermanentMute( id, !this.permanentMutes[id] )
-	}
-
-	SetPermanentMute( id, b ) {
-		this.permanentMutes[id] = b
-
-		this.muteButtons[id].SetHasClass( "Muted", b )
-
-		this.UpdateMute( id )
-	}
-
-	UpdateMute( id ) {
-		Game.SetPlayerMuted( id, !!this.permanentMutes[id] || !!this.mutes[id] )
-	}
-
-	NetTableDied( data ) {
-		for ( let id = 0; id < 24; id++ ) {
-			if ( localDied ) {
-				this.SetMute( id, false )
-			} else if ( data[id] == 1 ) {
-				this.SetMute( id, true )
-			}
-		}
 	}
 }

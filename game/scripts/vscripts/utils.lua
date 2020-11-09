@@ -9,6 +9,18 @@ function CreateEventUnit( unitName, pos, func, radius )
 	return unit
 end
 
+function StringToArray( str )
+	local t = {}
+	local i = 1
+
+	for s in string.gmatch( str, "([^%s]+)" ) do
+		t[i] = s
+		i = i + 1
+	end
+
+	return t
+end
+
 function MathRound( n )
     local abs = math.abs( n )
 	local a = abs - math.floor( abs )

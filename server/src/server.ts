@@ -3,173 +3,78 @@ import http from "http"
 import bodyParser from "body-parser"
 
 import { DataBase } from "./components/database"
+import { Matches } from "./components/matches"
+import { Players } from "./components/players"
 
 const serverSettings = require( "../server_settings" ) as KV
 
-const Server = new ( class {
+export class Server {
 	private expressApp: express.Application
 	private server: http.Server
-	private database: DataBase
+	public database: DataBase
+	public matches: Matches
+	public players: Players
 
 	constructor() {
-		const port = serverSettings.PORT || 1337
-
 		this.expressApp = express()
 		this.expressApp.use( bodyParser() )
-		this.database = new DataBase()
+		this.database = new DataBase( this )
+		this.matches = new Matches( this )
+		this.players = new Players( this )
 
 		this.expressApp.post( "/api/leaderboard", ( req: Request, res: Response ) => {
-			this.database.Query( "select steam_id, rating from players order by rating desc limit 0, 100", [], ( data ) => {
+			this.database.Query( "select steam_id, rating from players order by rating desc limit 0, 50", [], ( data ) => {
 				res.send( JSON.stringify( data ) )
 			} )
 		} )
 
-		this.Request( "/api/match/after", ( req: Request, res: Response ) => {
-			let matchData = {
-				match_id: req.body.matchID,
-				duration: req.body.duration,
-				winner: req.body.role,
-				win_reason: req.body.reason
-			}
+		this.DedicatedRequest( "/api/match/after", ( req: Request, res: Response ) => {
+			this.matches.After( req, res )
+		} )
 
-			this.database.Add( "matches", matchData )
+		this.DedicatedRequest( "/api/match/before", ( req: Request, res: Response ) => {
+			this.matches.Before( req, res )
+		} )
 
-			for ( let localID in req.body.players ) {
-				let p = req.body.players[localID]
+		this.DedicatedRequest( "/api/players/set_admin", ( req: Request, res: Response ) => {
+			let admin = req.body.count > 0 ? 1 : 0
 
-				this.database.Update( "players", {
-					steam_id: p.steamID
-				}, {
-					steam_id: p.steamID,
-					low_priority_: p.low_priority,
-					peace_streak: p.peace_streak,
-					imposter_rating: p.ratingImposter,
-					peace_rating: p.ratingPeace,
-					rating: p.rating
-				} )
-
-				this.database.Add( "player_matches", {
-					match_id: req.body.matchID,
-					steam_id: p.steamID,
-					hero_name: p.heroName,
-					role: p.role,
-					kills: p.kills,
-					imposter_votes: p.imposterVotes,
-					rank: p.rank,
-					role_rank: p.roleRank,
-					killed: p.killed ? 1 : 0,
-					kicked: p.kicked ? 1 : 0,
-					rating_changes: 0,
-					leave_before_death: p.leaveBeforeDeath ? 1 : 0
-				} )
-
-			}
-
+			this.players.SetPlayerCount( req.body.steam_id, admin, "admin" )
 			res.send( "" )
 		} )
 
-		this.Request( "/api/match/before", ( req: Request, res: Response ) => {
-			const heroNames = [
-				"npc_dota_hero_zuus",
-				"npc_dota_hero_monkey_king",
-				"npc_dota_hero_meepo",
-				"npc_dota_hero_invoker",
-				"npc_dota_hero_rubick",
-				"npc_dota_hero_pudge",
-				"npc_dota_hero_ember_spirit",
-				"npc_dota_hero_morphling",
-				"npc_dota_hero_nevermore",
-				"npc_dota_hero_storm_spirit",
-				"npc_dota_hero_tinker"
-			] 
-			const sendData: KV = {
-				favoriteHeroes: {},
-				totalMatches: {}
-			}
-			const promises = []
+		this.DedicatedRequest( "/api/players/set_ban", ( req: Request, res: Response ) => {
+			this.players.SetPlayerCount( req.body.steam_id, req.body.count, "ban" )
+			res.send( "" )
+		} )
 
-			promises.push( new Promise( r => this.database.GetByPlayers( "players", "*", req.body, ( data ) => {
-				sendData.players = data
-				r( 1 )
-			} ) ) )
+		this.DedicatedRequest( "/api/players/set_peace_streak", ( req: Request, res: Response ) => {
+			this.players.SetPlayerCount( req.body.steam_id, req.body.count, "peace_streak" )
+			res.send( "" )
+		} )
 
-			promises.push( new Promise( r => this.database.Get( "matches", {
-				winner: 0
-			}, ( data ) => {
-				sendData.peaceWins = data[0] ? data[0]["count( * )"] : 0
-				r( 2 )
-			}, "count( * )" ) ) )
+		this.DedicatedRequest( "/api/players/set_low_priority", ( req: Request, res: Response ) => {
+			this.players.SetPlayerCount( req.body.steam_id, req.body.count, "low_priority_" )
+			res.send( "" )
+		} )
 
-			promises.push( new Promise( r => this.database.Get( "matches", {
-				winner: 1
-			}, ( data ) => {
-				sendData.imposterWins = data[0] ? data[0]["count( * )"] : 0
-				r( 3 )
-			}, "count( * )" ) ) )
+		this.DedicatedRequest( "/api/players/add_low_priority", ( req: Request, res: Response ) => {
+			this.players.AddLowPriority( req.body.steam_id, req.body.count )
+			res.send( "" )
+		} )
 
-			let i = 4
+		this.DedicatedRequest( "/api/players/peace_streaks", ( req: Request, res: Response ) => {
+			this.players.UpdatePeaceStreaks( req.body )
+			res.send( "" )
+		} )
 
-			for ( let k in req.body ) {
-				let steamID = req.body[k]
-
-				promises.push( new Promise( r => this.database.Get( "player_matches", {
-					steam_id: steamID
-				}, ( data ) => {
-					let favoriteHeroes: KV = {}
-
-					for ( let k in data ) {
-						let heroName = data[k].hero_name
-
-						if ( !favoriteHeroes[heroName] ) {
-							favoriteHeroes[heroName] = 0
-						}
-
-						favoriteHeroes[heroName]++
-					}
-
-					let favoriteHero = ""
-					let heroMatches = 0
-
-					for ( let heroName in favoriteHeroes ) {
-						let c = favoriteHeroes[heroName]
-
-						if ( c > heroMatches ) {
-							heroMatches = c
-
-							favoriteHero = heroName
-						}
-					}
-
-					sendData.favoriteHeroes[steamID] = favoriteHero
-
-					r( i )
-				}, "hero_name" ) ) )
-
-				i++
-
-				promises.push( new Promise( r => this.database.Get( "player_matches", {
-					steam_id: steamID
-				}, ( data ) => {
-					sendData.totalMatches[steamID] = data[0]["count( * )"]
-
-					r( i )
-				}, "count( * )" ) ) )
-
-				i++
-
-				if ( i > 150 ) {
-					break
-				}
-			}
-
-			Promise.all( promises ).then( ( _ ) => {
-				res.send( JSON.stringify( sendData ) )
-			} )
+		this.DedicatedRequest( "/api/players/report", ( req: Request, res: Response ) => {
+			this.players.Report( req.body, res )
 		} )
 
 		this.server = http.createServer( this.expressApp )
-		this.server.listen( port, () => {
-			console.log( "Server is running on " + port + " port" )
+		this.server.listen( serverSettings.PORT, () => {
+			console.log( "Server is running on " + serverSettings.PORT + " port" )
 		} )
 	}
 
@@ -177,11 +82,13 @@ const Server = new ( class {
 		return req.headers.dedicated_server_key === serverSettings.DEDICATED_SERVER_KEY
 	}
 
-	Request( url: Url, func: ( req: Request, res: Response ) => any ): void {
+	DedicatedRequest( url: Url, func: ( req: Request, res: Response ) => any ): void {
 		this.expressApp.post( url, ( req: Request, res: Response ) => {
 			if ( this.CheckDedicatedKey( req ) ) {
 				func( req, res )
 			}	
 		} )
 	}
-} )()
+}
+
+const server = new Server()

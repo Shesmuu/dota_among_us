@@ -31,7 +31,7 @@
 					<Label id="WinDecscription" text="#au_rating_info_win_description" />
 					<Label id="LoseHeader" text="#au_rating_info_lose_header" />
 					<Label id="LoseDecscription" text="#au_rating_info_lose_description" />
-					<Label id="PartyDecscription" text="#au_rating_info_party_description" />
+					<!-- <Label id="PartyDecscription" text="#au_rating_info_party_description" /> -->
 				</Panel>
 			</Panel>
 

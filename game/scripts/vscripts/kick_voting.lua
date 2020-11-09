@@ -30,6 +30,14 @@ function KickVoting:Update( now )
 	end
 end
 
+function KickVoting:FindTeam( ib )
+	for _, player in pairs( GameMode.players ) do
+		if player.alive and player.team ~= GameMode.ghostTeam and ( ib or player.stats.ban <= 0 ) then
+			return player.team
+		end
+	end
+end
+
 function KickVoting:Start( starter )
 	if GameMode.state == AU_GAME_STATE_KICK_VOTING then
 		return
@@ -47,15 +55,10 @@ function KickVoting:Start( starter )
 
 	self.unitEffects = {}
 
-	local team = AU_DUMMIES_TEAM
+	local team = self:FindTeam( false )
 
-	for _, player in pairs( GameMode.players ) do
-		if player.alive and player.team ~= GameMode.ghostTeam then
-			team = player.team
-
-			break
-		end
-	end
+	team = team or self:FindTeam( true )
+	team = team or AU_DUMMIES_TEAM
 
 	self.visionUnit = CreateUnitByName( "npc_au_kick_voting_vision", self.center, false, nil, nil, team )
 

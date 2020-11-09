@@ -49,11 +49,7 @@ class HeroBarSystem {
 		this.heroBars = []
 		this.SetEnabled( false )
 
-		for ( let id = 0; id < 24; id++ ) {
-			if ( Players.IsValidPlayerID( id ) ) {
-				this.heroBars[id] = new HeroBar( this.panel, id )
-			}
-		}
+		this.Update()
 	}
 
 	SetEnabled( bool ) {
@@ -77,6 +73,10 @@ class HeroBarSystem {
 
 	NetTableDied( data ) {
 		for ( let id in data ) {
+			if ( !this.heroBars[id] ) {
+				this.heroBars[id] = new HeroBar( this.panel, id )
+			}
+
 			this.heroBars[id].SetDied( true )
 		}
 	}
@@ -86,8 +86,14 @@ class HeroBarSystem {
 			return
 		}
 
-		for ( let id in this.heroBars ) {
-			this.heroBars[id].Update()
+		for ( let id = 0; id < 24; id++ ) {
+			if ( Players.IsValidPlayerID( id ) ) {
+				if ( !this.heroBars[id] ) {
+					this.heroBars[id] = new HeroBar( this.panel, id )
+				}
+
+				this.heroBars[id].Update()
+			}
 		}
 	}
 }
