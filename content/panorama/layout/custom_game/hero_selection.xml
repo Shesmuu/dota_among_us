@@ -1,0 +1,54 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/hero_selection.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/hero_selection.js" />
+	</scripts>
+
+	<snippets>
+		<snippet name="HeroPickRow">
+			<Panel class="HeroPickRow">
+			</Panel>
+		</snippet>
+		
+		<snippet name="HeroCard">
+			<Panel class="HeroCard" />
+		</snippet>
+	</snippets>
+
+	<Panel class="hero_selection_custom" onfocus="DropInputFocus()">
+			<DOTAScenePanel id="BGScene" onload="HeroSelectionLoad()" class="selection_background" map="maps/backgrounds/pregame_phase.vmap"/>
+			<Panel id = "StateInfoGlobal" class = "StateInfoGlobalClass">
+				<Label id="PickTimer" class="PickTimerClass" text="#DOTA_PlayerLoading" />
+				<Label id="PickState" class="PickStateClass" text="" />
+			</Panel>
+
+			<Panel id = "hero_selection_main">
+				<Panel id = "HeroesContainer" class = "HeroesContainer">
+					<Panel id = "PanelSelector" class = "PanelSelector" />
+					<Panel id = "PanelSelector_2" class = "PanelSelector_2" />
+				</Panel>
+				<Panel id ="HeroInformationPanel" class = "HeroInformationPanel">
+					<Panel id ="HeroInformation" class="HeroInformation">
+						<Label text = "" id = "hero_name_info" class = "HeroNameInfoClass"/>
+						<Panel class="HeroInfoMain">
+							<Panel id = 'HeroModel' class="HeroModel"/>
+							<Panel id = 'AbilitiesInfo'/>
+						</Panel> 
+
+						<Panel class="ButtonPickAndRandom">
+							<Button class="ButtonSelectHero" id="PickButton">
+								<Label  id="ButtonSelectHeroLabel" text = "#DOTA_SELECT_Button"/>
+							</Button> 
+							<Panel id = "ButtonRandomHero" class = "ButtonRandomHero">
+								<Panel class = "RandomIcon"/>
+							</Panel>
+						</Panel> 
+					</Panel>
+				</Panel>
+			</Panel>
+	</Panel>
+</root>

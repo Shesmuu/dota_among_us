@@ -4,6 +4,7 @@
 		"game",
 		"player",
 		"settings",
-		"debug"
+		"debug",
+		"among_us_pick",
 	]
 }

@@ -1,0 +1,320 @@
+@keyframes 'scalein' {
+	from {
+		transform: scaleX(1) scaleY(1);
+	}
+
+	to {
+		transform: scaleX(1.1) scaleY(1.1);
+	}
+}
+
+.hero_selection_custom
+{
+
+	width: 100%;
+	height: 100%;
+}
+
+.selection_background
+{
+	width: 100%;
+	height: 100%;
+	background-color: gradient( linear, 100% 100%, 100% 100%, from( #171A25  ), to( #171A25dd ) );
+}
+
+.StateInfoGlobalClass
+{
+	align: center top;
+	flow-children: down;
+	background-image: url("s2r://panorama/images/hud/reborn/bg_timer_psd.vtex");
+	background-size: 100%;
+	height: 86px;
+	width: 210px;
+}
+
+.PickTimerClass {
+	font-size:24px;
+	font-weight: bold;
+	color:white;
+	horizontal-align: center;
+	margin-top: 5px;
+}
+
+.PickStateClass {
+	font-size:22px;
+	color:white;
+	font-weight: bold;
+	horizontal-align: center;
+	letter-spacing: 1px;
+	margin-top: 5px;
+}
+
+#hero_selection_main
+{
+	width: 100%;
+	flow-children: right;
+}
+
+.HeroesContainer {
+	width: 1200px;
+	height: 1080px;
+	margin-left: 35px;
+	flow-children: down;
+}
+
+.AspectRatio4x3 .HeroesContainer{
+	width: 1000px;
+	height: 1080px;
+	margin-left: 25px;
+}
+
+.PanelSelector {
+	vertical-align: top;
+	width: 100%;
+	margin-top: 250px;
+	flow-children: down;
+}
+
+.PanelSelector_2 {
+	margin-top: 100px;
+	width: 100%;
+	flow-children: up;
+}
+
+#HeroesForGame
+{
+	flow-children: right-wrap;
+	width: 100%;
+}
+
+#HeroesForRating
+{
+	margin-top: 10px;
+	flow-children: right-wrap;
+	width: 100%;
+}
+
+.RatingLow
+{
+	wash-color: red;
+}
+
+.RatingLowLogo
+{
+	wash-color: red;
+	background-image: url("s2r://panorama/images/hero_selection/banned_overlay_psd.vtex");
+	background-size: 100% 100%;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+}
+
+.HeroInformationPanel {
+	width: 720px;
+	height: 1080px;
+}
+
+.AspectRatio4x3 .HeroInformationPanel {
+	width: 720px;
+	height: 1080px;
+}
+
+.HeroInformation {
+
+	align: center top;
+	margin-top: 275px;
+	flow-children: down;
+	background-color: gradient( linear, 0% 100%, 0% 0%, from( #171A25dd  ), to( #171A25dd ) );
+	border: 1px solid black;
+	width: 400px;
+	height: 450px;
+}
+
+.HeroNameInfoClass {
+	font-size:36px;
+	color: white;
+	font-weight: bold;
+	horizontal-align: center;
+	margin: 10px;
+}
+
+.HeroInfoMain {
+	align: center center;
+	height: 280px;
+}
+
+.HeroModel {
+	width: 190px;
+	height: 233px;
+	background-color: gradient( linear, 0% 100%, 0% 0%, from( #171A25dd  ), to( #171A25dd ) );
+	border: 1px solid #38424b;
+	z-index: 1;
+}
+
+.HeroAvatar {
+	width: 101px;
+	height: 130px;
+}
+
+.hero_select_panel {
+	border: 2px solid #38424b;
+	width: 101px;
+	height: 133px;
+	margin-left: 15px;
+	margin-bottom: 10px;
+	margin-top: 15px;
+	background-color: gradient( linear, 0% 100%, 0% 0%, from( #171A25dd  ), to( #171A25dd ) );
+	transition-property: saturation, brightness, wash-color, opacity;
+	transition-duration: 0.2s;
+	flow-children: down;
+}
+
+.rating_panel {
+	width: 101px;
+	height: 20px;
+}
+
+@keyframes 'HeroCardSelected'
+{
+    0%		{ brightness: 1; }
+    50%		{ brightness: 2; }
+    100%    { brightness: 1; }
+}
+
+.RatingInfoLabel {
+	font-size: 18px;
+	color: white;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	font-weight:	bold;
+	text-shadow: 5px 5px 5px black;
+}
+
+.RatingPanelLabel {
+	align: center center;
+	font-size: 14px;
+	color: white;
+}
+
+.hero_select_panel:hover
+{
+	brightness: 1.5;
+	animation-name: HeroCardSelected;
+	animation-iteration-count: infinite;   
+    animation-duration: 0.8s;	
+    pre-transform-scale2d: 1.15;
+	transition-property: opacity, transform;
+	transition-duration: .24s;
+}
+
+.ButtonPickAndRandom
+{
+    height: 60px;
+	flow-children: right;
+	align: center center;
+}
+
+.ButtonSelectHero {
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #404D65dd ), to( #2B3445dd ) );
+	border-top: 1px solid #6F819B;
+	border-left: 1px solid #6F819B22;
+	border-right: 1px solid #6F819B11;
+	border-bottom: 1px solid #3F414B33;
+	box-shadow: #0000008f -6px -6px 12px 12px;
+	width:270px;
+	height:60px;
+	transition-property: brightness;
+	transition-duration: 0.15s;
+	transition-timing-function: ease-in-out;
+	horizontal-align: center;
+}
+
+.ButtonSelectHero Label {
+	font-size: 36px;
+	color: white;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	font-weight:	bold;
+	horizontal-align: center;
+	text-shadow: 5px 5px 5px black;
+	align: center center;
+}
+
+.ButtonSelectHero:hover
+{
+	brightness: 1.8;
+}
+
+.ButtonSelectHero:active
+{
+	brightness: 0.8;
+}
+
+#ButtonSelectHeroLabel
+{
+	horizontal-align: right;
+	font-size: 30px;
+	horizontal-align: center;
+}
+
+.ButtonRandomHero
+{
+    width: 60px;
+    height: 60px;
+    background-size: contain;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #404D65dd ), to( #2B3445dd ) );
+	border-top: 1px solid #6F819B;
+	border-left: 1px solid #6F819B22;
+	border-right: 1px solid #6F819B11;
+	border-bottom: 1px solid #3F414B33;
+	transition-property: brightness;
+	transition-duration: 0.15s;
+	transition-timing-function: ease-in-out;
+	margin-left: 15px;
+	box-shadow: #0000008f -6px -6px 12px 12px;
+}
+
+.RandomIcon
+{
+	background-image:url("s2r://panorama/images/control_icons/random_dice_psd.vtex");
+	align: center center;
+	width: 26px;
+	height: 30px;
+	background-size: contain;
+}
+
+
+.ButtonRandomHero:hover
+{
+	brightness: 1.8;
+}
+
+.ButtonRandomHero:active
+{
+	brightness: 0.8;
+}
+
+.Picked{
+	wash-color: #CCCCCC;
+	saturation: 0;
+}
+
+.Deletion{
+
+}
+
+.HeroInfoAbilty {
+	width : 75px;
+	height: 75px;
+    margin: 5px;
+    box-shadow: black 0px 0px 25px 2px;
+}
+
+#AbilitiesInfo
+{
+    flow-children: right;
+    align: center bottom;
+    z-index: 100;
+}
