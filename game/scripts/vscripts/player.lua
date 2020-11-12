@@ -4,7 +4,7 @@ local peaceAbilities = {
 	}
 }
 
-local impostorAbilities = {
+IMPOSTOR_ABILITIES = {
 	npc_dota_hero_riki = {
 		"au_impostor_kill",
 		"au_impostor_riki_smoke"
@@ -556,7 +556,7 @@ function Player:RoleAbilities()
 		return
 	end
 
-	local abilities = self.role == AU_ROLE_IMPOSTOR and impostorAbilities or peaceAbilities
+	local abilities = self.role == AU_ROLE_IMPOSTOR and IMPOSTOR_ABILITIES or peaceAbilities
 
 	for i, abilityName in pairs( abilities[self.abilitiesHeroName] or {} ) do
 		self.hero:Ability( abilityName, i - 1, 20 )
@@ -571,7 +571,7 @@ function Player:CustomGameSetup()
 	
 end
 
-function Player:HeroSelection()
+function Player:UpdateTeam()
 	self.team = PlayerResource:GetTeam( self.id )
 end
 

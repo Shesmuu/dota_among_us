@@ -5,10 +5,11 @@ end
 _G.HTTP_MODE = 1
 
 _G.AU_GAME_STATE_NONE = 0
-_G.AU_GAME_STATE_SETTINGS = 1
-_G.AU_GAME_STATE_PROCESS = 2
-_G.AU_GAME_STATE_KICK_VOTING = 3
-_G.AU_GAME_STATE_SCREEN_NOTICE = 4
+_G.AU_GAME_STATE_HERO_SELECTION = 1
+_G.AU_GAME_STATE_SETTINGS = 2
+_G.AU_GAME_STATE_PROCESS = 3
+_G.AU_GAME_STATE_KICK_VOTING = 4
+_G.AU_GAME_STATE_SCREEN_NOTICE = 5
 
 _G.AU_ROLE_PEACE = 0
 _G.AU_ROLE_IMPOSTOR = 1
@@ -69,6 +70,8 @@ require( "sabotages/eclipse" )
 require( "sabotages/interference" )
 require( "sabotages/oxygen" )
 require( "sabotages/reactor" )
+
+require( "custom_selection" )
 
 function GameMode:SetWinner( role, reason )
 	local winRole = role
@@ -423,12 +426,6 @@ function GameMode:CustomGameSetup()
 	Http:CustomGameSetup()
 end
 
-function GameMode:HeroSelection()
-	for id, player in pairs( self.players ) do
-		player:HeroSelection()
-	end
-end
-
 function GameMode:GameInProgress()
 	Settings:End()
 
@@ -613,16 +610,16 @@ function GameMode:Activate()
 	GameRules:SetFirstBloodActive( false )
 	GameRules:SetGoldPerTick( 0 )
 	GameRules:SetPostGameTime( 300 )
-	GameRules:SetPreGameTime( 999998 )
+	GameRules:SetPreGameTime( 0 )
 	GameRules:SetSafeToLeave( false )
 	GameRules:SetShowcaseTime( 0 )
-	GameRules:SetStrategyTime( 5 )
+	GameRules:SetStrategyTime( 0 )
 	GameRules:SetStartingGold( 0 )
 	GameRules:SetTimeOfDay( 0 )
 	GameRules:SetHeroRespawnEnabled( true )
 	GameRules:SetPostGameTime( IsTest() and 9999 or 300 )
 	GameRules:SetHeroSelectPenaltyTime( 0 )
-	GameRules:SetHeroSelectionTime( 20 )
+	GameRules:SetHeroSelectionTime( 0 )
 
 	local ent = GameRules:GetGameModeEntity()
 
@@ -832,8 +829,6 @@ function GameMode:OnGameRulesStateChange()
 
 	if s == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		self:CustomGameSetup()
-	elseif s == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		self:HeroSelection()
 	elseif s == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		self:AssignRoles()
 
@@ -851,17 +846,19 @@ function GameMode:OnGameRulesStateChange()
 			Http:Request( "api/players/peace_streaks", roles )
 		end
 
-		for id, p in pairs( self.players ) do
-			local player = PlayerResource:GetPlayer( id )
+		--for id, p in pairs( self.players ) do
+		--	local player = PlayerResource:GetPlayer( id )
 
-			if player and PlayerResource:HasSelectedHero( id ) == false then
-				player:MakeRandomHeroSelection()
-			end
-		end
-	elseif s == DOTA_GAMERULES_STATE_PRE_GAME then
-		Settings:Start()
+		--	if player and PlayerResource:HasSelectedHero( id ) == false then
+		--		player:MakeRandomHeroSelection()
+		--	end
+		--end
 	elseif s == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		self:GameInProgress()
+		for id, player in pairs( self.players ) do
+			player:UpdateTeam()
+		end
+
+		custom_selection:Init()
 	end
 end
 

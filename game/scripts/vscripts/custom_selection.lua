@@ -158,7 +158,7 @@ function custom_selection:RegisterHeroes()
 	for _,hero in pairs(enable_heroes) do
 		local abilities = {}
 		for i = 1, 2 do
-			local ability = impostorAbilities[hero][i]
+			local ability = IMPOSTOR_ABILITIES[hero][i]
 			if ability then
 				if ability ~= nil and ability ~= "" then
 					table.insert(abilities, ability)
@@ -170,7 +170,7 @@ function custom_selection:RegisterHeroes()
 	HEROES = enable_heroes
 	for _,hero in pairs(enable_heroes) do
 		table.insert(all_heroes, hero)
-		if heroes_info[hero].RatingHero == 1 then
+		if heroes_info[hero] and heroes_info[hero].RatingHero == 1 then
 			table.insert(rating_heroes, {hero = hero, ratingneed = heroes_info[hero].RatingNeed})
 		end
 	end
