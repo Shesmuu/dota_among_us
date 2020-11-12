@@ -15,12 +15,14 @@
 	background-color: rgba( 200, 200, 200, 0.3 );
 	border-radius: 4px;
 	transform: translateX( 400px );
-	transition-property: transform;
+	opacity: 0;
+	transition-property: transform, opacity;
 	transition-duration: 0.3s;
 	flow-children: down;
 }
 
 #Mutes.Visible {
+	opacity: 1;
 	transform: translateX( 0px );
 }
 

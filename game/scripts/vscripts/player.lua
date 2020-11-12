@@ -5,6 +5,10 @@ local peaceAbilities = {
 }
 
 local impostorAbilities = {
+	npc_dota_hero_riki = {
+		"au_impostor_kill",
+		"au_impostor_riki_smoke"
+	},
 	npc_dota_hero_night_stalker = {
 		"au_impostor_kill",
 		"au_impostor_ns_fly"

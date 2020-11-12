@@ -172,6 +172,17 @@
 		"MaxLevel" "1"
 		"AbilityCooldown" "5"
 	}
+	"au_impostor_riki_smoke" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/impostor/riki/au_impostor_riki_smoke"
+		"AbilityTextureName" "riki_smoke_screen"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel" "1"
+		"AbilitySpecial" {
+			"1" { "var_type" "FIELD_INTEGER" "radius" "300" }
+		}
+		"AbilityCooldown" "15"
+	}
 	"au_ogre_bloodlust" {
 		"BaseClass" "ability_lua"
 		"ScriptFile" "abilities/ogre/au_ogre_bloodlust"

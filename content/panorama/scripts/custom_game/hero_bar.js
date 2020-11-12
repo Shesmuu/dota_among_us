@@ -74,7 +74,7 @@ class HeroBarSystem {
 	NetTableDied( data ) {
 		for ( let id in data ) {
 			if ( !this.heroBars[id] ) {
-				this.heroBars[id] = new HeroBar( this.panel, id )
+				this.heroBars[id] = new HeroBar( this.panel, Number( id ) )
 			}
 
 			this.heroBars[id].SetDied( true )
