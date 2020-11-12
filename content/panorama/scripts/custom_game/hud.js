@@ -1,4 +1,4 @@
-customChatEnabled = true //!Game.IsInToolsMode()
+customChatEnabled = !Game.IsInToolsMode()
 
 AU_GAME_STATE_NONE = 0
 AU_GAME_STATE_PROCESS = 2
