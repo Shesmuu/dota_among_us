@@ -55,6 +55,14 @@
 	flow-children: right;
 }
 
+#hero_selection_your_hero
+{
+	height: 100%;
+	width: 100%;
+	flow-children: right;
+	visibility: collapse;
+}
+
 .HeroesContainer {
 	width: 1200px;
 	height: 1080px;
@@ -122,7 +130,6 @@
 }
 
 .HeroInformation {
-
 	align: center top;
 	margin-top: 275px;
 	flow-children: down;
@@ -204,7 +211,6 @@
 	animation-name: HeroCardSelected;
 	animation-iteration-count: infinite;   
     animation-duration: 0.8s;	
-    pre-transform-scale2d: 1.15;
 	transition-property: opacity, transform;
 	transition-duration: .24s;
 }
@@ -317,4 +323,77 @@
     flow-children: right;
     align: center bottom;
     z-index: 100;
+}
+
+.HeroPickedContainer {
+	flow-children: down;
+	align: center center;
+	width: 600px;
+	height: 650px;
+}
+
+.HeroPickedName {
+	font-size:22px;
+	color:white;
+	font-weight: bold;
+	horizontal-align: center;
+	letter-spacing: 1px;
+	margin-top: 5px;
+}
+
+.BacktoHeroes {
+	height: 100%;
+	width: 100px;
+}
+
+.BacktoHeroesArrow
+{
+	width: 40px;
+	height: 40px;
+	horizontal-align: center;
+	wash-color: #999;
+	background-image: url("s2r://panorama/images/control_icons/arrow_solid_left_png.vtex");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#BacktoHero .BacktoHeroesArrow
+{
+	background-image: url("s2r://panorama/images/control_icons/arrow_solid_right_png.vtex");
+}
+
+.BacktoHeroesButton > Label
+{
+	color: #999;
+	width: 100%;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 14px;
+	margin-top: 4px;
+	text-overflow: shrink;
+}
+
+.BacktoHeroesButton
+{
+	vertical-align: middle;
+	width: 90px;
+	flow-children: down;
+	padding: 12px;
+
+	transition-property: opacity;
+
+	transition-duration: 0.4s;
+	transition-delay: 0.8s;
+	transition-timing-function: ease-in-out;
+}
+
+.BacktoHeroesButton:hover
+{
+	brightness: 2.0;
+}
+
+.BacktoHeroesButton:active
+{
+	brightness: 1.5;
 }
