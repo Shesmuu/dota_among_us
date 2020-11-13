@@ -41,7 +41,6 @@ end
 function custom_selection:Init()
 	IN_STATE = true
 	StartTimerLoading()
-	GameRules:GetGameModeEntity():SetPauseEnabled( false )
 	custom_selection:RegisterHeroes()
 	CustomGameEventManager:RegisterListener( 'among_us_pick_select_hero', Dynamic_Wrap( self, 'PlayerSelect'))
 	CustomGameEventManager:RegisterListener( 'among_us_pick_player_registred', Dynamic_Wrap( self, 'PlayerRegistred' ) )
@@ -212,7 +211,6 @@ function custom_selection:EndSelection()
 	PICK_STATE = AMONG_US_PICK_STATE_END
 	pick_ended = true
 	CustomGameEventManager:Send_ServerToAllClients( 'pick_end', {} )
-	GameRules:GetGameModeEntity():SetPauseEnabled( true )
 	for pid, pinfo in pairs( PLAYERS ) do
 		PlayerResource:SetCameraTarget(pid, nil)
 	end
