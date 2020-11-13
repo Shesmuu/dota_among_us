@@ -247,7 +247,7 @@
 		</Panel>
 
 		<Panel id="Minigame">
-			<Label id="MinigameTitle" />
+			<Label id="MinigameTitle" html="true" />
 			<Panel id="MinigameContent">
 				<Panel id="MinigameContainer" />
 				<Label id="MinigameMessage" />

@@ -117,6 +117,8 @@ class MinigameSearch extends Minigame {
 
 		super( "", "SearchContainer" )
 
+		$( "#MinigameTitle" ).visible = false
+
 		this.needToSearch = {}
 
 		let max = heroList.length
@@ -124,6 +126,11 @@ class MinigameSearch extends Minigame {
 		let text = $.Localize( "#au_minigame_search_title" )
 		let row = null
 		let totalCount = 60
+
+		let title = $.CreatePanel( "Panel", this.container, "" )
+		title.AddClass( "SearchTitle" )
+
+		$.CreatePanel( "Label", title, "" ).text = $.Localize( "#au_minigame_search_title" )
 
 		for ( let i = 0; i < totalCount; i++ ) {
 			if ( i % 15 == 0 ) {
@@ -141,12 +148,9 @@ class MinigameSearch extends Minigame {
 				if ( random <= chance ) {
 					this.needToSearch[heroName] = true
 
-					text = text + $.Localize( "#" + heroName )
+					let image = $.CreatePanel( "Image", title, "" )
+					image.SetImage( "file://{images}/heroes/icons/" + heroName + ".png" )
 					searchCount = searchCount - 1
-
-					if ( searchCount > 0 ) {
-						text = text + ", "
-					}
 				}
 			}
 
@@ -159,8 +163,6 @@ class MinigameSearch extends Minigame {
 
 			heroList.splice( r, 1 )
 		}
-
-		$( "#MinigameTitle" ).text = text
 
 		this.type = AU_MINIGAME_SEARCH
 		this.listening = true
@@ -191,5 +193,11 @@ class MinigameSearch extends Minigame {
 
 			panel.AddClass( "Fail" )
 		}
+	}
+
+	Destroy() {
+		$( "#MinigameTitle" ).visible = true
+
+		super.Destroy()
 	}
 }
