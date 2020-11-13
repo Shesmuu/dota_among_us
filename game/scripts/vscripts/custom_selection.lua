@@ -363,7 +363,8 @@ function modifier_starting_game:OnIntervalThink()
 end
 
 function StartTimerLoading()  
-    GameRules:GetGameModeEntity():SetThink( _TimerThinker, 1 )
+	local timer = SpawnEntityFromTableSynchronous("info_target", { targetname = "hero_selection_timer" })
+    timer:SetThink( _TimerThinker, 1 )
 end
 
 local _TimerThinker__Timers = {}
