@@ -86,7 +86,7 @@ function LoadHeroes( kv ){
             var heroes_rating_row = $.CreatePanel("Panel", $("#PanelSelector_2"), "HeroesForRating" );
             var heroes_rating_text = $.CreatePanel('Label', $("#PanelSelector_2"), 'heroes_rating_text');
             heroes_rating_text.AddClass('RatingInfoLabel');
-            heroes_rating_text.text = $.Localize("Герои За Рейтинг")
+            heroes_rating_text.text = $.Localize("#ratingheroes")
             heroes_rating_row.BLoadLayoutSnippet('HeroPickRow');
             for (var i = 1; i <= hero_list.all_heroes_length; i++) 
             {

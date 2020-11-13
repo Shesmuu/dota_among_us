@@ -16,7 +16,7 @@ PICK_STATE_STATUS[4] = AMONG_US_PICK_STATE_END
 
 TIME_OF_STATE = {}
 TIME_OF_STATE[1] = 3
-TIME_OF_STATE[2] = 6022
+TIME_OF_STATE[2] = 60
 TIME_OF_STATE[3] = 10
 
 PLAYERS = {}
@@ -40,6 +40,8 @@ end
 
 function custom_selection:Init()
 	IN_STATE = true
+	StartTimerLoading()
+	GameRules:GetGameModeEntity():SetPauseEnabled( false )
 	custom_selection:RegisterHeroes()
 	CustomGameEventManager:RegisterListener( 'among_us_pick_select_hero', Dynamic_Wrap( self, 'PlayerSelect'))
 	CustomGameEventManager:RegisterListener( 'among_us_pick_player_registred', Dynamic_Wrap( self, 'PlayerRegistred' ) )
@@ -244,10 +246,10 @@ function CheckPlayerHeroes()
 end
 
 function custom_selection:GiveHeroPlayer(id,hero)
-	local wisp = PlayerResource:GetPlayer(id):GetAssignedHero()
+	local wisp = PlayerResource:GetSelectedHeroEntity(id)
 	PlayerResource:ReplaceHeroWith(id, hero, 700, 0)
 	UTIL_Remove(wisp)
-	local new_hero = PlayerResource:GetPlayer(id):GetAssignedHero()
+	local new_hero = PlayerResource:GetSelectedHeroEntity(id)
 	PlayerResource:SetCameraTarget(new_hero:GetPlayerOwnerID(), new_hero)
 	if PICK_STATE == AMONG_US_PICK_STATE_END then
 		PlayerResource:SetCameraTarget(new_hero:GetPlayerOwnerID(), nil)

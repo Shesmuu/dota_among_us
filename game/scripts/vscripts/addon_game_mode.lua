@@ -628,7 +628,7 @@ function GameMode:Activate()
 	ent:SetDaynightCycleDisabled( true )
 	ent:SetExecuteOrderFilter( self.ExecuteOrderFilter, self )
 	ent:SetPauseEnabled( IsTest() )
-	--ent:SetCustomGameForceHero( "npc_dota_hero_ogre_magi" )
+	ent:SetCustomGameForceHero( "npc_dota_hero_wisp" )
 
 	self:Convars()
 	self:DefaultDay()
