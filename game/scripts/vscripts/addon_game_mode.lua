@@ -802,9 +802,9 @@ function GameMode:OnNPCSpawned( data )
 
 		local id = unit:GetPlayerID()
 
-		if self.players[id] then
+		--[[if self.players[id] then
 			self.players[id]:HeroSpawned( unit )
-		elseif IsTest() then
+		else]]if not self.players[id] and IsTest() then
 			Player( id ):HeroSpawned( unit )
 		end
 	elseif unit:GetUnitName() == "npc_au_ghost" then
@@ -826,7 +826,11 @@ function GameMode:OnGameRulesStateChange()
 
 	if s == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		self:CustomGameSetup()
-	elseif s == DOTA_GAMERULES_STATE_STRATEGY_TIME then
+	elseif s == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		for id, player in pairs( self.players ) do
+			player:UpdateTeam()
+		end
+
 		self:AssignRoles()
 
 		local roles = {}
@@ -850,11 +854,7 @@ function GameMode:OnGameRulesStateChange()
 		--		player:MakeRandomHeroSelection()
 		--	end
 		--end
-	elseif s == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		for id, player in pairs( self.players ) do
-			player:UpdateTeam()
-		end
-
+	
 		custom_selection:Init()
 	end
 end

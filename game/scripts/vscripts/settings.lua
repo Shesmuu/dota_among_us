@@ -120,7 +120,6 @@ function Settings:SetVoted( name, option )
 end
 
 function Settings:End()
-	print( "AKSdkA" )
 	if self.ended then
 		return
 	end
@@ -129,5 +128,5 @@ function Settings:End()
 	self:NetTableState()
 
 	GameMode.visibleImpostorCount = self.votedSettings.impostor_info == 0
-	GameRules:GameInProgress()
+	GameMode:GameInProgress()
 end

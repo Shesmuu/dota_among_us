@@ -250,7 +250,7 @@ function custom_selection:GiveHeroPlayer(id,hero)
 	UTIL_Remove(wisp)
 	local new_hero = PlayerResource:GetSelectedHeroEntity(id)
 	PlayerResource:SetCameraTarget(new_hero:GetPlayerOwnerID(), new_hero)
-	GameMode.players[id]:HeroSpawned( hero )
+	GameMode.players[id]:HeroSpawned( new_hero )
 	if PICK_STATE == AMONG_US_PICK_STATE_END then
 		PlayerResource:SetCameraTarget(new_hero:GetPlayerOwnerID(), nil)
 	end
