@@ -221,9 +221,25 @@ function HeroSelected(kv)
     }
 }
 
-function HeroesIsPicked() {
+function HeroesIsPicked(kv) {
     $("#PickButton").style.visibility = "collapse";
     $("#ButtonRandomHero").style.visibility = "collapse";
+    $("#hero_selection_main").style.visibility = "collapse";
+    $("#hero_selection_your_hero").style.visibility = "visible";
+    var hero =  '<DOTAScenePanel id="hero_selected" style="width:600px;height:500px;margin-top:20px;" drawbackground="1" unit="'+kv.hero+'" particleonly="false" />'
+    $("#HeroPickedContainer").BCreateChildren(hero)
+    $("#HeroPickedName").text = $.Localize(kv.hero);
+    $("#HeroInformationPanel").style.width = "600px";  
+}
+
+function BacktoHeroes() {
+    $("#hero_selection_main").style.visibility = "visible";
+    $("#hero_selection_your_hero").style.visibility = "collapse";
+}
+
+function BacktoHero() {
+    $("#hero_selection_main").style.visibility = "collapse";
+    $("#hero_selection_your_hero").style.visibility = "visible";
 }
 
 function ShowFiltList(kv) 

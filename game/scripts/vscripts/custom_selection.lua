@@ -16,8 +16,8 @@ PICK_STATE_STATUS[4] = AMONG_US_PICK_STATE_END
 
 TIME_OF_STATE = {}
 TIME_OF_STATE[1] = 3
-TIME_OF_STATE[2] = 60
-TIME_OF_STATE[3] = 10
+TIME_OF_STATE[2] = 20
+TIME_OF_STATE[3] = 5
 
 PLAYERS = {}
 HEROES = {}
@@ -114,6 +114,9 @@ function custom_selection:PlayerLoaded( kv )
 		custom_selection:DrawHeroesForPlayer( pid )
 		custom_selection:DrawPickScreenForPlayer( pid )
 		CustomGameEventManager:Send_ServerToPlayer( player, 'pick_filter_reconnect', {picked = PICKED_HEROES, picked_length = #PICKED_HEROES})
+		if PLAYERS[ pid ].picked_hero ~= nil then
+			CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(pid), 'hero_is_picked', {hero = PLAYERS[ pid ].picked_hero})
+		end
 		if PICK_STATE == AMONG_US_PICK_STATE_SELECT then
 			CustomGameEventManager:Send_ServerToPlayer( player, 'pick_start_selection', {} )
 		elseif PICK_STATE == AMONG_US_PICK_STATE_PRE_END then
@@ -228,7 +231,7 @@ function custom_selection:PlayerSelect( kv )
 		pinfo.picked_hero = kv.hero
 		table.insert(PICKED_HEROES, kv.hero)
 		CustomGameEventManager:Send_ServerToAllClients( 'pick_select_hero', { hero = kv.hero})
-		CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(pid), 'hero_is_picked', {})
+		CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(pid), 'hero_is_picked', {hero = kv.hero})
 		custom_selection:GiveHeroPlayer(pid, pinfo.picked_hero)
 		CheckPlayerHeroes()
 	end

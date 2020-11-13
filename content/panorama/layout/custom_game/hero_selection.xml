@@ -49,6 +49,33 @@
 						</Panel> 
 					</Panel>
 				</Panel>
+				<Panel id = "BacktoHero" class = "BacktoHeroes">
+					<Panel id = "BacktoHeroesButton" class = "BacktoHeroesButton" onactivate="BacktoHero();">
+						<Panel id="BacktoHeroesArrow" class="BacktoHeroesArrow" />
+						<Label class="" text="#DOTA_TutorialTitle_MaidenIntro" />
+					</Panel>
+				</Panel>
 			</Panel>
+
+			<Panel id="hero_selection_your_hero">
+				<Panel id = "BacktoHeroes" class = "BacktoHeroes">
+					<Panel id = "BacktoHeroesButton" class = "BacktoHeroesButton" onactivate="BacktoHeroes();">
+						<Panel id="BacktoHeroesArrow" class="BacktoHeroesArrow" />
+						<Label class="" text="#DOTA_Broadcaster_ImagePicker_Heroes" />
+					</Panel>	
+				</Panel>
+				<Panel id = "HeroPickedContainer" class = "HeroPickedContainer">
+					<Label class="HeroPickedName" text="#DOTA_TutorialTitle_MaidenIntro" />
+					<Label id="HeroPickedName" class="HeroPickedName" text="" />
+				</Panel>
+			</Panel>
+
+
+
+
+
+
+
+
 	</Panel>
 </root>
