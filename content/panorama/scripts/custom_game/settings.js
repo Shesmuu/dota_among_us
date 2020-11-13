@@ -99,6 +99,11 @@ class Settings {
 
 	NetTableState( data ) {
 		this.endTime = data.end_time
+
+		if ( data.ended == 1 ) {
+			this.ended = true
+			this.panel.visible = false
+		}
 	}
 
 	NetTableVoted( data ) {
@@ -109,11 +114,6 @@ class Settings {
 
 	Update( now ) {
 		if ( this.ended || !this.endTime ) {
-			return
-		} else if ( Game.GetState() > DOTA_GameState.DOTA_GAMERULES_STATE_PRE_GAME ) {
-			this.ended = true
-			this.panel.visible = false
-
 			return
 		}
 

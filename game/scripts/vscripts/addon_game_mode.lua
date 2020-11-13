@@ -5,11 +5,10 @@ end
 _G.HTTP_MODE = 1
 
 _G.AU_GAME_STATE_NONE = 0
-_G.AU_GAME_STATE_HERO_SELECTION = 1
-_G.AU_GAME_STATE_SETTINGS = 2
-_G.AU_GAME_STATE_PROCESS = 3
-_G.AU_GAME_STATE_KICK_VOTING = 4
-_G.AU_GAME_STATE_SCREEN_NOTICE = 5
+_G.AU_GAME_STATE_SETTINGS = 1
+_G.AU_GAME_STATE_PROCESS = 2
+_G.AU_GAME_STATE_KICK_VOTING = 3
+_G.AU_GAME_STATE_SCREEN_NOTICE = 4
 
 _G.AU_ROLE_PEACE = 0
 _G.AU_ROLE_IMPOSTOR = 1
@@ -427,8 +426,6 @@ function GameMode:CustomGameSetup()
 end
 
 function GameMode:GameInProgress()
-	Settings:End()
-
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 10 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 10 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 10 )
@@ -709,7 +706,7 @@ function GameMode:DefaultNight()
 end
 
 function GameMode:ExecuteOrderFilter( data )
-	if GameRules:State_Get() < DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+	if self.state < AU_GAME_STATE_PROCESS then
 		return false
 	end
 

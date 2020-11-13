@@ -55,7 +55,8 @@ end
 
 function Settings:NetTableState()
 	CustomNetTables:SetTableValue( "settings", "state", {
-		end_time = self.endTime
+		end_time = self.endTime,
+		ended = self.ended
 	} )
 end
 
@@ -119,13 +120,14 @@ function Settings:SetVoted( name, option )
 end
 
 function Settings:End()
+	print( "AKSdkA" )
 	if self.ended then
 		return
 	end
 
 	self.ended = true
+	self:NetTableState()
 
 	GameMode.visibleImpostorCount = self.votedSettings.impostor_info == 0
-
-	GameRules:ForceGameStart()
+	GameRules:GameInProgress()
 end

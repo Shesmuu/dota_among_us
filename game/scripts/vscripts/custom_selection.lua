@@ -214,6 +214,7 @@ function custom_selection:EndSelection()
 	for pid, pinfo in pairs( PLAYERS ) do
 		PlayerResource:SetCameraTarget(pid, nil)
 	end
+	Settings:Start()
 end
 
 function custom_selection:PlayerSelect( kv )
@@ -249,6 +250,7 @@ function custom_selection:GiveHeroPlayer(id,hero)
 	UTIL_Remove(wisp)
 	local new_hero = PlayerResource:GetSelectedHeroEntity(id)
 	PlayerResource:SetCameraTarget(new_hero:GetPlayerOwnerID(), new_hero)
+	GameMode.players[id]:HeroSpawned( hero )
 	if PICK_STATE == AMONG_US_PICK_STATE_END then
 		PlayerResource:SetCameraTarget(new_hero:GetPlayerOwnerID(), nil)
 	end
