@@ -13,6 +13,7 @@ AU_MINIGAME_FACELESS = 13
 AU_MINIGAME_WISP = 14
 AU_MINIGAME_SUNS = 15
 AU_MINIGAME_COLLECT = 16
+AU_MINIGAME_ALCHEMIST = 17
 AU_MINIGAME_INTERFERENCE = 101
 AU_MINIGAME_ECLIPSE = 102
 AU_MINIGAME_OXYGEN = 103
@@ -155,6 +156,7 @@ class Minigames {
 		minigames[AU_MINIGAME_X_MARK] = MinigameXMark
 		minigames[AU_MINIGAME_SUNS] = MinigameSuns
 		minigames[AU_MINIGAME_COLLECT] = MinigameCollect
+		minigames[AU_MINIGAME_ALCHEMIST] = MinigameAlchemist
 
 		if ( m != null ) {
 			if ( minigames[m] != null ) {

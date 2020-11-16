@@ -1,0 +1,72 @@
+.AlchemistContainer {
+	padding: 10px;
+	flow-children: down;
+}
+
+.AlchemistContainer #Game {
+	flow-children: right;
+}
+
+.AlchemistContainer #Buttons {
+	vertical-align: center;
+	flow-children: down;
+}
+
+.AlchemistContainer #Up, .AlchemistContainer #Down {
+	width: 50px;
+	height: 50px;
+	transform: rotateZ( 90deg );
+	background-image: url( "s2r://panorama/images/control_icons/arrow_solid_left_png.vtex" );
+	background-size: 100%;
+	wash-color: grey;
+	opacity: 0.7;
+	transition-property: wash-color;
+	transition-duration: 0.1s;
+}
+
+.AlchemistContainer #Down {
+	transform: rotateZ( -90deg );
+}
+
+.AlchemistContainer #Up:hover, .AlchemistContainer #Down:hover {
+	wash-color: white;
+}
+
+.AlchemistContainer #Container {
+	width: 440px;
+}
+
+.AlchemistContainer #Rows {
+	width: 100%;
+	flow-children: down;
+}
+
+.AlchemistContainer .GoldRow {
+	width: 100%;
+	height: 50px;
+}
+
+.AlchemistContainer #Alchemist {
+	width: height-percentage( 100% );
+	height: 50px;
+	background-image: url( "file://{images}/heroes/icons/npc_dota_hero_alchemist.png" );
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: 40px;
+	transition-property: position;
+	transition-duration: 0.18s;
+}
+
+.AlchemistContainer .Gold {
+	vertical-align: center;
+	width: 40px;
+	height: 40px;
+	background-image: url( "s2r://panorama/images/hud/reborn/gold_small_psd.vtex" );
+	background-size: 100%;
+}
+
+.AlchemistContainer #ScoreCount {
+	color: white;
+	font-size: 16px;
+	font-family: Radiance;
+}

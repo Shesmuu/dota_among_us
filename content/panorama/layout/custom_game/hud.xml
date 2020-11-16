@@ -22,6 +22,7 @@
 		<include src="file://{resources}/styles/custom_game/minigames/search.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/faceless.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/collect.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/alchemist.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/interference.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/eclipse.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/oxygen.css" />
@@ -45,6 +46,7 @@
 		<include src="file://{resources}/scripts/custom_game/minigames/search.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/faceless.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/collect.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/alchemist.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/interference.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/eclipse.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/oxygen.js" />
@@ -99,6 +101,22 @@
 					<Label id="IsSabotage" text="#kick_voting_sabotage" />
 				</Panel>
 				<Label id="KickCount" />
+			</Panel>
+		</snippet>
+
+		<snippet name="MinigameAlchemist">
+			<Panel class="AlchemistContainer">
+				<Panel id="Game">
+					<Panel id="Buttons">
+						<Button id="Up" />
+						<Button id="Down" />
+					</Panel>
+					<Panel id="Container">
+						<Panel id="Rows" />
+						<Panel id="Alchemist" />
+					</Panel>
+				</Panel>
+				<Label id="ScoreCount" />
 			</Panel>
 		</snippet>
 
