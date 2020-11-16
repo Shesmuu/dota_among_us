@@ -1,0 +1,104 @@
+.CollectContainer {
+	border-top: 3px solid rgb( 26, 26, 26 );
+	flow-children: right;
+}
+
+#AllItemsContainer {
+	height: 100%;
+	border-right: 3px solid rgb( 26, 26, 26 );
+	background-color: rgb( 8, 8, 8 );
+	overflow: clip scroll;
+	flow-children: down;
+}
+
+#AllItemsContainer DOTAItemImage {
+	height: 38px;
+	margin: 4px;
+	border-radius: 3px;
+	border: 1px solid rgb( 22, 22, 22 );
+}
+
+#AllItemsContainer VerticalScrollBar {
+	horizontal-align: right;
+	width: 6px;
+	height: 100%;
+	transition-property: transform;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+	layout-position: fixed;
+}
+
+#AllItemsContainer #ScrollThumb {
+	background-color: rgb( 26, 26, 26 );
+	width: 6px;
+	transition-property: transform, position;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}
+
+#AllItemsContainer .Arrow {
+	vertical-align: center;
+	width: 30px;
+	height: 30px;
+	opacity: 0.8;
+	wash-color: grey;
+	background-repeat: no-repeat;
+	background-image: url( "s2r://panorama/images/control_icons/arrow_solid_right_png.vtex" );
+	background-size: 100%;
+}
+
+#ItemCollect {
+	height: 300px;
+}
+
+#ItemCollect #Center {
+	horizontal-align: center;
+	vertical-align: center;
+	margin-bottom: 40px;
+	flow-children: down;
+}
+
+#ItemCollect #Center Label {
+	horizontal-align: center;
+	color: white;
+	font-size: 15px;
+	font-family: Radiance;
+}
+
+#ItemCollect #CollectItem {
+	horizontal-align: center;
+}
+
+#ItemCollect #VariantItems {
+	vertical-align: bottom;
+	border-top: 3px solid rgb( 26, 26, 26 );
+}
+
+#ItemCollect #VarItemSlots {
+	horizontal-align: center;
+	flow-children: right;
+}
+
+#ItemCollect #VarItemSlots DOTAItemImage {
+	height: 45px;
+	margin: 4px;
+	border-radius: 3px;
+	border: 1px solid rgb( 22, 22, 22 );
+}
+
+#ItemCollect #VarItemSlots DOTAItemImage.Selected {
+	brightness: 0.25;
+}
+
+#ItemCollect #EmptySlots {
+	flow-children: right;
+}
+
+#ItemCollect #EmptySlots DOTAItemImage {
+	background-color: black;
+	height: 45px;
+	width: 64px;
+	margin: 4px;
+	border-radius: 3px;
+	border: 1px solid rgb( 22, 22, 22 );
+}

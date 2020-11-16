@@ -21,6 +21,7 @@
 		<include src="file://{resources}/styles/custom_game/minigames/wisp.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/search.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/faceless.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/collect.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/interference.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/eclipse.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/oxygen.css" />
@@ -43,6 +44,7 @@
 		<include src="file://{resources}/scripts/custom_game/minigames/wisp.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/search.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/faceless.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/collect.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/interference.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/eclipse.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/oxygen.js" />
@@ -97,6 +99,22 @@
 					<Label id="IsSabotage" text="#kick_voting_sabotage" />
 				</Panel>
 				<Label id="KickCount" />
+			</Panel>
+		</snippet>
+
+		<snippet name="MinigameCollect">
+			<Panel class="CollectContainer">
+				<Panel id="AllItemsContainer" />
+				<Panel id="ItemCollect">
+					<Panel id="Center">
+						<Label text="#au_minigame_collect_description" />
+						<DOTAItemImage id="CollectItem" />
+						<Panel id="EmptySlots" />
+					</Panel>
+					<Panel id="VariantItems">
+						<Panel id="VarItemSlots" />
+					</Panel>
+				</Panel>
 			</Panel>
 		</snippet>
 

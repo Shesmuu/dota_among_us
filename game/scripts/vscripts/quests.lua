@@ -12,10 +12,11 @@ _G.AU_MINIGAME_SEARCH = 12
 _G.AU_MINIGAME_FACELESS = 13
 _G.AU_MINIGAME_WISP = 14
 _G.AU_MINIGAME_SUNS = 15
-_G.AU_MINIGAME_INTERFERENCE = 16
-_G.AU_MINIGAME_ECLIPSE = 17
-_G.AU_MINIGAME_OXYGEN = 18
-_G.AU_MINIGAME_REACTOR = 19
+_G.AU_MINIGAME_COLLECT = 16
+_G.AU_MINIGAME_INTERFERENCE = 101
+_G.AU_MINIGAME_ECLIPSE = 102
+_G.AU_MINIGAME_OXYGEN = 103
+_G.AU_MINIGAME_REACTOR = 104
 _G.AU_MINIGAME_KICK_VOTING = 228
 
 GlobalQuest = class( {} )
@@ -99,6 +100,17 @@ function GlobalQuest:GetNetTableData()
 	}
 end
 
+local minigameRecipes = {
+	item_recipe_refresher = "item_refresher",
+	item_recipe_rapier = "item_rapier",
+	item_recipe_greater_crit = "item_greater_crit",
+	item_recipe_basher = "item_basher",
+	item_recipe_bfury = "item_bfury",
+	item_recipe_manta = "item_manta",
+	item_recipe_medallion_of_courage = "item_medallion_of_courage",
+	item_recipe_veil_of_discord = "item_veil_of_discord",
+}
+
 local questUnitList = {
 	kick_voting = {
 		event = function( _, player )
@@ -156,7 +168,7 @@ local questList = {
 	meepo = { type = AU_MINIGAME_MEEPO, stepCount = 2 },
 	wisp = { type = AU_MINIGAME_WISP },
 	search = { type = AU_MINIGAME_SEARCH },
-	faceless = { type = AU_MINIGAME_FACELESS },
+	faceless = { type = AU_MINIGAME_COLLECT }, -- AU_MINIGAME_FACELESS
 	suns = { type = AU_MINIGAME_SUNS }
 }
 
@@ -170,6 +182,34 @@ Quests = {
 }
 
 function Quests:Activate()
+	local minigameCollect = {}
+
+	for recipeName, itemData in pairs( LoadKeyValues( "scripts/npc/items.txt" ) ) do
+		if type( itemData ) == "table" then
+			local requirements = itemData.ItemRequirements
+
+			if minigameRecipes[recipeName] and requirements then
+				local _, v = next( requirements )
+
+				if v then
+					local item = {}
+					local i = 1
+
+					for name in v:gmatch( "([^;]+)" ) do
+						item[i] = name
+						i = i + 1
+					end
+
+					minigameCollect[minigameRecipes[recipeName]] = item
+				end
+			end
+		else
+			print( recipeName, itemData )
+		end
+	end
+
+	CustomNetTables:SetTableValue( "game", "minigame_collect_items", minigameCollect )
+
 	for unitName, unitData in pairs( questUnitList ) do
 		self:InitUnits( unitName, unitData )
 	end

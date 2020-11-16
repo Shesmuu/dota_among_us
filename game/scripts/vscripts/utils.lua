@@ -13,7 +13,7 @@ function StringToArray( str )
 	local t = {}
 	local i = 1
 
-	for s in string.gmatch( str, "([^%s]+)" ) do
+	for s in str:gmatch( "([^%s]+)" ) do
 		t[i] = s
 		i = i + 1
 	end
