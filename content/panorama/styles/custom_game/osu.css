@@ -1,0 +1,39 @@
+.OsuContainer {
+	width: 1000px;
+	height: 630px;
+}
+
+.OsuContainer .Circle {
+	border: 7px solid white;
+	vertical-align: center;
+	horizontal-align: center;
+	border-radius: 1000px;
+	opacity: 1;
+	transition-property: opacity;
+	transition-duration: 0.2s;
+	background-image: url("s2r://panorama/images/textures/miniprofile_rock_psd.vtex");
+}
+
+.OsuContainer .Circle.Hidden {
+	opacity: 0;
+}
+
+.OsuContainer .CircleCheck {
+	border: 2px solid red;
+	vertical-align: center;
+	horizontal-align: center;
+	border-radius: 1000px;
+	opacity: 1;
+	transition-property: opacity;
+	transition-duration: 0.4s;
+}
+
+.OsuContainer .CircleCheck.Hidden {
+	opacity: 0;
+}
+
+.OsuContainer .CircleAbility {
+	width: 65px;
+	height: 65px;
+	align: center center;
+}

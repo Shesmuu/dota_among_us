@@ -110,6 +110,41 @@
 		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"30"
 	}
+	"npc_au_quest_batrider" {
+		"Model"						"models/heroes/batrider/batrider.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"30"
+	}
+	"npc_au_quest_osu" {
+		"Model"						"models/courier/minipudge/minipudge.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"30"
+	}
+	"npc_au_quest_grave" {
+		"Model"						"models/heroes/dazzle/dazzle.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"30"
+	}
+	"npc_au_quest_collect" {
+		"Model"						"models/heroes/rikimaru/rikimaru.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"30"
+	}
+	"npc_au_quest_alchemist" {
+		"Model"						"models/heroes/alchemist/alchemist.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"30"
+	}
 	"npc_au_quest_bottle_1" {
 		"Model"						"models/bottle/bottle.vmdl"
 		"BaseClass"					"npc_dota_creature"

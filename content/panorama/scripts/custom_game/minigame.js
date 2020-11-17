@@ -12,8 +12,11 @@ AU_MINIGAME_SEARCH = 12
 AU_MINIGAME_FACELESS = 13
 AU_MINIGAME_WISP = 14
 AU_MINIGAME_SUNS = 15
-AU_MINIGAME_COLLECT = 16
-AU_MINIGAME_ALCHEMIST = 17
+AU_MINIGAME_OSU = 16
+AU_MINIGAME_GRAVE = 17
+AU_MINIGAME_COLLECT = 18
+AU_MINIGAME_ALCHEMIST = 19
+AU_MINIGAME_BATRIDER = 20
 AU_MINIGAME_INTERFERENCE = 101
 AU_MINIGAME_ECLIPSE = 102
 AU_MINIGAME_OXYGEN = 103
@@ -155,8 +158,12 @@ class Minigames {
 		minigames[AU_MINIGAME_OXYGEN] = MinigameOxygen
 		minigames[AU_MINIGAME_X_MARK] = MinigameXMark
 		minigames[AU_MINIGAME_SUNS] = MinigameSuns
+		minigames[AU_MINIGAME_BATRIDER] = MinigameBatrider
+		minigames[AU_MINIGAME_OSU] = MinigameOsu
+		minigames[AU_MINIGAME_GRAVE] = MinigameGrave
 		minigames[AU_MINIGAME_COLLECT] = MinigameCollect
 		minigames[AU_MINIGAME_ALCHEMIST] = MinigameAlchemist
+
 
 		if ( m != null ) {
 			if ( minigames[m] != null ) {
