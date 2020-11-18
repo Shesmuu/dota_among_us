@@ -183,4 +183,84 @@
 			"sounds/weapons/hero/shared/large_blade/follow_thru03.vsnd",
 		]
 	}
+	Minigame.Coil = {
+		type = "dota_src1_3d"
+		volume = 1.000000
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 75.000000
+		mixgroup = "BaseAttacks"
+		vsnd_files = [
+			"sounds/weapons/hero/nevermore/shadowraze.vsnd",
+		]
+	}
+	Minigame.Mortred = {
+		type = "dota_src1_3d"
+		volume = 1.000000
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 75.000000
+		mixgroup = "BaseAttacks"
+		vsnd_files = [
+			"sounds/weapons/hero/phantom_assassin/stifling_dagger_target.vsnd",
+		]
+	}
+	Minigame.BatriderFly = {
+		type = "dota_src1_3d"
+		volume = 1.000000
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 75.000000
+		mixgroup = "BaseAttacks"
+		vsnd_files = [
+			"sounds/vo/batrider/bat_ability_firefly_01.vsnd",
+			"sounds/vo/batrider/bat_ability_firefly_02.vsnd",
+			"sounds/vo/batrider/bat_ability_firefly_03.vsnd",
+			"sounds/vo/batrider/bat_ability_firefly_04.vsnd",
+			"sounds/vo/batrider/bat_ability_firefly_05.vsnd",
+		]
+	}
+	Minigame.BatriderWings = {
+		type = "dota_src1_3d"
+		volume = 1.000000
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 75.000000
+		mixgroup = "BaseAttacks"
+		vsnd_files = [
+			"sounds/physics/movement/hero/dragon_knight/flap1.vsnd",
+			"sounds/physics/movement/hero/dragon_knight/flap2.vsnd",
+			"sounds/physics/movement/hero/dragon_knight/flap3.vsnd",
+			"sounds/physics/movement/hero/dragon_knight/flap4.vsnd",
+		]
+	}
+	Minigame.Alchemist = {
+		type = "dota_src1_3d"
+		volume = 1.000000
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 75.000000
+		mixgroup = "BaseAttacks"
+		vsnd_files = [
+			"sounds/npc/courier/lockjaw/lockjaw_run_gold_01.vsnd",
+		]
+	}
+	Minigame.AlchemistError = {
+		type = "dota_src1_3d"
+		volume = 1.000000
+		pitch_rand_min = -0.050000
+		pitch_rand_max = 0.050000
+		pitch = 1.000000
+		soundlevel = 75.000000
+		mixgroup = "BaseAttacks"
+		vsnd_files = [
+			"sounds/weapons/hero/alchemist/unstable_concoction_stun01.vsnd",
+			"sounds/weapons/hero/alchemist/unstable_concoction_stun02.vsnd",
+		]
+	}
 }

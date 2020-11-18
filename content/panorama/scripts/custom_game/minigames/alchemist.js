@@ -4,6 +4,12 @@ class AlchemistGold {
 		this.panel.AddClass( "Gold" )
 		this.creationTime = now
 		this.row = row
+		this.kolba = false
+		this.kolba_r = RandomInt( 0, 2 )
+		if (this.kolba_r == 0) {
+			this.kolba = true
+			this.panel.style.backgroundImage = "url( 'file://{images}/spellicons/alchemist_unstable_concoction.png' )"
+		}
 	}
 
 	Update( now ) {
@@ -87,6 +93,13 @@ class MinigameAlchemist extends Minigame {
 
 			if ( gold.pos <= 50 && gold.row == this.currentAlchPos ) {
 				destroy = true
+				if (gold.kolba == true) {
+					gold.Destroy()
+					this.golds.splice( i, 1 )
+					this.FailDelay( 0.6, "#au_minigame_failure_1" )
+					Sounds_.EmitSound( "Minigame.AlchemistError" )
+					return
+				}
 
 				this.score = this.score + 1
 
