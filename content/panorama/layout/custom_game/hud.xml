@@ -21,11 +21,14 @@
 		<include src="file://{resources}/styles/custom_game/minigames/wisp.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/search.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/faceless.css" />
-		<include src="file://{resources}/styles/custom_game/minigames/collect.css" />
-		<include src="file://{resources}/styles/custom_game/minigames/alchemist.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/interference.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/eclipse.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/oxygen.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/batrider.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/osu.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/mortred.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/alchemist.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/collect.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/kick_voting.css" />
 	</styles>
 
@@ -45,12 +48,15 @@
 		<include src="file://{resources}/scripts/custom_game/minigames/wisp.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/search.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/faceless.js" />
-		<include src="file://{resources}/scripts/custom_game/minigames/collect.js" />
-		<include src="file://{resources}/scripts/custom_game/minigames/alchemist.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/interference.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/eclipse.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/oxygen.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/kick_voting.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/batrider.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/osu.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/mortred.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/collect.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/alchemist.js" />
 		<include src="file://{resources}/scripts/custom_game/hero_bar.js" />
 		<include src="file://{resources}/scripts/custom_game/top_bar.js" />
 		<include src="file://{resources}/scripts/custom_game/quests.js" />
@@ -70,6 +76,61 @@
 					<Panel id="Color" />
 					<Button id="Mute" />
 				</DOTAHeroImage>
+			</Panel>
+		</snippet>
+
+		<snippet name="MinigameAlchemist">
+			<Panel class="AlchemistContainer">
+				<Panel id="Game">
+					<Panel id="Buttons">
+						<Button id="Up" />
+						<Button id="Down" />
+					</Panel>
+					<Panel id="Container">
+						<Panel id="Rows" />
+						<Panel id="Alchemist" />
+					</Panel>
+				</Panel>
+				<Label id="ScoreCount" />
+			</Panel>
+		</snippet>
+
+		<snippet name="MinigameMortred">
+			<Panel class="MortredContainer">
+				<Label id="Time" />
+				<Panel id="Game">
+					<Panel id="Buttons">
+						<Panel id="TopButtons">
+							<Button id="Up" />
+						</Panel>	
+						<Panel id="MiddleButtons">
+							<Button id="Left" />
+							<Button id="Right" />
+						</Panel>
+						<Panel id="BottomButtons">
+							<Button id="Down" />
+						</Panel>	
+					</Panel>
+					<Panel id="Container">
+						<Panel id="Rows" />
+						<Panel id="Mortred" />
+					</Panel>
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="MinigameCollect">
+			<Panel class="CollectContainer">
+				<Panel id="AllItemsContainer" />
+				<Panel id="ItemCollect">
+					<Panel id="Center">
+						<DOTAItemImage id="CollectItem" />
+						<Panel id="EmptySlots" />
+					</Panel>
+					<Panel id="VariantItems">
+						<Panel id="VarItemSlots" />
+					</Panel>
+				</Panel>
 			</Panel>
 		</snippet>
 
@@ -101,38 +162,6 @@
 					<Label id="IsSabotage" text="#kick_voting_sabotage" />
 				</Panel>
 				<Label id="KickCount" />
-			</Panel>
-		</snippet>
-
-		<snippet name="MinigameAlchemist">
-			<Panel class="AlchemistContainer">
-				<Panel id="Game">
-					<Panel id="Buttons">
-						<Button id="Up" />
-						<Button id="Down" />
-					</Panel>
-					<Panel id="Container">
-						<Panel id="Rows" />
-						<Panel id="Alchemist" />
-					</Panel>
-				</Panel>
-				<Label id="ScoreCount" />
-			</Panel>
-		</snippet>
-
-		<snippet name="MinigameCollect">
-			<Panel class="CollectContainer">
-				<Panel id="AllItemsContainer" />
-				<Panel id="ItemCollect">
-					<Panel id="Center">
-						<Label text="#au_minigame_collect_description" />
-						<DOTAItemImage id="CollectItem" />
-						<Panel id="EmptySlots" />
-					</Panel>
-					<Panel id="VariantItems">
-						<Panel id="VarItemSlots" />
-					</Panel>
-				</Panel>
 			</Panel>
 		</snippet>
 

@@ -5,9 +5,9 @@ class MinigameOsu extends Minigame {
 		this.circles = []
 		this.delay = Game.GetGameTime() + 0.8
 		let Circles = [
-			{ CircleRadius: 150, ClickRadius: { max: 150, min: 140, }},
-			{ CircleRadius: 190, ClickRadius:  { max: 190,  min:  180, } },
-			{ CircleRadius: 225, ClickRadius: { max: 225, min: 215, }}
+			{ CircleRadius: 150, ClickRadius: { max: 150, min: 130, }},
+			{ CircleRadius: 190, ClickRadius:  { max: 190,  min:  170, } },
+			{ CircleRadius: 225, ClickRadius: { max: 225, min: 205, }}
 		]
 		let positions = 
 		[
@@ -35,11 +35,14 @@ class MinigameOsu extends Minigame {
 		if ( circle.hidden ) {
 			return
 		}
+		$.Msg(circle.red_radius)
 		if (circle.red_radius <= circle.radius_circle_max+2 && circle.red_radius > circle.radius_circle_min)
 		{
 			circle.Hide( true )
 			if (this.current_circle < 2) {
 				this.current_circle = this.current_circle + 1
+				this.circles[this.current_circle].lastTime = Game.GetGameTime();
+				Sounds_.EmitSound( "Minigame.Coil" )
 			} else {
 				this.Complete( 0.75, "#au_minigame_good_2" )
 			}
@@ -51,7 +54,7 @@ class MinigameOsu extends Minigame {
 	}
 
 	Update( now ) {
-		if (Game.GetGameTime() <= this.delay) { return }
+		if (Game.GetGameTime() <= this.delay) { this.circles[this.current_circle].lastTime = Game.GetGameTime(); return }
 		this.circles[this.current_circle].Update( now, this.container )
 	}
 }
@@ -72,14 +75,17 @@ class OsuCircle {
 		this.panel.style.position = ( this.startX ) + "px " + ( this.startY  ) + "px 0px"
 		this.panel.style.width = (this.startRadius) + "px"
 		this.panel.style.zIndex = (icon * -1)
-		let icons = ["file://{images}/spellicons/puck_phase_shift.png", "file://{images}/items/manta.png", "file://{images}/spellicons/ember_spirit_sleight_of_fist.png"];
+		let icons = ["file://{images}/spellicons/nevermore_shadowraze1.png", "file://{images}/spellicons/nevermore_shadowraze2.png", "file://{images}/spellicons/nevermore_shadowraze3.png"];
 		let image = $.CreatePanel( "Image", this.panel, "" ) 
 		image.AddClass( "CircleAbility" )
-		if (icon == 1) { image.style.width = "85px" }
 		image.SetImage( icons[icon] )
+
 	}
 
 	Update( now, parent ) {
+		let frameTime = now - this.lastTime
+		this.lastTime = now
+
 		if ( this.hidden ) {
 			return
 		}
@@ -92,11 +98,11 @@ class OsuCircle {
 			this.panel_check.style.position = ( this.startX ) + "px " + ( this.startY ) + "px 0px"
 		}
 
-		if (this.red_radius >= this.startRadius - 12  )
+		if (this.red_radius >= this.startRadius - 22  )
 		{
 			this.panel_check.style.width = (this.red_radius) + "px"
 			this.panel_check.style.height = (this.red_radius) + "px"
-			this.red_radius = this.red_radius - 2
+			this.red_radius = this.red_radius - 240 * frameTime
 		} else {
 			GameEvents.SendCustomGameEventToServer( "au_minigame_result", {
 				failure: true

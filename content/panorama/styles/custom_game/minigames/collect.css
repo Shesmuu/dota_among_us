@@ -1,14 +1,31 @@
 .CollectContainer {
-	border-top: 3px solid rgb( 26, 26, 26 );
+	border-top: 1px solid rgb( 26, 26, 26 );
 	flow-children: right;
 }
 
 #AllItemsContainer {
+	width: 350px;
 	height: 100%;
-	border-right: 3px solid rgb( 26, 26, 26 );
+	border-right: 1px solid rgb( 26, 26, 26 );
 	background-color: rgb( 8, 8, 8 );
 	overflow: clip scroll;
 	flow-children: down;
+	visibility: collapse;
+}
+
+#AnswerButton {
+	width: 45px;
+	height: 45px;
+	border-radius: 100px;
+	border: 2px solid black;
+	margin: 10px;
+}
+
+#AnswerButtonTimer {
+	color: white;
+	font-size: 28px;
+	font-family: Radiance;
+	align: center center;
 }
 
 #AllItemsContainer DOTAItemImage {
@@ -48,7 +65,8 @@
 }
 
 #ItemCollect {
-	height: 300px;
+	height: 400px;
+	width: 600px;
 }
 
 #ItemCollect #Center {
@@ -56,6 +74,7 @@
 	vertical-align: center;
 	margin-bottom: 40px;
 	flow-children: down;
+	margin-left: 170px;
 }
 
 #ItemCollect #Center Label {
@@ -71,12 +90,14 @@
 
 #ItemCollect #VariantItems {
 	vertical-align: bottom;
-	border-top: 3px solid rgb( 26, 26, 26 );
+	width: 140px;
+	align: left center;
+	margin-left: 50px;
 }
 
 #ItemCollect #VarItemSlots {
 	horizontal-align: center;
-	flow-children: right;
+	flow-children: right-wrap;
 }
 
 #ItemCollect #VarItemSlots DOTAItemImage {
@@ -92,6 +113,7 @@
 
 #ItemCollect #EmptySlots {
 	flow-children: right;
+	align:center center;
 }
 
 #ItemCollect #EmptySlots DOTAItemImage {

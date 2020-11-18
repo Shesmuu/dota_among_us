@@ -124,7 +124,7 @@
 		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
 		"RingRadius"				"30"
 	}
-	"npc_au_quest_grave" {
+	"npc_au_quest_mortred" {
 		"Model"						"models/heroes/dazzle/dazzle.vmdl"
 		"BaseClass"					"npc_dota_creature"
 		"ModelScale" 				"1"

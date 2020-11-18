@@ -1,0 +1,95 @@
+.MortredContainer {
+	width: 370px;
+	height: 500px;
+	padding: 10px;
+	flow-children: down;
+}
+
+.MortredContainer #Game {
+	flow-children: up;
+}
+
+.MortredContainer #Buttons {
+	vertical-align: center;
+	width: 120px;
+	height: 120px;
+	flow-children: down;
+}
+
+.MortredContainer #TopButtons, .MortredContainer #MiddleButtons, .MortredContainer #BottomButtons, {
+	width: 100%;
+	flow-children: right;
+}
+
+.MortredContainer #Up, .MortredContainer #Down, .MortredContainer #Left, .MortredContainer #Right  {
+	width: 40px;
+	height: 40px;
+	background-image: url( "s2r://panorama/images/control_icons/arrow_solid_left_png.vtex" );
+	background-size: 100%;
+	wash-color: grey;
+	opacity: 0.7;
+	transition-property: wash-color;
+	transition-duration: 0.1s;
+}
+
+.MortredContainer #Down {
+	transform: rotateZ( -90deg );
+	align: center bottom;
+}
+
+.MortredContainer #Left {
+	transform: rotateZ( 0deg );
+	align: left center;
+}
+
+.MortredContainer #Right {
+	transform: rotateZ( 180deg );
+	align: right center;
+}
+
+.MortredContainer #Up {
+	transform: rotateZ( 90deg );
+	align: center top;
+}
+
+.MortredContainer #Up:hover, .MortredContainer #Down:hover, .MortredContainer #Left:hover, .MortredContainer #Right:hover {
+	wash-color: white;
+}
+
+.MortredContainer #Container {
+	width: 450px;
+}
+
+.MortredContainer #Rows {
+	width: 100%;
+	flow-children: down;
+}
+
+.MortredContainer .KnifesRow {
+	width: 100%;
+	height: 50px;
+}
+
+.MortredContainer #Mortred {
+	width: 50px;
+	height: 50px;
+	background-image: url( "file://{images}/heroes/icons/npc_dota_hero_phantom_assassin.png" );
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: 40px;
+	transition-property: position;
+	transition-duration: 0.18s;
+}
+
+.MortredContainer .Knife {
+	width: 50px;
+	height: 24px;
+	background-size: 100%;
+}
+
+.MortredContainer #Time {
+	color: white;
+	font-size: 16px;
+	font-family: Radiance;
+	horizontal-align: center;
+}

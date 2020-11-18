@@ -13,7 +13,7 @@ AU_MINIGAME_FACELESS = 13
 AU_MINIGAME_WISP = 14
 AU_MINIGAME_SUNS = 15
 AU_MINIGAME_OSU = 16
-AU_MINIGAME_GRAVE = 17
+AU_MINIGAME_MORTRED = 17
 AU_MINIGAME_COLLECT = 18
 AU_MINIGAME_ALCHEMIST = 19
 AU_MINIGAME_BATRIDER = 20
@@ -160,7 +160,7 @@ class Minigames {
 		minigames[AU_MINIGAME_SUNS] = MinigameSuns
 		minigames[AU_MINIGAME_BATRIDER] = MinigameBatrider
 		minigames[AU_MINIGAME_OSU] = MinigameOsu
-		minigames[AU_MINIGAME_GRAVE] = MinigameGrave
+		minigames[AU_MINIGAME_MORTRED] = MinigameMortred
 		minigames[AU_MINIGAME_COLLECT] = MinigameCollect
 		minigames[AU_MINIGAME_ALCHEMIST] = MinigameAlchemist
 
