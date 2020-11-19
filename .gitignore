@@ -3,8 +3,6 @@ server/prod
 server/package-lock.json
 server/server_settings.js
 
-*.png
-*.fbx
 *.vmat_c
 *.vanim_c
 *.vmdl_c
