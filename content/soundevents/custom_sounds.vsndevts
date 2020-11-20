@@ -247,7 +247,7 @@
 		soundlevel = 75.000000
 		mixgroup = "BaseAttacks"
 		vsnd_files = [
-			"sounds/npc/courier/lockjaw/lockjaw_run_gold_01.vsnd",
+			"sounds/ui/coins.vsnd",
 		]
 	}
 	Minigame.AlchemistError = {

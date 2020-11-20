@@ -2,6 +2,11 @@ function CreateEventUnit( unitName, pos, func, radius )
 	local unit = CreateUnitByName( unitName, pos, false, nil, nil, AU_DUMMIES_TEAM )
 	local modifier = unit:AddNewModifier( unit, nil, "modifier_au_aura", nil )
 
+	if unitName == "npc_au_quest_collect" then
+		unit:SetMaterialGroup(tostring(picture))
+		picture = picture + 1
+	end
+
 	unit.event = func
 	modifier.radius = radius or 250
 	modifier.modifierAura = "modifier_au_unit_event"

@@ -2,7 +2,7 @@ if GameMode then
 	return
 end
 
-_G.HTTP_MODE = 1
+_G.HTTP_MODE = 0
 
 _G.AU_GAME_STATE_NONE = 0
 _G.AU_GAME_STATE_SETTINGS = 1

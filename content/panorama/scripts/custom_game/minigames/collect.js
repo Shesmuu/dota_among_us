@@ -76,7 +76,7 @@ class MinigameCollect extends Minigame {
 		for ( let i in varItems ) {
 			const item = $.CreatePanel( "DOTAItemImage", varItemsContainer, "" )
 			item.itemname = varItems[i]
-
+			
 			item.SetPanelEvent( "onactivate", () => {
 				this.SelectItem( item, varItems[i] )
 			} )

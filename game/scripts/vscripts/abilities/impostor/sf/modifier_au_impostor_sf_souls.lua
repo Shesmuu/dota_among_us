@@ -27,7 +27,7 @@ function modifier_au_impostor_sf_souls:OnIntervalThink()
 			DOTA_TEAM_GOODGUYS,
 			self:GetParent():GetAbsOrigin(),
 			nil,
-			2000,
+			2500,
 			DOTA_UNIT_TARGET_TEAM_BOTH,
 			DOTA_UNIT_TARGET_HERO,
 			DOTA_UNIT_TARGET_FLAG_INVULNERABLE,

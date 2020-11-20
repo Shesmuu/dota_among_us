@@ -159,53 +159,53 @@ local questUnitList = {
 }
 
 local minigameRecipes = {
-item_recipe_moon_shard = "item_moon_shard",
-item_recipe_magic_wand = "item_magic_wand",
-item_recipe_travel_boots = "item_travel_boots",
-item_recipe_travel_boots_2 = "item_travel_boots_2",
-item_recipe_phase_boots = "item_phase_boots",
-item_recipe_power_treads = "item_power_treads",
-item_recipe_hand_of_midas = "item_hand_of_midas",
-item_recipe_oblivion_staff = "item_oblivion_staff",
-item_recipe_pers = "item_pers",
-item_recipe_poor_mans_shie = "item_poor_mans_shield",
-item_recipe_bracer = "item_bracer",
-item_recipe_wraith_band = "item_wraith_band",
-item_recipe_null_talisman = "item_null_talisman",
-item_recipe_mekansm = "item_mekansm",
-item_recipe_vladmir = "item_vladmir",
-item_recipe_buckler = "item_buckler",
-item_recipe_ring_of_basili = "item_ring_of_basilius",
-item_recipe_holy_locket = "item_holy_locket",
-item_recipe_pipe = "item_pipe",
-item_recipe_urn_of_shadows = "item_urn_of_shadows",
-item_recipe_headdress = "item_headdress",
-item_recipe_sheepstick = "item_sheepstick",
-item_recipe_orchid = "item_orchid",
-item_recipe_bloodthorn = "item_bloodthorn",
-item_recipe_echo_sabre = "item_echo_sabre",
-item_recipe_cyclone = "item_cyclone",
-item_recipe_aether_lens = "item_aether_lens",
-item_recipe_force_staff = "item_force_staff",
-item_recipe_hurricane_pike = "item_hurricane_pike",
-item_recipe_dagon = "item_dagon",
-item_recipe_necronomicon = "item_necronomicon",
-item_recipe_assault = "item_assault",
-item_recipe_refresher = "item_refresher",
-item_recipe_black_king_bar = "item_black_king_bar",
-item_recipe_shivas_guard = "item_shivas_guard",
-item_recipe_bloodstone = "item_bloodstone",
-item_recipe_sphere = "item_sphere",
-item_recipe_lotus_orb = "item_lotus_orb",
-item_recipe_meteor_hammer = "item_meteor_hammer",
-item_recipe_nullifier = "item_nullifier",
-item_recipe_aeon_disk = "item_aeon_disk",
-item_recipe_kaya = "item_kaya",
-item_recipe_spirit_vessel = "item_spirit_vessel",
-item_recipe_vanguard = "item_vanguard",
-item_recipe_crimson_guard = "item_crimson_guard",
-item_recipe_blade_mail = "item_blade_mail",
-item_recipe_moon_shard = "item_moon_shard",
+	item_recipe_moon_shard = "item_moon_shard",
+	item_recipe_magic_wand = "item_magic_wand",
+	item_recipe_travel_boots = "item_travel_boots",
+	item_recipe_travel_boots_2 = "item_travel_boots_2",
+	item_recipe_phase_boots = "item_phase_boots",
+	item_recipe_power_treads = "item_power_treads",
+	item_recipe_hand_of_midas = "item_hand_of_midas",
+	item_recipe_oblivion_staff = "item_oblivion_staff",
+	item_recipe_pers = "item_pers",
+	item_recipe_poor_mans_shie = "item_poor_mans_shield",
+	item_recipe_bracer = "item_bracer",
+	item_recipe_wraith_band = "item_wraith_band",
+	item_recipe_null_talisman = "item_null_talisman",
+	item_recipe_mekansm = "item_mekansm",
+	item_recipe_vladmir = "item_vladmir",
+	item_recipe_buckler = "item_buckler",
+	item_recipe_ring_of_basili = "item_ring_of_basilius",
+	item_recipe_holy_locket = "item_holy_locket",
+	item_recipe_pipe = "item_pipe",
+	item_recipe_urn_of_shadows = "item_urn_of_shadows",
+	item_recipe_headdress = "item_headdress",
+	item_recipe_sheepstick = "item_sheepstick",
+	item_recipe_orchid = "item_orchid",
+	item_recipe_bloodthorn = "item_bloodthorn",
+	item_recipe_echo_sabre = "item_echo_sabre",
+	item_recipe_cyclone = "item_cyclone",
+	item_recipe_aether_lens = "item_aether_lens",
+	item_recipe_force_staff = "item_force_staff",
+	item_recipe_hurricane_pike = "item_hurricane_pike",
+	item_recipe_dagon = "item_dagon",
+	item_recipe_necronomicon = "item_necronomicon",
+	item_recipe_assault = "item_assault",
+	item_recipe_refresher = "item_refresher",
+	item_recipe_black_king_bar = "item_black_king_bar",
+	item_recipe_shivas_guard = "item_shivas_guard",
+	item_recipe_bloodstone = "item_bloodstone",
+	item_recipe_sphere = "item_sphere",
+	item_recipe_lotus_orb = "item_lotus_orb",
+	item_recipe_meteor_hammer = "item_meteor_hammer",
+	item_recipe_nullifier = "item_nullifier",
+	item_recipe_aeon_disk = "item_aeon_disk",
+	item_recipe_kaya = "item_kaya",
+	item_recipe_spirit_vessel = "item_spirit_vessel",
+	item_recipe_vanguard = "item_vanguard",
+	item_recipe_crimson_guard = "item_crimson_guard",
+	item_recipe_blade_mail = "item_blade_mail",
+	item_recipe_moon_shard = "item_moon_shard",
 }
 
 local questList = {
@@ -220,10 +220,10 @@ local questList = {
 	faceless = { type = AU_MINIGAME_FACELESS },
 	suns = { type = AU_MINIGAME_SUNS },
 	batrider = { type = AU_MINIGAME_BATRIDER },
-	osu = { type = AU_MINIGAME_OSU },
-	mortred = { type = AU_MINIGAME_MORTRED },
-	collect = { type = AU_MINIGAME_COLLECT },
-	alchemist = { type = AU_MINIGAME_ALCHEMIST},
+	osu = { type = AU_MINIGAME_OSU, stepCount = 3 },
+	mortred = { type = AU_MINIGAME_MORTRED, stepCount = 2 },
+	collect = { type = AU_MINIGAME_COLLECT, stepCount = 3 },
+	alchemist = { type = AU_MINIGAME_ALCHEMIST, stepCount = 3},
 }
 
 Quests = {
@@ -237,23 +237,22 @@ Quests = {
 
 function Quests:Activate()
 	local minigameCollect = {}
-
-	for recipeName, itemData in pairs( LoadKeyValues( "scripts/npc/items.txt" ) ) do
+	
+	for recipeName, itemData in pairs( LoadKeyValues( "scripts/npc/npc_items_custom.txt" ) ) do
 		if type( itemData ) == "table" then
 			local requirements = itemData.ItemRequirements
-
 			if minigameRecipes[recipeName] and requirements then
 				local _, v = next( requirements )
-
+	
 				if v then
 					local item = {}
 					local i = 1
-
+	
 					for name in v:gmatch( "([^;]+)" ) do
 						item[i] = name
 						i = i + 1
 					end
-
+					
 					minigameCollect[minigameRecipes[recipeName]] = item
 				end
 			end
@@ -286,7 +285,7 @@ function Quests:InitUnits( unitName, unitData )
 		event = function( unit, activator )
 			local quest = self:FindGlobalQuest( questName )
 
-			if quest then
+			if quest and not quest.completed then
 				quest:Trigger( unit, activator )
 			end
 		end
@@ -294,7 +293,7 @@ function Quests:InitUnits( unitName, unitData )
 		event = function( unit, activator )
 			local quest = activator:FindQuest( questName )
 
-			if quest then
+			if quest and not quest.completed then
 				quest:Trigger( unit )
 			end
 		end
@@ -366,28 +365,31 @@ function Quests:RandomQuests( player )
 		return
 	end
 
+
 	local quests1 = {
 		"voker",
 		"stone",
 		"bottle",
-		"batrider",
 		"osu",
-		"mortred"
+		"alchemist",
+		"collect"
 	}
 	local quests2 = {
 		"meepo",
-		"meteorites"
+		"meteorites",
+		"mortred"
 	}
 	local quests3 = {
 		"suns",
 		"faceless",
 		"search",
 		"wisp",
-		"cog"
+		"cog",
+		"batrider"
 	}
 
 	local quests = {
-		quests1[RandomInt( 1, #quests1 )],
+		--quests1[RandomInt( 1, #quests1 )],
 		quests2[RandomInt( 1, #quests2 )],
 		--quests3[RandomInt( 1, #quests3 )]
 	}
@@ -397,6 +399,13 @@ function Quests:RandomQuests( player )
 
 		table.insert( quests, quests3[r] )
 		table.remove( quests3, r )
+	end
+
+	for i = 1, 2 do
+		local r = RandomInt( 1, #quests1 )
+
+		table.insert( quests, quests1[r] )
+		table.remove( quests1, r )
 	end
 
 	for _, questName in pairs( quests ) do
@@ -458,7 +467,7 @@ function Quests:GameInProgress()
 
 	for _, player in pairs( GameMode.players ) do
 		if player.role == AU_ROLE_PEACE and player.hero then
-			taskPointsToWin = taskPointsToWin + 4
+			taskPointsToWin = taskPointsToWin + 5
 		end
 	end
 

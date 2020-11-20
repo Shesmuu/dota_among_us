@@ -1,5 +1,7 @@
 Quest = class( {} )
 
+picture = 1
+
 function Quest:constructor( player, name, data, units, customSettings )
 	self.player = player
 	self.name = name
@@ -84,11 +86,13 @@ function Quest:MinigameCompleted()
 		self.stepNow = self.stepNow + 1
 
 		self:DestroyEffect()
-		self:Effect()
 
 		if self.stepCount < self.stepNow then
 			self:Complete()
+		else
+			self:Effect()
 		end
+
 	else
 		self:Complete()
 	end
@@ -117,6 +121,9 @@ function Quest:Complete()
 end
 
 function Quest:GetTargetUnit()
+	if self.completed then
+		return
+	end
 	if self.stepCount then
 		return self.targets[self.stepNow]
 	elseif not self.completed then

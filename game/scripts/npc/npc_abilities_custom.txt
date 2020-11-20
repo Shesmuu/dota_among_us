@@ -109,8 +109,8 @@
 	}
 	"au_impostor_pudge_eat" {
 		"BaseClass" "ability_lua"
-		"AbilityTextureName"	"pudge_dismember"
 		"ScriptFile" "abilities/impostor/pudge/au_impostor_pudge_eat"
+		"AbilityTextureName"	"pudge_dismember"
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"MaxLevel" "1"
 		"AbilitySpecial" {
@@ -137,8 +137,8 @@
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"MaxLevel" "1"
 		"AbilitySpecial" {
-			"1" { "var_type" "FIELD_INTEGER" "cooldown" "40" }
-			"2" { "var_type" "FIELD_INTEGER" "duration" "20" }
+			"1" { "var_type" "FIELD_INTEGER" "cooldown" "20" }
+			"2" { "var_type" "FIELD_INTEGER" "duration" "60" }
 		}
 	}
 	"au_impostor_morph_transform" {
@@ -180,7 +180,7 @@
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"MaxLevel" "1"
 		"AbilitySpecial" {
-			"1" { "var_type" "FIELD_INTEGER" "radius" "300" }
+			"1" { "var_type" "FIELD_INTEGER" "radius" "200" }
 		}
 		"AbilityCooldown" "15"
 	}
@@ -192,7 +192,7 @@
 		"MaxLevel" "1"
 		"AbilityCastPoint" "0.15"
 		"AbilityCastAnimation" "ACT_DOTA_CAST_ABILITY_3"
-		"AbilityManaCost" "20"
+		"AbilityManaCost" "60"
 		"AbilitySpecial" {
 			"1" { "var_type" "FIELD_INTEGER" "duration" "10" }
 			"2" { "var_type" "FIELD_FLOAT" "movespeed" "18.2" }

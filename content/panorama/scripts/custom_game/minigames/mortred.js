@@ -7,7 +7,7 @@ class MinigameMortred extends Minigame {
 		this.rowCount = 7
 		this.currentMortredPosY = 0
 		this.currentMortredPosX = 0
-		this.time = Game.GetGameTime() + 8
+		this.time = Game.GetGameTime() + 11
 		this.nextKnifeTime = Game.GetGameTime() + 0.5
 		this.mortred = this.container.FindChildTraverse( "Mortred" )
 		this.timeTimer= this.container.FindChildTraverse( "Time" )
@@ -180,10 +180,9 @@ class MinigameMortred extends Minigame {
 			}
 
 			if ( this.MacroCollision(knife) ) {
-				GameEvents.SendCustomGameEventToServer( "au_minigame_result", {
-					failure: true
-				} )
+				this.FailDelay( 0.6, "#au_minigame_failure_1" )
 				Sounds_.EmitSound( "Minigame.Mortred" )
+				destroy = true
 			}
 
 			if ( destroy ) {

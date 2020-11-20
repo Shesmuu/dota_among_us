@@ -248,6 +248,7 @@ function CheckPlayerHeroes()
 end
 
 function custom_selection:GiveHeroPlayer(id,hero)
+	PrecacheUnitByNameAsync(hero, function()
 	local wisp = PlayerResource:GetSelectedHeroEntity(id)
 	PlayerResource:ReplaceHeroWith(id, hero, 700, 0)
 	UTIL_Remove(wisp)
@@ -257,6 +258,7 @@ function custom_selection:GiveHeroPlayer(id,hero)
 	if PICK_STATE == AMONG_US_PICK_STATE_END then
 		PlayerResource:SetCameraTarget(new_hero:GetPlayerOwnerID(), nil)
 	end
+	end, id)
 end
 
 function custom_selection:RandomHeroForPlayer()

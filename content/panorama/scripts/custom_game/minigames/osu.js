@@ -5,9 +5,9 @@ class MinigameOsu extends Minigame {
 		this.circles = []
 		this.delay = Game.GetGameTime() + 0.8
 		let Circles = [
-			{ CircleRadius: 150, ClickRadius: { max: 150, min: 130, }},
-			{ CircleRadius: 190, ClickRadius:  { max: 190,  min:  170, } },
-			{ CircleRadius: 225, ClickRadius: { max: 225, min: 205, }}
+			{ CircleRadius: 150, ClickRadius: { max: 150, min: 126, }},
+			{ CircleRadius: 190, ClickRadius:  { max: 190,  min:  166, } },
+			{ CircleRadius: 225, ClickRadius: { max: 225, min: 199, }}
 		]
 		let positions = 
 		[
@@ -98,14 +98,14 @@ class OsuCircle {
 			this.panel_check.style.position = ( this.startX ) + "px " + ( this.startY ) + "px 0px"
 		}
 
-		if (this.red_radius >= this.startRadius - 22  )
+		if (this.red_radius >= this.startRadius - 26  )
 		{
 			this.panel_check.style.width = (this.red_radius) + "px"
 			this.panel_check.style.height = (this.red_radius) + "px"
-			this.red_radius = this.red_radius - 240 * frameTime
+			this.red_radius = this.red_radius - 200 * frameTime
 		} else {
 			GameEvents.SendCustomGameEventToServer( "au_minigame_result", {
-				failure: true
+				//failure: true
 			} )
 		}
 
