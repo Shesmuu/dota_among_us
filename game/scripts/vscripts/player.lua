@@ -297,6 +297,7 @@ end
 function Player:NetTable()
 	local t = {
 		quests = {},
+		role = self.role,
 		alive = self.alive,
 		kick_count = self.kickVotingCount,
 		ban = self.stats.ban,
@@ -559,7 +560,7 @@ function Player:RoleAbilities()
 	local abilities = self.role == AU_ROLE_IMPOSTOR and IMPOSTOR_ABILITIES or peaceAbilities
 
 	for i, abilityName in pairs( abilities[self.abilitiesHeroName] or {} ) do
-		self.hero:Ability( abilityName, i - 1, 20 )
+		self.hero:Ability( abilityName, i - 1, 40 )
 	end
 
 	if self.role == AU_ROLE_IMPOSTOR then

@@ -70,7 +70,7 @@ require( "sabotages/interference" )
 require( "sabotages/oxygen" )
 require( "sabotages/reactor" )
 
-require( "custom_selection" )
+--require( "custom_selection" )
 
 function GameMode:SetWinner( role, reason )
 	local winRole = role
@@ -610,13 +610,13 @@ function GameMode:Activate()
 	GameRules:SetPreGameTime( 0 )
 	GameRules:SetSafeToLeave( false )
 	GameRules:SetShowcaseTime( 0 )
-	GameRules:SetStrategyTime( 0 )
+	GameRules:SetStrategyTime( 5 )
 	GameRules:SetStartingGold( 0 )
 	GameRules:SetTimeOfDay( 0 )
 	GameRules:SetHeroRespawnEnabled( true )
 	GameRules:SetPostGameTime( IsTest() and 9999 or 300 )
 	GameRules:SetHeroSelectPenaltyTime( 0 )
-	GameRules:SetHeroSelectionTime( 0 )
+	GameRules:SetHeroSelectionTime( 20 )
 
 	local ent = GameRules:GetGameModeEntity()
 
@@ -625,7 +625,7 @@ function GameMode:Activate()
 	ent:SetDaynightCycleDisabled( true )
 	ent:SetExecuteOrderFilter( self.ExecuteOrderFilter, self )
 	ent:SetPauseEnabled( IsTest() )
-	ent:SetCustomGameForceHero( "npc_dota_hero_wisp" )
+	--ent:SetCustomGameForceHero( "npc_dota_hero_wisp" )
 
 	self:Convars()
 	self:DefaultDay()
@@ -802,9 +802,9 @@ function GameMode:OnNPCSpawned( data )
 
 		local id = unit:GetPlayerID()
 
-		--[[if self.players[id] then
+		if self.players[id] then
 			self.players[id]:HeroSpawned( unit )
-		else]]if not self.players[id] and IsTest() then
+		elseif not self.players[id] and IsTest() then
 			Player( id ):HeroSpawned( unit )
 		end
 	elseif unit:GetUnitName() == "npc_au_ghost" then
@@ -826,6 +826,14 @@ function GameMode:OnGameRulesStateChange()
 
 	if s == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		self:CustomGameSetup()
+	elseif s == DOTA_GAMERULES_STATE_STRATEGY_TIME then
+		for id, p in pairs( self.players ) do
+			local player = PlayerResource:GetPlayer( id )
+
+			if player and PlayerResource:HasSelectedHero( id ) == false then
+				player:MakeRandomHeroSelection()
+			end
+		end
 	elseif s == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		for id, player in pairs( self.players ) do
 			player:UpdateTeam()
@@ -846,16 +854,10 @@ function GameMode:OnGameRulesStateChange()
 		if send then
 			Http:Request( "api/players/peace_streaks", roles )
 		end
-
-		--for id, p in pairs( self.players ) do
-		--	local player = PlayerResource:GetPlayer( id )
-
-		--	if player and PlayerResource:HasSelectedHero( id ) == false then
-		--		player:MakeRandomHeroSelection()
-		--	end
-		--end
 	
-		custom_selection:Init()
+		--custom_selection:Init()
+
+		Settings:Start()
 	end
 end
 

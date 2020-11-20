@@ -17,7 +17,7 @@
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"MaxLevel" "1"
 		"AbilityCastAnimation" "ACT_DOTA_ATTACK"
-		"AbilitySpecial" { "1" { "var_type"	"FIELD_INTEGER" "cooldown" "30" } }
+		"AbilitySpecial" { "1" { "var_type"	"FIELD_INTEGER" "cooldown" "40" } }
 	}
 	"au_impostor_sabotage_eclipse" {
 		"BaseClass" "ability_lua"
@@ -69,7 +69,7 @@
 		"AbilityChannelAnimation" "ACT_DOTA_CHANNEL_ABILITY_4"
 		"AbilityCastPoint" "0.53"
 		"AbilityChannelTime" "3"
-		"AbilityCooldown" "50"
+		"AbilityCooldown" "70"
 		"AbilitySpecial" { "1" { "var_type"	"FIELD_INTEGER" "duration" "3" } }
 	}
 	"au_impostor_sf_souls" {
@@ -114,7 +114,7 @@
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"MaxLevel" "1"
 		"AbilitySpecial" {
-			"1" { "var_type" "FIELD_INTEGER" "cooldown" "30" }
+			"1" { "var_type" "FIELD_INTEGER" "cooldown" "40" }
 			"2" { "var_type" "FIELD_INTEGER" "duration" "15" }
 		}
 	}
