@@ -109,6 +109,7 @@
 	}
 	"au_impostor_pudge_eat" {
 		"BaseClass" "ability_lua"
+		"AbilityTextureName"	"pudge_dismember"
 		"ScriptFile" "abilities/impostor/pudge/au_impostor_pudge_eat"
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"MaxLevel" "1"
