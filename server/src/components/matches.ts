@@ -11,19 +11,6 @@ export class Matches {
 
 	Before( req: Request, res: Response ) {
 		this.server.players.AddMissingPlayers( req.body, () => {
-			const heroNames = [
-				"npc_dota_hero_zuus",
-				"npc_dota_hero_monkey_king",
-				"npc_dota_hero_meepo",
-				"npc_dota_hero_invoker",
-				"npc_dota_hero_rubick",
-				"npc_dota_hero_pudge",
-				"npc_dota_hero_ember_spirit",
-				"npc_dota_hero_morphling",
-				"npc_dota_hero_nevermore",
-				"npc_dota_hero_storm_spirit",
-				"npc_dota_hero_tinker"
-			] 
 			const sendData: KV = {
 				favoriteHeroes: {},
 				totalMatches: {}
@@ -36,18 +23,18 @@ export class Matches {
 				r()
 			}, false ) ) )
 
-			promises.push( new Promise( r => this.server.database.Get( "matches", {
-				winner: 0
-			}, "count( * )", ( data ) => {
-				sendData.peaceWins = data[0] ? data[0]["count( * )"] : 0
+			promises.push( new Promise( r => this.server.database.Query( "select count(*) from `matches` where winner=1 and id>29684", [], ( data ) => {
+				sendData.imposterWins = data[0] ? data[0]["count(*)"] : 0
+
+				console.log( data )
 
 				r()
 			} ) ) )
 
-			promises.push( new Promise( r => this.server.database.Get( "matches", {
-				winner: 1
-			}, "count( * )", ( data ) => {
-				sendData.imposterWins = data[0] ? data[0]["count( * )"] : 0
+			promises.push( new Promise( r => this.server.database.Query( "select count(*) from `matches` where winner=0 and id>29684", [], ( data ) => {
+				sendData.peaceWins = data[0] ? data[0]["count(*)"] : 0
+
+				console.log( data )
 
 				r()
 			} ) ) )
