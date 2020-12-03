@@ -26,15 +26,11 @@ export class Matches {
 			promises.push( new Promise( r => this.server.database.Query( "select count(*) from `matches` where winner=1 and id>29684", [], ( data ) => {
 				sendData.imposterWins = data[0] ? data[0]["count(*)"] : 0
 
-				console.log( data )
-
 				r()
 			} ) ) )
 
 			promises.push( new Promise( r => this.server.database.Query( "select count(*) from `matches` where winner=0 and id>29684", [], ( data ) => {
 				sendData.peaceWins = data[0] ? data[0]["count(*)"] : 0
-
-				console.log( data )
 
 				r()
 			} ) ) )

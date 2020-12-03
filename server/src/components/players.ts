@@ -21,6 +21,7 @@ export class Players {
 			low_priority_: 0,
 			imposter_rating: 1000,
 			peace_rating: 1000,
+			rating_season_1: 1000,
 			rating: 1000,
 			ban: 0,
 			reports_remaining: this.startReports,
