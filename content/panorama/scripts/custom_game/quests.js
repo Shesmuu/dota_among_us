@@ -186,3 +186,10 @@ class Quests {
 		}
 	}
 }
+
+GameEvents.Subscribe('impostor_task_hidden', TaskHidden );
+
+function TaskHidden()
+{        
+	$( "#TotalTasksCompleted" ).style.visiblity = "collapse"
+}

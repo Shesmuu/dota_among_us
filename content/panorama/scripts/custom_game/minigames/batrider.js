@@ -74,13 +74,13 @@ class MinigameBatrider extends Minigame {
 		}
 
 		if ( this.lastTime < this.FlyTime ) {
-			this.Y = this.Y - 45 * frameTime
-			this.X = this.X + 10 * frameTime
+			this.Y = this.Y - 39 * frameTime
+			this.X = this.X + 12 * frameTime
 			this.bird.style.position = ( this.X ) + "% " + ( this.Y ) + "% 0px"
 		} else {
 			this.bird.style.position = ( this.X ) + "% " + ( this.Y ) + "% 0px"
-			this.Y = this.Y + 45 * frameTime
-			this.X = this.X + 10 * frameTime
+			this.Y = this.Y + 39 * frameTime
+			this.X = this.X + 12 * frameTime
 		}
 
 		if ( this.X >= 91 ) {

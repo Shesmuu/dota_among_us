@@ -39,7 +39,11 @@ function QuestOxygen:MinigameResult( data )
 					end
 				end
 
-				Quests:NetTable()
+				if GameMode.visibleTaks then
+					Quests:NetTable(false)
+				else
+					Quests:NetTable(true)
+				end
 			end
 		end
 	elseif data.failure == 1 then

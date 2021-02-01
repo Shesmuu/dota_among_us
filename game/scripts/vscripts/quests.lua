@@ -22,6 +22,11 @@ _G.AU_MINIGAME_ECLIPSE = 102
 _G.AU_MINIGAME_OXYGEN = 103
 _G.AU_MINIGAME_REACTOR = 104
 _G.AU_MINIGAME_KICK_VOTING = 228
+_G.AU_MINIGAME_CAMERA = 105
+_G.AU_MINIGAME_CAMERA_WARD_1 = 106
+_G.AU_MINIGAME_CAMERA_WARD_2 = 107
+_G.AU_MINIGAME_CAMERA_WARD_3 = 108
+_G.AU_MINIGAME_CAMERA_WARD_4 = 109
 
 
 GlobalQuest = class( {} )
@@ -55,7 +60,11 @@ function GlobalQuest:constructor( name, t, sabotage, stepCount )
 
 	self.index = Add( Quests.globalQuests, self )
 
-	Quests:NetTable()
+	if GameMode.visibleTaks then
+		Quests:NetTable(false)
+	else
+		Quests:NetTable(true)
+	end
 end
 
 function GlobalQuest:Trigger( unit, activator )
@@ -85,7 +94,11 @@ function GlobalQuest:Destroy( i )
 
 	self.sabotage:End( i )
 
-	Quests:NetTable()
+	if GameMode.visibleTaks then
+		Quests:NetTable(false)
+	else
+		Quests:NetTable(true)
+	end
 end
 
 function GlobalQuest:GetNetTableData()
@@ -117,9 +130,9 @@ local questUnitList = {
 						if
 							now >= GameMode.kickVotingCooldown and
 							not Sabotage:IsActive() and
-							player.kickVotingCount > 0
+							GameMode.KickVotingCount > 0
 						then
-							player.kickVotingCount = player.kickVotingCount - 1
+							GameMode.KickVotingCount = GameMode.KickVotingCount - 1
 							EmitGlobalSound( "Game.KickVotingButton" )
 							GameMode:KickVoting( AU_NOTICE_TYPE_KICK_VOTING_CONVENE, player )
 						end
@@ -129,12 +142,23 @@ local questUnitList = {
 				end
 			} )
 		end,
-		color = { 105, 105, 105 },
 		radius = 350,
+		ghostDisable = true
+	},
+	camera = {
+		event = function( _, player )
+			player:SetMinigame( {
+				type = AU_MINIGAME_CAMERA,
+			} )
+		end,
 		ghostDisable = true
 	},
 	stone = {},
 	voker = {},
+	camera_ward_1 = {},
+	camera_ward_2 = {},
+	camera_ward_3 = {},
+	camera_ward_4 = {},
 	bottle_1 = { questName = "bottle" },
 	bottle_2 = { questName = "bottle" },
 	bottle_3 = { questName = "bottle" },
@@ -205,7 +229,51 @@ local minigameRecipes = {
 	item_recipe_vanguard = "item_vanguard",
 	item_recipe_crimson_guard = "item_crimson_guard",
 	item_recipe_blade_mail = "item_blade_mail",
-	item_recipe_moon_shard = "item_moon_shard",
+	item_recipe_soul_booster = "item_soul_booster",
+	item_recipe_hood_of_defiance = "item_hood_of_defiance",
+	item_recipe_rapier = "item_rapier",
+	item_recipe_monkey_king_bar = "item_monkey_king_bar",
+	item_recipe_radiance = "item_radiance",
+	item_recipe_butterfly = "item_butterfly",
+	item_recipe_greater_crit = "item_greater_crit",
+	item_recipe_basher = "item_basher",
+	item_recipe_bfury = "item_bfury",
+	item_recipe_manta = "item_manta",
+	item_recipe_lesser_crit = "item_lesser_crit",
+	item_recipe_dragon_lance = "item_dragon_lance",
+	item_recipe_armlet = "item_armlet",
+	item_recipe_invis_sword = "item_invis_sword",
+	item_recipe_silver_edge = "item_silver_edge",
+	item_recipe_sange_and_yasha = "item_sange_and_yasha",
+	item_recipe_kaya_and_sange = "item_kaya_and_sange",
+	item_recipe_yasha_and_kaya = "item_yasha_and_kaya",
+	item_recipe_satanic = "item_satanic",
+	item_recipe_mjollnir = "item_mjollnir",
+	item_recipe_skadi = "item_skadi",
+	item_recipe_sange = "item_sange",
+	item_recipe_helm_of_the_dominator = "item_helm_of_the_dominator",
+	item_recipe_maelstrom = "item_maelstrom",
+	item_recipe_desolator = "item_desolator",
+	item_recipe_yasha = "item_yasha",
+	item_recipe_mask_of_madness = "item_mask_of_madness",
+	item_recipe_diffusal_blade = "item_diffusal_blade",
+	item_recipe_ethereal_blade = "item_ethereal_blade",
+	item_recipe_soul_ring = "item_soul_ring",
+	item_recipe_arcane_boots = "item_arcane_boots",
+	item_recipe_octarine_core = "item_octarine_core",
+	item_recipe_ancient_janggo = "item_ancient_janggo",
+	item_recipe_medallion_of_courage = "item_medallion_of_courage",
+	item_recipe_solar_crest = "item_solar_crest",
+	item_recipe_veil_of_discord = "item_veil_of_discord",
+	item_recipe_guardian_greaves = "item_guardian_greaves",
+	item_recipe_rod_of_atos = "item_rod_of_atos",
+	item_recipe_iron_talon = "item_iron_talon",
+	item_recipe_abyssal_blade = "item_abyssal_blade",
+	item_recipe_heavens_halberd = "item_heavens_halberd",
+	item_recipe_ring_of_aquila = "item_ring_of_aquila",
+	item_recipe_tranquil_boots = "item_tranquil_boots",
+	item_recipe_glimmer_cape = "item_glimmer_cape",
+	item_recipe_trident = "item_trident",
 }
 
 local questList = {
@@ -443,7 +511,9 @@ function Quests:AddTaskPoints( count )
 		GameMode:SetWinner( AU_ROLE_PEACE, AU_WIN_REASON_TASKS_COMPLETED )
 	end
 
-	self:NetTable()
+	if GameMode.visibleTaks then
+		Quests:NetTable()
+	end
 end
 
 function Quests:FindGlobalQuest( name )
@@ -477,10 +547,12 @@ function Quests:GameInProgress()
 
 	self.taskPointsToWin = taskPointsToWin
 
-	self:NetTable()
+	if GameMode.visibleTaks then
+		Quests:NetTable()
+	end
 end
 
-function Quests:NetTable()
+function Quests:NetTable(task)
 	local t = {
 		quests = {},
 		points_to_win = self.taskPointsToWin,
@@ -493,5 +565,16 @@ function Quests:NetTable()
 		t.quests[i] = quest:GetNetTableData()
 	end
 
+	if task then
+		local table = CustomNetTables:GetTableValue("game", "quests")
+		if table then
+			local old_p = table.points
+			if old_p then
+				t.points = old_p
+				CustomNetTables:SetTableValue( "game", "quests", t )
+				return
+			end
+		end
+	end
 	CustomNetTables:SetTableValue( "game", "quests", t )
 end

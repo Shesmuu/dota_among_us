@@ -1,4 +1,5 @@
 LinkLuaModifier( "modifier_au_impostor_morph_caster", "abilities/impostor/morph/modifier_au_impostor_morph_caster", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_au_impostor_morph_target", "abilities/impostor/morph/modifier_au_impostor_morph_target", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_au_impostor_morph_duration", "abilities/impostor/morph/modifier_au_impostor_morph_duration", LUA_MODIFIER_MOTION_NONE )
 
 au_impostor_morph_transform = {}
@@ -73,6 +74,9 @@ function au_impostor_morph_transform:CreateIllusion()
 
 	caster:AddNoDraw()
 	caster:AddNewModifier( caster, self, "modifier_au_impostor_morph_caster", nil )
+	self.hero:AddNewModifier( caster, self, "modifier_au_impostor_morph_target", {
+		duration = self:GetSpecialValueFor( "duration" )
+	} )
 
 	self.illusion = CreateUnitByName(
 		self.hero:GetUnitName(),
@@ -99,8 +103,12 @@ function au_impostor_morph_transform:DestroyIllusion()
 
 	caster:RemoveNoDraw()
 	caster:RemoveModifierByName( "modifier_au_impostor_morph_caster" )
+	self.hero:RemoveModifierByName( "modifier_au_impostor_morph_target" )
 end
 
 function au_impostor_morph_transform:Removing()
 	self:GetCaster():RemoveModifierByName( "modifier_au_impostor_morph_duration" )
+	if self.hero then
+		self.hero:RemoveModifierByName( "modifier_au_impostor_morph_target" )
+	end
 end

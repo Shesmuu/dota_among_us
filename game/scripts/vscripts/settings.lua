@@ -3,15 +3,10 @@ Settings = {}
 function Settings:Activate()
 	self.playerVotes = {}
 	self.availableSettings = {
-		custom = {
-			{
-				name = "impostor_info",
-				priority = 1,
-				options = {
-					[0] = "#au_settings_yes",
-					[1] = "#au_settings_no",
-				}
-			}
+		custom = 
+		{
+			{ name = "impostor_info", priority = 1, options =  { [0] = "#au_settings_yes", [1] = "#au_settings_no", } },
+			{ name = "task_info", priority = 1, options =  { [0] = "#au_settings_yes", [1] = "#au_settings_no", } },
 		}
 	}
 	self.settingVotes = {}
@@ -93,6 +88,14 @@ function Settings:VoteOption( data )
 			self:SetVoted( "impostor_info", 1 )
 		end
 	end
+	
+	if data.name == "task_info" then
+		if self.settingVotes.task_info[0] >= d + 1 then
+			self:SetVoted( "task_info", 0 )
+		elseif self.settingVotes.task_info[1] >= d then
+			self:SetVoted( "task_info", 1 )
+		end
+	end
 
 	CustomNetTables:SetTableValue( "settings", "votes", self.settingVotes )
 	CustomNetTables:SetTableValue( "settings", "players", self.playerVotes )
@@ -128,5 +131,7 @@ function Settings:End()
 	self:NetTableState()
 
 	GameMode.visibleImpostorCount = self.votedSettings.impostor_info == 0
+	GameMode.visibleTaks = self.votedSettings.task_info == 0
 	GameMode:GameInProgress()
+	timer_cycle:StartGameTimer()
 end

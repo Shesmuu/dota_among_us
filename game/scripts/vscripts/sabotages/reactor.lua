@@ -66,7 +66,11 @@ function QuestReactor:CalcStep()
 		return
 	end
 
-	Quests:NetTable()
+	if GameMode.visibleTaks then
+		Quests:NetTable(false)
+	else
+		Quests:NetTable(true)
+	end
 end
 
 SabotageReactor = class( {}, nil, BaseSabotage )

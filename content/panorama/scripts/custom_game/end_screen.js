@@ -14,8 +14,11 @@ cameraDistanceEnd = 400
 cameraChangeDuration = 2
 cameraStartTime = Game.GetGameTime()
 cameraEndTime = Game.GetGameTime() + cameraChangeDuration
+player_parties = []
 
-function PlayerRow( parent, id, data, stats ) {
+Mutes_ = new Mutes()
+
+function PlayerRow( parent, id, data, stats, color, solo ) {
 	let panel = $.CreatePanel( "Panel", parent, "" )
 	panel.BLoadLayoutSnippet( "PlayerRow" )
 
@@ -23,6 +26,16 @@ function PlayerRow( parent, id, data, stats ) {
 	let avatar = panel.FindChildTraverse( "AvatarImage" )
 	avatar.style.width = "100%"
 	avatar.style.height = "100%"
+
+	const colors = []
+		colors[0] = "red"
+		colors[1] = "green"
+		colors[2] = "blue"
+		colors[3] = "yellow"
+		colors[4] = "orange"
+		colors[5] = "pink"
+		colors[6] = "purple"
+	const c = colors[color]
 
 	if ( playerInfo ) {
 		avatar.steamid = playerInfo.player_steamid
@@ -48,16 +61,24 @@ function PlayerRow( parent, id, data, stats ) {
 			statLabel.text = data[stat.param]
 		}
 	}
+
+	if (Number(CustomNetTables.GetTableValue("player", Number( id )).partyid) !== 0 ){
+		if (Number(solo) !== 0){
+			panel.style.borderLeft = "5px solid "+c+")"
+			panel.FindChildTraverse( "PlayerInfo" ).style.backgroundColor = "gradient( linear, 0% 0%, 100% 0%, from( "+c+" ), to( #000 ) )"
+		}
+	}
 }
 
-function RolePlayers( parent, title, role, stats, data ) {
-	parent.BLoadLayoutSnippet( "RolePlayersList" )
-	parent.FindChildTraverse( "RoleName" ).text = $.Localize( title )
+function RolePlayers( stats, data ) {
 
-	let statsContainer = parent.FindChildTraverse( "StatTitles" )
+	$( "#Imposters" ).BLoadLayoutSnippet( "RolePlayersList" )
+	$( "#Imposters" ).FindChildTraverse( "RoleName" ).text = $.Localize( "#au_imposters" )
+
+	let statsContainer = $( "#Imposters" ).FindChildTraverse( "StatTitles" )
 
 	for ( let stat of stats ) {
-		if ( stat.role != null && role != stat.role ) {
+		if ( stat.role != null && 1 != stat.role ) {
 			continue
 		}
 
@@ -72,12 +93,50 @@ function RolePlayers( parent, title, role, stats, data ) {
 		}
 	}
 
-	let playersContainer = parent.FindChildTraverse( "PlayerRow" )
+	$( "#Peaces" ).BLoadLayoutSnippet( "RolePlayersList" )
+	$( "#Peaces" ).FindChildTraverse( "RoleName" ).text = $.Localize( "#au_peaces" )
+
+	let statsContainer_2 = $( "#Peaces" ).FindChildTraverse( "StatTitles" )
+
+	for ( let stat of stats ) {
+		if ( stat.role != null && 0 != stat.role ) {
+			continue
+		}
+
+		let statPanel = $.CreatePanel( "Panel", statsContainer_2, "" )
+		statPanel.AddClass( stat.titleStyle != null ? stat.titleStyle : "DefaultStat" )
+
+		if ( stat.titleFunc ) {
+			stat.titleFunc( statPanel, data )
+		} else {
+			let statLabel = $.CreatePanel( "Label", statPanel, "" )
+			statLabel.text = $.Localize( stat.name )
+		}
+	}
 
 	for ( let id in data ) {
-		if ( data[id].role == role ) {
-			PlayerRow( parent, id, data[id], stats )
+		let player_party = CustomNetTables.GetTableValue("player", Number( id )).partyid
+		player_parties[player_party] = player_parties[player_party] || []
+		if (player_parties[player_party].indexOf( id ) == -1) {
+			player_parties[player_party].push(id)
 		}
+	}
+
+	let color = 0
+	let solo = 1
+
+	for ( let partyid in player_parties ) {
+		for ( let party_count of player_parties[partyid] ) {
+			if (player_parties[partyid].length < 2) { solo = 0 } else { solo = 1 }
+			if ( Players.IsValidPlayerID( Number(party_count) ) ) {
+				if ( data[Number(party_count)].role == 0 ) {
+					PlayerRow( $( "#Peaces" ), party_count, data[party_count], stats, color, solo )
+				} else if ( data[Number(party_count)].role == 1 ) {
+					PlayerRow( $( "#Imposters" ), party_count, data[party_count], stats, color, solo )
+				}
+			}
+		}
+		color = color + 1
 	}
 }
 
@@ -185,8 +244,7 @@ function NetTableWinner( data ) {
 		//}
 	]
 
-	RolePlayers( impostersPanel, "#au_imposters", 1, statsForm, data.players )
-	RolePlayers( peacesPanel, "#au_peaces", 0, statsForm, data.players )
+	RolePlayers( statsForm, data.players )
 }
 
 function Update() {
@@ -208,11 +266,41 @@ function Update() {
 	if ( now >= cameraStartTime + 0.5 ) {
 		$.GetContextPanel().SetHasClass( "Visible", true )
 	}
-
 	$.Schedule( 0, Update )
 }
 
 SubscribeNetTable( "game", "winner", NetTableWinner )
 
+
 UnmuteAll()
 Update()
+
+SubscribeNetTable( "player", Players.GetLocalPlayer().toString(), NetTablePlayerUpdate )
+
+function NetTablePlayerUpdate( data ) {
+	Mutes_.NetTablePlayer( data )
+
+	let warning = $( "#ReportsWarning" )
+	let situation = $( "#ReportsSituation" )
+	let warningText = "#au_reports_warning"
+	let situationText = "#au_reports_situation"
+
+	if ( data.ban > 0 ) {
+		warningText += "_banned"
+		situationText += "_banned"
+		situation.text = $.Localize( situationText ) + data.ban
+		situation.visible = true
+	} else {
+		if (situation) {
+			situation.visible = false
+		}
+	}
+
+	if (warning) {
+		warning.text = $.Localize( warningText )
+	}
+
+	if ($( "#LowPriorityCount" )) {
+		$( "#LowPriorityCount" ).text = $.Localize( "#au_low_priority_remaining" ) + data.low_priority
+	}
+}

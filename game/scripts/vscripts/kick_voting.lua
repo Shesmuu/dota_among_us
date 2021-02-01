@@ -4,7 +4,7 @@ KickVoting = {
 
 function KickVoting:Activate()
 	local ent =  Quests:GetUnits( "kick_voting" )[1]
-
+	kickvoting_teleport_start = false
 	self.center = ent:GetAbsOrigin()
 	self.direction = ent:GetForwardVector()
 	self.skipDummy = ent
@@ -44,10 +44,6 @@ function KickVoting:Start( starter )
 	end
 
 	GameMode.state = AU_GAME_STATE_KICK_VOTING
-
-	for _, quest in pairs( Quests.globalQuests ) do
-		quest:Destroy( true )
-	end
 
 	for i, effect in pairs( self.unitEffects ) do
 		ParticleManager:DestroyParticle( effect, false )
@@ -96,7 +92,7 @@ function KickVoting:Start( starter )
 		ParticleManager:SetParticleControlEnt( self.starterEffect, 2, starter.hero, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", pos, true )
 	end
 
-	local duration = IsTest() and 60 or 120
+	local duration = IsTest() and 20 or 90
 
 	self.endTime = GameRules:GetGameTime() + duration
 
@@ -104,6 +100,12 @@ function KickVoting:Start( starter )
 	GameMode:ClearCorpses()
 	GameMode:NetTableDied()
 	GameMode:NetTableState()
+
+	for _, player in pairs( GameMode.players ) do
+		if player.alive then
+			CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer( player.id ), 'chat_visible', {} )
+		end
+	end
 end
 
 function KickVoting:ReduceEndTime()
@@ -261,11 +263,21 @@ function KickVoting:End()
 
 		Quests:NetTable()
 
+		kickvoting_teleport_start = false
+
 		GameMode:Process()
 	end )
+	for _, player in pairs( GameMode.players ) do
+		if player.alive and player.team ~= GameMode.ghostTeam then
+			CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer( player.id ), 'chat_hidden', {} )
+		end
+	end
 end
 
 function KickVoting:Preparing()
+	for _, quest in pairs( Quests.globalQuests ) do
+		quest:Destroy( true )
+	end
 	for id, player in pairs( GameMode.players ) do
 		local unit = player:GetUnit()
 
@@ -274,6 +286,42 @@ function KickVoting:Preparing()
 
 			if morphTransform and morphTransform.illusion then
 				unit = morphTransform.illusion
+			end
+
+			unit:SetHealth(1000)
+
+			if unit:GetUnitName() == "npc_dota_hero_invoker" then
+				local quas = unit:FindModifierByName("modifier_au_impostor_invoker_quas")
+				local exort = unit:FindModifierByName("modifier_au_impostor_invoker_exort")
+				local wex = unit:FindModifierByName("modifier_au_impostor_invoker_wex")
+				if quas then
+					quas:Destroy()
+				end
+				if exort then
+					exort:Destroy()
+				end
+				if wex then
+					wex:Destroy()
+				end
+			end
+
+			local keeper = unit:FindModifierByName("modifier_au_impostor_keeper_teleport")
+			if keeper then
+				keeper:Destroy()
+			end
+
+			local mirana = unit:FindModifierByName("modifier_au_impostor_mirana_moonlight")
+			if mirana then
+				mirana:Destroy()
+			end
+
+			local commisar_track = unit:FindModifierByName("modifier_au_commissar_track")
+			if commisar_track then
+				commisar_track:Destroy()
+			end
+
+			if unit:FindAbilityByName("au_impostor_sf_ghost") then
+				unit:SetMana(1000)
 			end
 
 			if not unit:HasModifier( "modifier_au_impostor_mk_mischief" ) then
@@ -302,6 +350,6 @@ function KickVoting:Preparing()
 
 		player:SetMinigame()
 	end
-
+	kickvoting_teleport_start = true
 	Quests:NetTable()
 end

@@ -38,8 +38,11 @@ _G.GameMode = {
 	tombs = {},
 	playerCount = 0,
 	kickVotingCooldown = 0,
+	KickVotingCount = 3,
 	nextPlayerUpdate = 0,
 	visibleImpostorCount = false,
+	visibleTaks = true,
+	commisar_use_track = false,
 	hasServerData = false,
 	playerColors = {
 		[0] = { 255, 255, 0 },
@@ -69,6 +72,7 @@ require( "sabotages/eclipse" )
 require( "sabotages/interference" )
 require( "sabotages/oxygen" )
 require( "sabotages/reactor" )
+require( "timer_cycle" )
 
 --require( "custom_selection" )
 
@@ -198,7 +202,7 @@ function GameMode:SetWinner( role, reason )
 	if self.hasServerData then
 		Http:Request( "api/match/after", {
 			duration = GameRules:GetDOTATime( false, false ),
-			matchID = IsInToolsMode() and RandomInt( 1, 14881337 ) or tostring( GameRules:GetMatchID() ),
+			matchID = IsInToolsMode() and RandomInt( 1, 14881337 ) or tostring( GameRules:Script_GetMatchID() ),
 			reason = reason,
 			role = role,
 			players = players
@@ -229,6 +233,7 @@ function GameMode:CreateImpostorEffects( hero, disableSave )
 		end
 	end
 end
+
 
 function GameMode:ClearCorpses()
 	--for _, player in pairs( self.players ) do
@@ -276,7 +281,7 @@ function GameMode:Process( data )
 		player:Process()
 	end
 
-	self.kickVotingCooldown = GameRules:GetGameTime() + ( data.kickVotingCooldown or 25 )
+	self.kickVotingCooldown = GameRules:GetGameTime() + ( data.kickVotingCooldown or 50 )
 
 	self:ClearCorpses()
 	self:NetTableDied()
@@ -349,7 +354,7 @@ function GameMode:AssignRoles()
 
 				for id, player in pairs( self.players ) do
 					if player.stats.low_priority <= 0 and player.role ~= AU_ROLE_IMPOSTOR then
-						local chance = math.floor( ( player.stats.peace_streak + 1 / avgStreak ) ^ 5 * 10 )
+						local chance = math.floor( ( math.min( player.stats.peace_streak, 3 ) / avgStreak ) ^ 5 * 10 )
 
 						chance = math.min( chance, 300 )
 
@@ -401,6 +406,19 @@ function GameMode:AssignRoles()
 	end
 end
 
+function GameMode:ComissarRandom()
+	local heroes_peace = {}
+	for id, player in pairs( self.players ) do
+		if player.role ~= AU_ROLE_IMPOSTOR then
+			table.insert( heroes_peace, player )
+		end
+	end
+	local random = RandomInt(1, #heroes_peace)
+	if heroes_peace[random] then
+		heroes_peace[random]:SetComissar()
+	end
+end
+
 function GameMode:CustomGameSetup()
 	for id = 0, 64 do
 		if PlayerResource:IsValidPlayerID( id ) and not self.players[id] then
@@ -415,7 +433,6 @@ function GameMode:CustomGameSetup()
 			for i, p in pairs( self.players ) do
 				if player.partyID == p.partyID and player ~= p then
 					player.stats.party = true
-
 					break
 				end
 			end
@@ -436,7 +453,7 @@ function GameMode:GameInProgress()
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_6, 10 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_7, 10 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_8, 10 )
-
+	GameRules:GetGameModeEntity():SetCustomScanCooldown(100000)
 	Quests:GameInProgress()
 
 	local now = GameRules:GetGameTime()
@@ -453,8 +470,13 @@ function GameMode:GameInProgress()
 
 	self:NetTableImpostors()
 	self:Process( {
-		kickVotingCooldown = 60
+		kickVotingCooldown = 50
 	} )
+	for _, player in pairs( GameMode.players ) do
+		if player.alive and player.team ~= GameMode.ghostTeam then
+			CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer( player.id ), 'chat_hidden', {} )
+		end
+	end
 end
 
 function GameMode:Update_()
@@ -544,6 +566,7 @@ end
 
 function GameMode:NetTableImpostors()
 	local t = {}
+	local comm = {}
 
 	for id, player in pairs( self.players ) do
 		if player.role == AU_ROLE_IMPOSTOR then
@@ -551,7 +574,14 @@ function GameMode:NetTableImpostors()
 		end
 	end
 
+	for id, player in pairs( self.players ) do
+		if player.commissar == true then
+			comm[id] = true
+		end
+	end
+
 	CustomNetTables:SetTableValue( "game", "impostors", t )
+	CustomNetTables:SetTableValue( "game", "commisar", comm )
 end
 
 function GameMode:NetTableState()
@@ -561,9 +591,12 @@ function GameMode:NetTableState()
 		notice = self.notice,
 		kick_voting_end_time = KickVoting.endTime,
 		kick_voting_cooldown = self.kickVotingCooldown,
+		kick_count = self.KickVotingCount,
 		sabotage_active = Sabotage:IsActive(),
+		sabotage_comm = Sabotage:CameraCheck(),
 		found_corpse = self.lastFoundCorpse,
 		visible_impostor_count = self.visibleImpostorCount,
+		visible_Taks = self.visibleTaks,
 		last_kicked = self.lastKicked
 	} )
 end
@@ -590,6 +623,7 @@ function GameMode:Activate()
 	LinkLuaModifier( "modifier_au_unit", "modifiers/modifier_au_unit", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier( "modifier_au_unselectable", "modifiers/modifier_au_unselectable", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier( "modifier_au_ghost", "modifiers/modifier_au_ghost", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier( "modifier_au_camera", "modifiers/modifier_au_camera", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier( "modifier_au_stone_meepo", "modifiers/modifier_au_stone_meepo", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier( "modifier_au_quest_unit", "modifiers/modifier_au_quest_unit", LUA_MODIFIER_MOTION_NONE )
 
@@ -753,10 +787,21 @@ function GameMode:ExecuteOrderFilter( data )
 	end
 
 	if self.state == AU_GAME_STATE_KICK_VOTING then
+		for _, index in pairs( data.units ) do
+			local unit = EntIndexToHScript( index )
+
+			if data.order_type == DOTA_UNIT_ORDER_CAST_TARGET  then
+				if (ability:GetAbilityName() == "au_vote_kick" or ability:GetAbilityName() == "au_commissar_track") then
+					if unit == target then
+						return false
+					end
+				end
+			end
+		end
 		if
 			data.order_type == DOTA_UNIT_ORDER_CAST_TARGET and
 			ability and
-			ability:GetAbilityName() == "au_vote_kick"
+			(ability:GetAbilityName() == "au_vote_kick" or ability:GetAbilityName() == "au_commissar_track")
 		then
 			return true
 		end
@@ -840,6 +885,7 @@ function GameMode:OnGameRulesStateChange()
 		end
 
 		self:AssignRoles()
+		self:ComissarRandom()
 
 		local roles = {}
 		local send = false
@@ -911,6 +957,12 @@ function GameMode:Convars()
 		end )
 	end, "", FCVAR_CHEAT )
 
+	Convars:RegisterCommand( "au_int", function( _, value )
+		Delay( 2, function()
+			Sabotage:GetSabotage( AU_SABOTAGE_INTERFERENCE ):Start()
+		end )
+	end, "", FCVAR_CHEAT )
+
 	Convars:RegisterCommand( "au_winner", function( _, value )
 		Delay( 2, function()
 			self:SetWinner( AU_ROLE_IMPOSTOR, AU_WIN_REASON_IMPOSTOR_COUNT )
@@ -948,13 +1000,10 @@ function Precache( context )
 	PrecacheModel( "models/props_nature/mushroom_wild001.vmdl", context )
 	PrecacheModel( "models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_b.vmdl", context )
 
-	--[[
-		Precache things we know we'll use.  Possible file types include (but not limited to):
-			PrecacheResource( "model", "*.vmdl", context )
-			PrecacheResource( "soundfile", "*.vsndevts", context )
-			PrecacheResource( "particle", "*.vpcf", context )
-			PrecacheResource( "particle_folder", "particles/folder", context )
-	]]
+	local heroes = LoadKeyValues("scripts/npc/dota_heroes.txt")
+  	for k,v in pairs(heroes) do
+  		PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_" .. k:gsub('npc_dota_hero_','') ..".vsndevts", context )  
+  	end
 end
 
 function Activate()

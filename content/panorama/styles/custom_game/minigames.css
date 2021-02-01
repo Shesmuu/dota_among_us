@@ -1,9 +1,8 @@
 #Minigame {
 	horizontal-align: center;
 	vertical-align: center;
-	background-image: url( "s2r://panorama/images/hud/reborn/ability_bg_psd.vtex" );
+	background-image: url( "file://{images}/custom_game/quest_bg.png" );
 	background-size: 100%;
-	background-color: rgb( 33, 33, 33 );
 	opacity: 0;
 	transition-property: opacity;
 	transition-duration: 0.3s;

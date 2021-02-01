@@ -1,4 +1,17 @@
 .EclipseContainer {
+	padding: 20px;
+	flow-children: down;
+}
+
+#TimerCooldown {
+	height: 30px;
+	flow-children: right;
+	align: center center;
+	color: white;
+	font-size: 22px;
+}
+
+#BombPanel {
 	height: 120px;
 	padding: 20px;
 	flow-children: right;

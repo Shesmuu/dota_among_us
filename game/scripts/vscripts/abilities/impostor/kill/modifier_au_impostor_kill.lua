@@ -44,7 +44,7 @@ function modifier_au_impostor_kill:OnIntervalThink()
 				hero ~= parent and
 				parent:GetPlayerOwnerID() ~= hero.player.id and
 				hero.player.role ~= AU_ROLE_IMPOSTOR and
-				hero.player.alive
+				hero.player.alive and not hero:HasModifier("modifier_au_tiny_toss")
 			then
 				if ability.target ~= hero.player then
 					ability.target = hero.player

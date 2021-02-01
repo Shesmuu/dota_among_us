@@ -1,7 +1,194 @@
 "" {
+	"npc_dota_hero_riki" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_zuus" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_monkey_king" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_meepo" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_invoker" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_rubick" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
 	"npc_dota_hero_ogre_magi" {
 		"AttributeBaseIntelligence" "0"
 		"StatusMana" "200"
 		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_pudge" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_ember_spirit" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_morphling" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_nevermore" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_storm_spirit" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_tinker" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_antimage" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_night_stalker" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_furion" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_beastmaster" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_bloodseeker" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_queenofpain" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_weaver" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_mirana" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_keeper_of_the_light" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_life_stealer" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
+	}
+	"npc_dota_hero_tiny" {
+		"AttributeBaseIntelligence" "0"
+		"StatusMana" "200"
+		"StatusManaRegen" "0"
+		"StatusHealthRegen" "0"
+		"AttributeBaseStrength"	"0"
+		"StatusHealth"		"1000"
 	}
 }

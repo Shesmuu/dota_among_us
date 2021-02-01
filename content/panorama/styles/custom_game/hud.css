@@ -22,6 +22,14 @@
 	height: 104px;
 }
 
+#HudButtons Label {
+	align: center bottom;
+	font-size: 13px;
+	color: white;
+	font-family: Radiance;
+	margin-bottom: 2px;
+}
+
 .HUDFlipped #HudButtons {
 	horizontal-align: left;
 }
@@ -71,6 +79,21 @@
 }
 
 #MorphHeroSelectPanel {
+	horizontal-align: center;
+	vertical-align: bottom;
+	background-image: url( "s2r://panorama/images/hud/reborn/ability_bg_psd.vtex" );
+	background-size: 100%;
+	background-color: black;
+	margin-bottom: 200px;
+	transform: translateY( 300px );
+	opacity: 0;
+	transition-property: transform, opacity;
+	transition-duration: 0.4s;
+	padding: 2px;
+	flow-children: down;
+}
+
+#KeeperHeroCenterCelect {
 	horizontal-align: center;
 	vertical-align: bottom;
 	background-image: url( "s2r://panorama/images/hud/reborn/ability_bg_psd.vtex" );
@@ -157,6 +180,40 @@
 	flow-children: right;
 }
 
+#KeeperHeroCenterCelect #Header {
+	width: 100%;
+}
+
+#KeeperHeroCenterCelect Label {
+	horizontal-align: center;
+	font-size: 24px;
+	font-family: Radiance;
+	color: white;
+}
+
+#KeeperHeroCenterCelect #CloseButton {
+	horizontal-align: right;
+	width: 24px;
+	height: 24px;
+	background-image: url( "s2r://panorama/images/control_icons/x_close_png.vtex" );
+	background-size: 100%;
+}
+
+#KeeperHeroCenterCelect.Visible {
+	transform: translateY( 0px );
+	opacity: 1;
+}
+
+#KeeperHeroCenterCelect DOTAHeroImage {
+	width: 112px;
+	height: 70px;
+	margin: 2px;
+}
+
+#KeeperHeroCenterCelect #HeroesContainer {
+	flow-children: right;
+}
+
 #KickVotingTimer {
 	horizontal-align: center;
 	vertical-align: center;
@@ -225,4 +282,67 @@
 	100% {
 		color: #d13d3d;
 	}
+}
+
+#TimerDayNight
+{
+	align: right top;
+	flow-children: down;
+	background-image: url("s2r://panorama/images/hud/reborn/bg_timer_psd.vtex");
+	background-size: 100%;
+	height: 50px;
+	width: 95px;
+	margin-right: 300px;
+}
+
+#Voting
+{
+	align: right top;
+	flow-children: down;
+	background-image: url("s2r://panorama/images/hud/reborn/bg_timer_psd.vtex");
+	background-size: 100%;
+	height: 35px;
+	width: 70px;
+	margin-right: 230px;
+}
+
+#TimePanel
+{
+    font-size: 16px;
+    color: white;
+	align: center center;
+    text-shadow: 2px 2px 2px #000000;
+    flow-children: down;
+    font-weight: bold;
+}
+
+#TimerIcon
+{
+	transform: scaleX(-1);
+	//background-image: url("s2r://panorama/images/hud/reborn/icon_moon_psd.vtex");
+	background-image: url("s2r://panorama/images/hud/reborn/icon_sun_psd.vtex");
+	width: 20px; 
+	height: 20px;
+	background-size: 100%;
+	align: center center;
+}
+
+#VotingPanel
+{
+    font-size: 16px;
+    color: white;
+	align: center top;
+	margin-top: 7px;
+    text-shadow: 2px 2px 2px #000000;
+    flow-children: right;
+}
+
+#KickVotingIcon
+{
+	background-image: url("file://{images}/custom_game/kickvoting.png");
+	width: 16px; 
+	height: 16px;
+	background-size: 100%;
+	margin-left: 5px;
+	margin-right: 5px;
 }

@@ -92,7 +92,15 @@ class Chat {
 		}
 	}
 
+	Clean() {
+		let deleted = this.messages.splice( 0, this.messages.length )
+		for ( let m of deleted ) {
+			m.Delete()
+		}
+	}
+
 	OpenChat() {
+		if ($( "#ChatButton" ).visible == false) { return }
 		this.enabled = true
 		this.panel.AddClass( "Visible" )
 		this.entry.SetFocus()

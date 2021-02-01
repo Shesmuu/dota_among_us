@@ -1,7 +1,16 @@
 local peaceAbilities = {
 	npc_dota_hero_ogre_magi = {
 		"au_ogre_bloodlust"
-	}
+	},
+	npc_dota_hero_antimage = {
+		"au_impostor_am_blink"
+	},
+	npc_dota_hero_invoker = {
+		"au_impostor_invoker_spheres_2"
+	},
+	npc_dota_hero_keeper_of_the_light = {
+		"au_impostor_keeper_teleport"
+	},
 }
 
 IMPOSTOR_ABILITIES = {
@@ -23,15 +32,17 @@ IMPOSTOR_ABILITIES = {
 	},
 	npc_dota_hero_monkey_king = {
 		"au_impostor_kill",
-		"au_impostor_mk_mischief"
+		"au_impostor_mk_tree",
 	},
 	npc_dota_hero_meepo = {
 		"au_impostor_kill",
 		"au_impostor_meepo_clone"
 	},
 	npc_dota_hero_invoker = {
-		"au_impostor_kill",
-		"au_impostor_invoker_invis"
+		"au_impostor_invoker_spheres",
+		"au_impostor_invoker_wex",
+		"au_impostor_invoker_quas",
+		"au_impostor_invoker_exort",
 	},
 	npc_dota_hero_rubick = {
 		"au_impostor_rubick_kill",
@@ -49,7 +60,7 @@ IMPOSTOR_ABILITIES = {
 	},
 	npc_dota_hero_nevermore = {
 		"au_impostor_kill",
-		"au_impostor_sf_souls"
+		"au_impostor_sf_ghost"
 	},
 	npc_dota_hero_storm_spirit = {
 		"au_impostor_kill",
@@ -58,6 +69,44 @@ IMPOSTOR_ABILITIES = {
 	npc_dota_hero_tinker = {
 		"au_impostor_kill",
 		"au_impostor_tinker_rearm"
+	},
+	npc_dota_hero_furion = {
+		"au_impostor_kill",
+		"au_impostor_furion_teleport"
+	},
+	npc_dota_hero_beastmaster = {
+		"au_impostor_kill",
+		"au_impostor_beastmaster_bird"
+	},
+	npc_dota_hero_bloodseeker = {
+		"au_impostor_kill",
+		"au_impostor_bloodseeker_seeking"
+	},
+	npc_dota_hero_antimage = {
+		"au_impostor_kill",
+		"au_impostor_am_blink"
+	},
+	npc_dota_hero_queenofpain = {
+		"au_impostor_qp_knife",
+		"au_impostor_qp_scream"
+	},
+	npc_dota_hero_weaver = {
+		"au_impostor_kill",
+		"au_impostor_weaver_invis"
+	},
+	npc_dota_hero_mirana = {
+		"au_impostor_kill",
+		"au_impostor_mirana_moonlight"
+	},
+	npc_dota_hero_keeper_of_the_light = {
+		"au_impostor_kill",
+		"au_impostor_keeper_teleport"
+	},
+	npc_dota_hero_tiny = {
+		"au_impostor_tiny_toss",
+	},
+	npc_dota_hero_life_stealer = {
+		"au_impostor_ls_infest",
 	},
 }
 
@@ -71,7 +120,7 @@ function Player:constructor( id )
 	self.team = PlayerResource:GetTeam( self.id )
 	self.role = AU_ROLE_PEACE
 	self.admin = false
-	self.kickVotingCount = 1
+	self.commissar = false
 	self.reportsRemaining = 0
 	self.reportedPlayers = {}
 	self.quests = {}
@@ -112,10 +161,16 @@ function Player:constructor( id )
 
 	ListenToClient( "au_minigame_result", Debug:F( self.MinigameRusult ), self, id )
 	ListenToClient( "au_morph_transform_select", Debug:F( self.MorphTransformSelect ), self, id )
+	ListenToClient( "au_keeper_teleport_select", Debug:F( self.KeeperTeleportSelect ), self, id )
 	ListenToClient( "au_report_player", Debug:F( self.ReportPlayer ), self, id )
+	ListenToClient( "camera_start", Debug:F( self.Camera ), self, id )
+	ListenToClient( "au_recamera", Debug:F( self.ReCamera ), self, id )
+	ListenToClient( "au_setcamera", Debug:F( self.CamCamera ), self, id )
 
 	GameMode.playerCount = GameMode.playerCount + 1
 	GameMode.players[id] = self
+
+	self:NetTable()
 end
 
 function Player:Update( now )
@@ -172,6 +227,7 @@ function Player:Update( now )
 		local time = killTime + ( IsTest() and 20 or 70 )
 
 		if now >= time then
+			if IsTest() then return end
 			self:Kill( false, nil, true, true )
 
 			CustomGameEventManager:Send_ServerToAllClients( "au_red_center_message", {
@@ -272,6 +328,82 @@ function Player:ReportPlayer( data )
 	end )
 end
 
+function Player:Camera(kv)
+	if Sabotage:CameraCheck() then return end
+	local team = kv.team
+	local count = kv.count
+	local id = kv.id
+	local cameras = FindUnitsInRadius(
+        DOTA_TEAM_NOTEAM,
+        Vector(0,0,0), 
+        nil,   
+        FIND_UNITS_EVERYWHERE,
+        DOTA_UNIT_TARGET_TEAM_BOTH,
+        DOTA_UNIT_TARGET_ALL,
+        0, 
+        0,  
+        false 
+    )
+    for _,camera in pairs(cameras) do
+    	if count == "1" then
+    		if camera:GetUnitName() == "npc_au_quest_camera_ward_1" then
+    			camera:AddNewModifier(nil, nil, "modifier_au_camera", {duration = 0.1, team = team, id = id})
+    		end
+    	elseif count == "2" then
+	    	if camera:GetUnitName() == "npc_au_quest_camera_ward_2" then
+	    		camera:AddNewModifier(nil, nil, "modifier_au_camera", {duration = 0.1, team = team, id = id})
+	    	end
+    	elseif count == "3" then
+	    	if camera:GetUnitName() == "npc_au_quest_camera_ward_3" then
+	    		camera:AddNewModifier(nil, nil, "modifier_au_camera", {duration = 0.1, team = team, id = id})
+	    	end
+    	elseif count == "4" then
+	    	if camera:GetUnitName() == "npc_au_quest_camera_ward_4" then
+	    		camera:AddNewModifier(nil, nil, "modifier_au_camera", {duration = 0.1, team = team, id = id})
+	    	end
+    	end
+    end
+end
+
+function Player:CamCamera(kv)
+	if Sabotage:CameraCheck() then return end
+	local count = kv.count
+	local cameras = FindUnitsInRadius(
+        DOTA_TEAM_NOTEAM,
+        Vector(0,0,0), 
+        nil,   
+        FIND_UNITS_EVERYWHERE,
+        DOTA_UNIT_TARGET_TEAM_BOTH,
+        DOTA_UNIT_TARGET_ALL,
+        0, 
+        0,  
+        false 
+    )
+    for _,target in pairs(cameras) do
+    	if count == "1" then
+    		if target:GetUnitName() == "npc_au_quest_camera_ward_1" then
+    			self:SendEvent( "au_set_camara_position_new", { unit = target:GetEntityIndex() } )
+    		end
+    	elseif count == "2" then
+	    	if target:GetUnitName() == "npc_au_quest_camera_ward_2" then
+	    		self:SendEvent( "au_set_camara_position_new", { unit = target:GetEntityIndex() } )
+	    	end
+    	elseif count == "3" then
+	    	if target:GetUnitName() == "npc_au_quest_camera_ward_3" then
+	    		self:SendEvent( "au_set_camara_position_new", { unit = target:GetEntityIndex() } )
+	    	end
+    	elseif count == "4" then
+	    	if target:GetUnitName() == "npc_au_quest_camera_ward_4" then
+	    		self:SendEvent( "au_set_camara_position_new", { unit = target:GetEntityIndex() } )
+	    	end
+    	end
+    end
+end
+
+function Player:ReCamera()
+	self:SetCamera( self.hero )
+end
+
 function Player:MorphTransformSelect( data )
 	if not self.hero or not self.alive then
 		return
@@ -294,12 +426,29 @@ function Player:MorphTransformSelect( data )
 	end
 end
 
+function Player:KeeperTeleportSelect( data )
+	if not self.hero or not self.alive then
+		return
+	end
+
+	local unit = self:GetUnit()
+
+	if unit then
+		for i = 31, 0, -1 do
+			local ability = unit:GetAbilityByIndex( i )
+			if ability and ability:GetAbilityName() == "au_impostor_keeper_teleport" and ability:IsFullyCastable() then
+				ability:Teleport( tonumber( data.id ) )
+			end
+		end
+	end
+end
+
 function Player:NetTable()
 	local t = {
 		quests = {},
 		role = self.role,
+		partyid = self.partyID,
 		alive = self.alive,
-		kick_count = self.kickVotingCount,
 		ban = self.stats.ban,
 		reports_remaining = self.reportsRemaining,
 		reported_players = self.reportedPlayers,
@@ -374,7 +523,10 @@ function Player:KickVoting( pos, skipDummy, dir, team )
 		if self.alive then
 			self.hero:RemoveModifierByName( "modifier_au_unselectable" )
 
-			self.hero:Ability( "au_vote_kick", 0, IsTest() and 0 or 20 )
+			self.hero:Ability( "au_vote_kick", 0, IsTest() and 0 or 30 )
+			if self.commissar == true and not GameMode.commisar_use_track then
+				self.hero:Ability( "au_commissar_track", 1, IsTest() and 0 or 30 )
+			end
 		end
 	end
 end
@@ -391,7 +543,13 @@ function Player:Process()
 	self.nextQuestTime = GameRules:GetGameTime() + 5
 
 	self:DeathTime()
-	self:RoleAbilities()
+	if self.hero then
+		if self.hero:GetUnitName() == "npc_dota_hero_rubick" then
+			self:RoleAbilitiesRubickStart()
+		else
+			self:RoleAbilities()
+		end
+	end
 end
 
 function Player:HeroSpawned( hero )
@@ -476,6 +634,8 @@ function Player:Kill( spawnTomb, killer, afkDeath, instaCalc )
 	self.hero:AddNewModifier( unit, nil, "modifier_au_ghost", nil )
 	self.hero:RemoveAbilities()
 
+	CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer( self.id ), 'chat_visible', {} )
+
 	self:SendEvent( "au_red_center_message", {
 		text = "#au_you_killed",
 		duration = 4
@@ -509,7 +669,7 @@ function Player:Kill( spawnTomb, killer, afkDeath, instaCalc )
 	end
 end
 
-function Player:Sabotage( start )
+function Player:Sabotage( start, cooldown )
 	if self.role ~= AU_ROLE_IMPOSTOR then
 		return
 	end
@@ -523,7 +683,7 @@ function Player:Sabotage( start )
 					ability:SetActivated( false )
 				else
 					ability:SetActivated( true )
-					ability:StartCooldown( 30 )
+					ability:StartCooldown( cooldown )
 				end
 			end
 		end
@@ -546,6 +706,11 @@ function Player:SetRole( role )
 	GameMode:NetTableState()
 end
 
+function Player:SetComissar()
+	self.commissar = true
+	GameMode:NetTableState()
+end
+
 function Player:RoleAbilities()
 	if not self.hero then
 		return
@@ -559,10 +724,117 @@ function Player:RoleAbilities()
 
 	local abilities = self.role == AU_ROLE_IMPOSTOR and IMPOSTOR_ABILITIES or peaceAbilities
 
-	for i, abilityName in pairs( abilities[self.abilitiesHeroName] or {} ) do
-		self.hero:Ability( abilityName, i - 1, 40 )
+	if self.hero:GetUnitName() == "npc_dota_hero_invoker" then
+		if self.role == AU_ROLE_IMPOSTOR then
+			self.hero:Ability( "au_impostor_invoker_spheres", 0, 0 )
+			self.hero:Ability( "invoker_empty1", 1, 0 )
+			self.hero:Ability( "au_impostor_invoker_wex", 6, 20 )
+			self.hero:Ability( "au_impostor_invoker_quas", 7, 30 )
+			self.hero:Ability( "au_impostor_invoker_exort", 8, 30 )
+			self.hero:FindAbilityByName( "au_impostor_invoker_wex" ):SetHidden(true)
+			self.hero:FindAbilityByName( "au_impostor_invoker_quas" ):SetHidden(true)
+			self.hero:FindAbilityByName( "au_impostor_invoker_exort" ):SetHidden(true)
+			Sabotage:Abilities( self.hero )
+			self.hero:CastAbilityNoTarget(self.hero:FindAbilityByName( "au_impostor_invoker_spheres" ), self.hero:GetPlayerID())
+			return
+		end
+		self.hero:Ability( "au_impostor_invoker_spheres_2", 0, 0 )
+		self.hero:Ability( "invoker_empty1", 1, 0 )
+		self.hero:CastAbilityNoTarget(self.hero:FindAbilityByName( "au_impostor_invoker_spheres_2" ), self.hero:GetPlayerID())
+		return
 	end
 
+	for i, abilityName in pairs( abilities[self.abilitiesHeroName] or {} ) do
+		if abilityName == "au_impostor_kill" or abilityName == "au_impostor_pudge_eat" or abilityName == "au_impostor_rubick_kill" or abilityName == "au_impostor_qp_scream" then
+			self.hero:Ability( abilityName, i - 1, 30 )
+			if abilityName == "au_impostor_qp_scream" then
+				self.hero:FindAbilityByName("au_impostor_qp_scream"):SetActivated(false)
+			end
+		else
+			self.hero:Ability( abilityName, i - 1, 20 )
+		end
+	end
+
+	if self.role == AU_ROLE_IMPOSTOR then
+		Sabotage:Abilities( self.hero )
+	end
+end
+
+function Player:RoleAbilitiesRubickStart()
+	if not self.hero then
+		return
+	end
+
+	local ability = self.hero:GetAbilityByIndex( 0 )
+
+	if ability then
+		ability:Removing()
+		ability:SetHidden( true )
+	end
+
+	if not self.alive then
+		return
+	end
+
+	local abilities = self.role == AU_ROLE_IMPOSTOR and IMPOSTOR_ABILITIES or peaceAbilities
+
+	if self.abilitiesHeroName == "npc_dota_hero_invoker" then
+		self.hero:Ability( "au_impostor_invoker_exort", 1, 30 )
+		self.hero:Ability( "au_impostor_invoker_quas", 0, 20 )
+		Sabotage:Abilities( self.hero )
+		return
+	end
+
+	for i, abilityName in pairs( abilities[self.abilitiesHeroName] or {} ) do
+		if abilityName == "au_impostor_kill" or abilityName == "au_impostor_pudge_eat" or abilityName == "au_impostor_qp_scream" then
+			self.hero:Ability( abilityName, i - 1, 30 )
+			if abilityName == "au_impostor_qp_scream" then
+				self.hero:FindAbilityByName("au_impostor_qp_scream"):SetActivated(false)
+			end
+		else
+			self.hero:Ability( abilityName, i - 1, 20 )
+		end
+	end
+	if self.role == AU_ROLE_IMPOSTOR then
+		Sabotage:Abilities( self.hero )
+	end
+end
+
+function Player:RoleAbilitiesRubick()
+	if not self.hero then
+		return
+	end
+
+	local ability = self.hero:GetAbilityByIndex( 0 )
+
+	if ability then
+		ability:Removing()
+		ability:SetHidden( true )
+	end
+
+	if not self.alive then
+		return
+	end
+
+	local abilities = self.role == AU_ROLE_IMPOSTOR and IMPOSTOR_ABILITIES or peaceAbilities
+
+	if self.abilitiesHeroName == "npc_dota_hero_invoker" then
+		self.hero:Ability( "au_impostor_invoker_exort", 1, 40 )
+		self.hero:Ability( "au_impostor_invoker_quas", 0, 50 )
+		Sabotage:Abilities( self.hero )
+		return
+	end
+
+	for i, abilityName in pairs( abilities[self.abilitiesHeroName] or {} ) do
+		if abilityName == "au_impostor_kill" or abilityName == "au_impostor_pudge_eat" or abilityName == "au_impostor_qp_scream" then
+			self.hero:Ability( abilityName, i - 1, 40 )
+			if abilityName == "au_impostor_qp_scream" then
+				self.hero:FindAbilityByName("au_impostor_qp_scream"):SetActivated(false)
+			end
+		else
+			self.hero:Ability( abilityName, i - 1, 0 )
+		end
+	end
 	if self.role == AU_ROLE_IMPOSTOR then
 		Sabotage:Abilities( self.hero )
 	end
@@ -600,7 +872,7 @@ function Player:GameInProgress( now )
 
 		self.hero:HeroSettings()
 	else
-		self.hero:HeroSettings( 150, 1350 )
+		self.hero:HeroSettings( 700, 900 )
 	end
 
 	Quests:RandomQuests( self )

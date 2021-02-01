@@ -39,6 +39,7 @@ function au_impostor_pudge_eat:OnSpellStart()
 			local player = caster.player
 			local pos = self.hero:GetAbsOrigin()
 			local dir = caster:GetAbsOrigin() - pos
+			local radius = dir:Length2D()
 			local duration = {
 				duration = self:GetSpecialValueFor( "duration" )
 			}
@@ -52,8 +53,12 @@ function au_impostor_pudge_eat:OnSpellStart()
 			caster:AddNewModifier( caster, self, "modifier_au_impostor_pudge_eat_delay", duration )
 			self.hero:AddNewModifier( caster, self, "modifier_au_impostor_pudge_eat", duration )
 		
-			caster:SetClearSpaceOrigin( pos + dir * -150 )
-			caster:SetForwardVector( dir )
+			if radius > 75 then 
+				caster:SetAbsOrigin(pos)
+			else
+				caster:SetAbsOrigin(pos)
+				caster:SetForwardVector( dir )
+			end
 		end
 	end )
 end

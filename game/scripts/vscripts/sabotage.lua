@@ -23,15 +23,17 @@ function BaseSabotage:constructor( t, questName, duration, alert )
 	end
 end
 
-function BaseSabotage:Start()
+function BaseSabotage:Start(caster)
 	if self.started then
 		return
 	end
 
+	self.creator = caster
+
 	Quests.alertEnabled = self.alertEnabled
 
 	for _, player in pairs( GameMode.players ) do
-		player:Sabotage( true )
+		player:Sabotage( true, 30 )
 	end
 
 	if self.duration then
@@ -55,8 +57,16 @@ function BaseSabotage:End( interrupted )
 	Quests.alertEnabled = false
 
 	for _, player in pairs( GameMode.players ) do
-		player:Sabotage( false )
+		if self.creator == player then
+			player:Sabotage( false, 30 )
+		elseif self.creator == nil then
+			player:Sabotage( false, 30 )
+		else
+			player:Sabotage( false, 25 )
+		end
 	end
+
+	self.creator = nil
 
 	if self.duration and not interrupted then
 		if not interrupted then
@@ -145,8 +155,8 @@ Sabotage = {
 function Sabotage:Activate( value )
 	self.sabotages[AU_SABOTAGE_ECLIPSE] = SabotageEclipse( AU_SABOTAGE_ECLIPSE, "eclipse" )
 	self.sabotages[AU_SABOTAGE_INTERFERENCE] = SabotageInterference( AU_SABOTAGE_INTERFERENCE, "interference" )
-	self.sabotages[AU_SABOTAGE_OXYGEN] = SabotageOxygen( AU_SABOTAGE_OXYGEN, "oxygen", 43, true )
-	self.sabotages[AU_SABOTAGE_REACTOR] = SabotageReactor( AU_SABOTAGE_REACTOR, "reactor", 43, true )
+	self.sabotages[AU_SABOTAGE_OXYGEN] = SabotageOxygen( AU_SABOTAGE_OXYGEN, "oxygen", 53, true )
+	self.sabotages[AU_SABOTAGE_REACTOR] = SabotageReactor( AU_SABOTAGE_REACTOR, "reactor", 53, true )
 end
 
 function Sabotage:IsActive()
@@ -154,6 +164,14 @@ function Sabotage:IsActive()
 		if sabotage.started then
 			return true
 		end
+	end
+
+	return false
+end
+
+function Sabotage:CameraCheck()
+	if Quests.interferenced or Quests.eclipse then
+		return true
 	end
 
 	return false
@@ -174,4 +192,16 @@ function Sabotage:Abilities( unit )
 	unit:Ability( "au_impostor_sabotage_reactor", 3, 20 )
 	unit:Ability( "au_impostor_sabotage_eclipse", 4, 20 )
 	unit:Ability( "au_impostor_sabotage_interference", 5, 20 )
+end
+
+function Sabotage:AbilitiesRubick( unit )
+	unit:Ability( "au_impostor_sabotage_oxygen", 2, 0 )
+	unit:Ability( "au_impostor_sabotage_reactor", 3, 0 )
+	unit:Ability( "au_impostor_sabotage_eclipse", 4, 0 )
+	unit:Ability( "au_impostor_sabotage_interference", 5, 0 )
+	if Sabotage:IsActive() then
+		for _, player in pairs( GameMode.players ) do
+			player:Sabotage( true )
+		end
+	end
 end

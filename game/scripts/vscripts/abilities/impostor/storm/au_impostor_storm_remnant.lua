@@ -16,22 +16,18 @@ function au_impostor_storm_remnant:OnSpellStart()
 			if p.alive and p.hero and player.role == p.role then
 				local unit = CreateUnitByName( "npc_au_storm_remnant", pos, true, nil, nil, p.team )
 				unit:AddNewModifier( caster, self, "modifier_au_impostor_storm_remnant", nil )
+				unit:AddNewModifier( caster, self, "modifier_kill", {duration = self:GetSpecialValueFor( "duration" )} )
 
-				local effect = ParticleManager:CreateParticleForTeam(
+				unit.effect = ParticleManager:CreateParticleForTeam(
 					"particles/units/heroes/hero_stormspirit/stormspirit_static_remnant.vpcf",
 					PATTACH_WORLDORIGIN,
 					unit,
 					p.team
 				)
-				ParticleManager:SetParticleControl( effect, 0, pos )
-				ParticleManager:SetParticleControlEnt( effect, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", pos, true )
-				ParticleManager:SetParticleControl( effect, 2, Vector( RandomInt( 37, 52 ), 1, 100 ) )
-				ParticleManager:SetParticleControl( effect, 11, pos )
-
-				Delay( self:GetSpecialValueFor( "duration" ), function()
-					unit:Destroy()
-					ParticleManager:DestroyParticle( effect, false )
-				end )
+				ParticleManager:SetParticleControl( unit.effect, 0, pos )
+				ParticleManager:SetParticleControlEnt( unit.effect, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", pos, true )
+				ParticleManager:SetParticleControl( unit.effect, 2, Vector( RandomInt( 37, 52 ), 1, 100 ) )
+				ParticleManager:SetParticleControl( unit.effect, 11, pos )
 			end
 		end
 	end )

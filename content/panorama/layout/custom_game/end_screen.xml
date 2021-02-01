@@ -5,6 +5,7 @@
 
 	<scripts>
 		<include src="file://{resources}/scripts/custom_game/utils.js" />
+		<include src="file://{resources}/scripts/custom_game/mutes.js" />
 		<include src="file://{resources}/scripts/custom_game/end_screen.js" />
 	</scripts>
 
@@ -19,6 +20,7 @@
 					<Label id="Nickname" />
 				</Panel>
 				<Panel id="PlayerStats" />
+				<Panel id="ReportButtons" />
 			</Panel>
 		</snippet>
 
@@ -31,14 +33,55 @@
 				<Panel id="PlayersContainer" />
 			</Panel>
 		</snippet>
+
+		<snippet name="MutesPlayerRow">
+			<Panel class="PlayerRow">
+				<Panel id="ReportButtons" />
+				<DOTAHeroImage id="HeroImage">
+					<Panel id="Color" />
+					<Button id="Mute" />
+				</DOTAHeroImage>
+			</Panel>
+		</snippet>
 	</snippets>
 
 	<Panel class="Hud" hittest="false">
-		<Label id="Reason" />
-		<Panel id="RolesContainer">
-			<Panel id="Imposters" />
-			<Panel id="Peaces" />
+		<Panel id="HudHeroes">
+			<Label id="Reason" />
+			<Panel id="RolesContainer">
+				<Panel id="Imposters" />
+				<Panel id="Peaces" />
+			</Panel>
+			<TextButton id="CloseButton" text="#close_game" onactivate="Game.FinishGame()" />
 		</Panel>
-		<TextButton id="CloseButton" text="#close_game" onactivate="Game.FinishGame()" />
+		<Button id="MuteButton" onactivate="Mutes_.Toggle()">
+			<Label text="#mute_button" />
+		</Button>
+		<Panel id="Mutes">
+			<Panel id="Unbanned">
+				<Label text="#au_your_reports_1" />
+				<Panel id="Reports">
+					<Panel>
+						<Image src="file://{images}/custom_game/report_button_toxic.png" />
+						<Label id="ToxicReports" />
+					</Panel>
+					<Panel>
+						<Image src="file://{images}/custom_game/report_button_cheater.png" />
+						<Label id="CheatReports" />
+					</Panel>
+					<Panel>
+						<Image src="file://{images}/custom_game/report_button_party.png" />
+						<Label id="PartyReports" />
+					</Panel>
+				</Panel>
+				<Label text="#au_reports_to_ban" />
+				<Label id="ReportsRemaining" />
+			</Panel>
+			<Panel id="Banned">
+				<Label text="#au_reports_warning_banned" />
+				<Label id="BanRemainings" />
+			</Panel>
+			<Panel id="MuteList" />
+		</Panel>
 	</Panel>
 </root>

@@ -1,0 +1,43 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "global_lit_simple.vfx"
+
+	//---- Ambient Occlusion Map ----
+	F_AO_MAP 1
+
+	//---- Normal Maps ----
+	F_NORMAL_MAP 1
+
+	//---- Specular ----
+	F_SPECULAR 1
+
+	//---- Ambient Occlusion Map ----
+	g_flGradientBottom "-31.752"
+	g_flGradientColorMultiplier "6.233"
+	g_flGradientTop "200.000"
+	g_vAmbientOcclusionColor "[0.000000 0.000000 0.000000 0.000000]"
+	g_vGradientBottomColor "[0.000000 0.000000 0.000000 0.000000]"
+	g_vGradientTopColor "[1.000000 1.000000 1.000000 0.000000]"
+	TextureAmbientOcclusionMap "materials/cage/birdcage_ao.tga"
+
+	//---- Color ----
+	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
+	g_vTexCoordOffset "[0.000 0.000]"
+	g_vTexCoordScale "[1.000 1.000]"
+	TextureColor "materials/cage/birdcage_tex.tga"
+
+	//---- Normal Map ----
+	g_flBumpStrength "1.000"
+	TextureNormal "materials/cage/birdcage_normal.tga"
+
+	//---- Self Illum ----
+	TextureSelfIllumMask "materials/default/default_selfillum.tga"
+
+	//---- Specular ----
+	g_flSpecularBloom "0.000"
+	g_flSpecularIntensity "1.000"
+	TextureBloom "materials/cage/birdcage_specular.tga"
+	TextureReflectance "materials/default/default_refl.tga"
+}

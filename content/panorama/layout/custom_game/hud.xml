@@ -30,6 +30,7 @@
 		<include src="file://{resources}/styles/custom_game/minigames/alchemist.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/collect.css" />
 		<include src="file://{resources}/styles/custom_game/minigames/kick_voting.css" />
+		<include src="file://{resources}/styles/custom_game/minigames/camera.css" />
 	</styles>
 
 	<scripts>
@@ -52,6 +53,7 @@
 		<include src="file://{resources}/scripts/custom_game/minigames/eclipse.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/oxygen.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/kick_voting.js" />
+		<include src="file://{resources}/scripts/custom_game/minigames/camera.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/batrider.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/osu.js" />
 		<include src="file://{resources}/scripts/custom_game/minigames/mortred.js" />
@@ -65,6 +67,7 @@
 		<include src="file://{resources}/scripts/custom_game/mutes.js" />
 		<include src="file://{resources}/scripts/custom_game/settings.js" />
 		<include src="file://{resources}/scripts/custom_game/profile.js" />
+		<include src="file://{resources}/scripts/custom_game/timer.js" />
 		<include src="file://{resources}/scripts/custom_game/hud.js" />
 	</scripts>
 
@@ -105,10 +108,8 @@
 						</Panel>	
 						<Panel id="MiddleButtons">
 							<Button id="Left" />
-							<Button id="Right" />
-						</Panel>
-						<Panel id="BottomButtons">
 							<Button id="Down" />
+							<Button id="Right" />
 						</Panel>	
 					</Panel>
 					<Panel id="Container">
@@ -162,6 +163,14 @@
 					<Label id="IsSabotage" text="#kick_voting_sabotage" />
 				</Panel>
 				<Label id="KickCount" />
+			</Panel>
+		</snippet>
+
+		<snippet name="MinigameCamera">
+			<Panel class="CameraContainer">
+				<Button id="LeftArrow" class="button" />
+				<Label id="CameraError" text="#kick_voting_sabotage" />
+				<Button id="RightArrow" class="button" />
 			</Panel>
 		</snippet>
 
@@ -265,12 +274,24 @@
 			</Panel>
 			<Panel id="HeroesContainer" />
 		</Panel>
+		<Panel id="KeeperHeroCenterCelect">
+			<Panel id="Header">
+				<Label id="Title" text="#au_keeper_teleport_title" />
+				<Button id="CloseButton" onactivate="HideKeeperTeleport()" />
+			</Panel>
+			<Panel id="HeroesContainer" />
+		</Panel>
 		<Panel id="HudButtons">
 			<Button id="ChatButton" onactivate="Chat_.Toggle()">
+				<Label text="#chat_button" />
 				<Panel id="NewMessage" />
 			</Button>
-			<Button id="MuteButton" onactivate="Mutes_.Toggle()" />
-			<Button id="ProfileButton" onactivate="Profile_.Toggle()" />
+			<Button id="MuteButton" onactivate="Mutes_.Toggle()" >
+				<Label text="#mute_button" />
+			</Button>
+			<Button id="ProfileButton" onactivate="Profile_.Toggle()" >
+				<Label text="#profile_button" />
+			</Button>
 		</Panel>
 
 		<Panel id="TopBar">
@@ -316,6 +337,20 @@
 			<Panel id="MinigameContent">
 				<Panel id="MinigameContainer" />
 				<Label id="MinigameMessage" />
+			</Panel>
+		</Panel>
+
+		<Panel id="TimerDayNight">
+			<Panel id="TimePanel">
+				<Panel id="TimerIcon" />
+				<Label id="Timer" text="00:00" />
+			</Panel>
+		</Panel>
+
+		<Panel id="Voting">
+			<Panel id="VotingPanel">
+				<Panel id="KickVotingIcon" />
+				<Label id="VotingTimer" text="3" />
 			</Panel>
 		</Panel>
 

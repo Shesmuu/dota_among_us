@@ -1,3 +1,7 @@
+AU_REPORT_REASON_TOXIC = 0
+AU_REPORT_REASON_PARTY = 1
+AU_REPORT_REASON_CHEATS = 2
+
 class MutesPlayer {
 	constructor( id, parent ) {
 		const colors = []
@@ -29,7 +33,7 @@ class MutesPlayer {
 		this.ReportButton( AU_REPORT_REASON_TOXIC, "toxic", this.reportButtons )
 		this.ReportButton( AU_REPORT_REASON_CHEATS, "cheater",this.reportButtons )
 		this.ReportButton( AU_REPORT_REASON_PARTY, "party", this.reportButtons )
-
+		
 		this.SetMute( false )
 		this.SetPermanentMute( false )
 	}

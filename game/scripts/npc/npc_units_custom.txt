@@ -13,8 +13,8 @@
 		"Model"						"models/development/invisiblebox.vmdl"
 		"BaseClass"					"npc_dota_creature"
 		"ModelScale" 				"1"
-		"VisionDaytimeRange"		"3000"
-		"VisionNighttimeRange"		"3000"
+		"VisionDaytimeRange"		"5000"
+		"VisionNighttimeRange"		"5000"
 	}
 	"npc_au_kick_voting_voter" {
 		"Model"						"models/development/invisiblebox.vmdl"
@@ -69,9 +69,11 @@
 		}
 	}
 	"npc_au_quest_kick_voting" {
-		"Model"						"models/kick_voting/kick_voting.vmdl"
+		"Model"						"models/table/kick_voting.vmdl"
 		"BaseClass"					"npc_dota_creature"
 		"ModelScale" 				"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"30"
 	}
 	"npc_au_quest_wisp" {
 		"Model"						"models/wisp/wisp.vmdl"
@@ -79,9 +81,9 @@
 		"ModelScale" 				"1"
 	}
 	"npc_au_quest_search" {
-		"Model"						"models/search_table/search_table.vmdl"
+		"Model"						"models/quest_board/quest_board.vmdl"
 		"BaseClass"					"npc_dota_creature"
-		"ModelScale" 				"1"
+		"ModelScale" 				"1.3"
 	}
 	"npc_au_quest_faceless" {
 		"Model"						"models/faceless/faceless.vmdl"
@@ -161,9 +163,9 @@
 		"ModelScale" 				"1.41"
 	}
 	"npc_au_quest_stone" {
-		"Model"						"models/stone/stone.vmdl"
+		"Model"						"models/cage/cage_tree.vmdl"
 		"BaseClass"					"npc_dota_creature"
-		"ModelScale" 				"1"
+		"ModelScale" 				"1.1"
 	}
 	"npc_au_quest_voker" {
 		"Model"						"models/invoker/statue_invoker.vmdl"
@@ -221,5 +223,52 @@
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
 		"VisionDaytimeRange"		"2000"
 		"VisionNighttimeRange"		"2000"
+	}
+	"npc_au_quest_camera" {
+		"Model"						"models/items/wards/knightstatue_ward/knightstatue_ward.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"3"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"30"
+	}
+	"npc_au_quest_camera_ward_1" {
+		"Model"						"models/items/wards/f2p_ward/f2p_ward.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"30"
+		"Ability1"					"au_camera"
+	}
+	"npc_au_quest_camera_ward_2" {
+		"Model"						"models/items/wards/f2p_ward/f2p_ward.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"30"
+		"Ability1"					"au_camera"
+	}
+	"npc_au_quest_camera_ward_3" {
+		"Model"						"models/items/wards/f2p_ward/f2p_ward.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"30"
+		"Ability1"					"au_camera"
+	}
+	"npc_au_quest_camera_ward_4" {
+		"Model"						"models/items/wards/f2p_ward/f2p_ward.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"30"
+		"Ability1"					"au_camera"
+	}
+	"npc_au_sf_ghost" {
+		"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_red.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1.1"
+		"MovementSpeed"				"550"
+		"Ability1"					"au_impostor_sf_ghost_teleport"
+		"Ability2"					"au_impostor_sf_ghost_teleport_sf"
 	}
 }

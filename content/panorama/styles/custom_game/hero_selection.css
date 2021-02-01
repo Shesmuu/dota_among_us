@@ -330,6 +330,7 @@
 	align: center center;
 	width: 600px;
 	height: 650px;
+	opacity-mask: url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");
 }
 
 .HeroPickedName {

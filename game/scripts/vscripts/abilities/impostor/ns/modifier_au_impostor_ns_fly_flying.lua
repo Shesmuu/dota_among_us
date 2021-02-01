@@ -36,7 +36,7 @@ end
 function modifier_au_impostor_ns_fly_flying:OnIntervalThink()
 	local caster = self:GetCaster()
 	local player = caster.player
-
+	if kickvoting_teleport_start == true then self:Destroy() return end
 	AddFOWViewer( player.team, caster:GetAbsOrigin(), 2000, 0.1, false )
 end
 

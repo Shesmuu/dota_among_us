@@ -18,7 +18,10 @@ end
 function CDOTA_BaseNPC:HeroSettings( nightVision, dayVision )
 	self:SetDayTimeVisionRange( dayVision or 2000 )
 	self:SetNightTimeVisionRange( nightVision or 2000 )
-	self:SetBaseMoveSpeed( 550 )
+	self:SetBaseMoveSpeed( 500 )
+	if self:GetUnitName() == "npc_dota_hero_invoker" then
+		self:SetBaseMoveSpeed( 450 )
+	end
 end
 
 function CDOTA_BaseNPC:Ability( name, index, cooldown )
@@ -33,6 +36,7 @@ function CDOTA_BaseNPC:Ability( name, index, cooldown )
 	end
 
 	if cooldown then
+		ability:EndCooldown()
 		ability:StartCooldown( cooldown )
 	end
 

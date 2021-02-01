@@ -21,6 +21,7 @@ AU_MINIGAME_INTERFERENCE = 101
 AU_MINIGAME_ECLIPSE = 102
 AU_MINIGAME_OXYGEN = 103
 AU_MINIGAME_REACTOR = 104
+AU_MINIGAME_CAMERA = 105
 AU_MINIGAME_KICK_VOTING = 228
 
 class Minigame {
@@ -126,22 +127,30 @@ class Minigames {
 			this.kickVotingCooldown = data.kick_voting_cooldown
 		}
 
+		this.kick_count = data.kick_count
+
 		this.sabotageActive = data.sabotage_active == 1
+		this.sabotagecommunicate = data.sabotage_comm == 1
 
 		if ( this.minigame && this.minigame.type == AU_MINIGAME_KICK_VOTING ) {
 			this.minigame.SetSabotage( this.sabotageActive )
+		}
+		if ( this.minigame && this.minigame.type == AU_MINIGAME_CAMERA ) {
+			this.minigame.SetSabotage( this.sabotagecommunicate )
 		}
 	}
 
 	NetTablePlayer( data ) {
 		let m = data.minigame
-		let count = data.kick_count
 
 		if ( this.minigame && m != null ) {
 			this.minigame.Destroy()
 			this.minigame = null
+			$("#Minigame").style.backgroundImage = 'url( "file://{images}/custom_game/quest_bg.png" )'
 		} else if ( this.minigame && this.minigame.type == AU_MINIGAME_KICK_VOTING ) {
-			this.minigame.SetKickCount( count )
+			this.minigame.SetKickCount( this.kick_count )
+		} else if ( this.minigame && this.minigame.type == AU_MINIGAME_CAMERA ) {
+			$.Schedule( 0.5, () => GameEvents.SendCustomGameEventToServer( "au_recamera", {} ) )
 		}
 
 		let minigames = []
@@ -176,7 +185,9 @@ class Minigames {
 			) {
 				this.minigame = new MinigameBottle( m )
 			} else if ( m == AU_MINIGAME_KICK_VOTING ) {
-				this.minigame = new MinigameKickVoting( this.kickVotingCooldown, this.sabotageActive, count )
+				this.minigame = new MinigameKickVoting( this.kickVotingCooldown, this.sabotageActive, this.kick_count )
+			} else if ( m == AU_MINIGAME_CAMERA ) {
+				this.minigame = new MinigameCamera(this.sabotagecommunicate)
 			}
 
 			this.panel.SetHasClass( "Visible", true )

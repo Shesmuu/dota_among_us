@@ -106,7 +106,7 @@ class MinigameAlchemist extends Minigame {
 				this.scoreCount.text = $.Localize( "#au_minigame_alchemist_score" ) + this.score
 				Sounds_.EmitSound( "Minigame.Alchemist" )
 
-				if ( this.score >= 7 ) {
+				if ( this.score >= 5 ) {
 					this.Complete( 0.4, "#au_minigame_good_1" )
 				}
 			}

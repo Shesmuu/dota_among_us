@@ -13,10 +13,6 @@ AU_NOTICE_TYPE_IMPOSTORS_REMAINING = 4
 AU_NOTICE_TYPE_NO_KICKED = 5
 AU_NOTICE_TYPE_NONE = 6
 
-AU_REPORT_REASON_TOXIC = 0
-AU_REPORT_REASON_PARTY = 1
-AU_REPORT_REASON_CHEATS = 2
-
 AU_ROLE_PEACE = 0
 AU_ROLE_IMPOSTOR = 1
 
@@ -52,6 +48,7 @@ GameEvents.Subscribe( "dota_player_update_query_unit", () => {
 } )
 
 TopBar_ = new TopBar()
+TimerDayNight_ = new TimerDayNight()
 Quests_ = new Quests()
 Minigames_ = new Minigames()
 KickVotingTimer_ = new KickVotingTimer()
@@ -99,6 +96,14 @@ redMessageHideTime = 0
 GameEvents.Subscribe( "au_set_camara_position", data => {
 	GameUI.SetCameraTarget( data.unit )
 	$.Schedule( 0.1, () => GameUI.SetCameraTarget( -1 ) )
+} )
+
+GameEvents.Subscribe( "au_set_select_unit", data => {
+	GameUI.SelectUnit( data.unit, false )
+} )
+
+GameEvents.Subscribe( "au_set_camara_position_new", data => {
+	GameUI.SetCameraTarget( data.unit )
 } )
 
 GameEvents.Subscribe( "au_emit_sound", data => {
@@ -202,6 +207,7 @@ function NetTableState( data ) {
 
 	Quests_.SetState( data.state )
 	Minigames_.NetTableState( data )
+	TimerDayNight_.NetTableState( data )
 	TopBar_.NetTableState()
 	TopBar_.SetImpostorsRemaining( data.impostor_remaining )
 	TopBar_.SetImpostorsRemainingVisible( !!data.visible_impostor_count )
@@ -239,6 +245,7 @@ function Update() {
 	let now = Game.GetGameTime()
 
 	Mutes_.Update()
+	TopBar_.UpdatePlayersParty()
 	TopBar_.UpdatePlayers()
 	Minigames_.Update( now )
 	Quests_.Update( now )
@@ -268,6 +275,24 @@ function Update() {
 function HideMorphTransform() {
 	let panel = $( "#MorphHeroSelectPanel" )
 	panel.SetHasClass( "Visible", false )
+}
+
+function HideKeeperTeleport() {
+	let panel = $( "#KeeperHeroCenterCelect" )
+	panel.SetHasClass( "Visible", false )
+}
+
+function HudChatCleaning() {
+	Chat_.Clean()
+}
+
+function HudChatClosed() {
+	Chat_.CloseChat()
+	$( "#ChatButton" ).style.visibility = "collapse";
+}
+
+function HudChatOpen() {
+	$( "#ChatButton" ).style.visibility = "visible";
 }
 
 for ( let i = 0; i < DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ELEMENT_COUNT; i++ ) {
@@ -305,6 +330,37 @@ GameEvents.Subscribe( "au_morph_transform_start", heroes => {
 		} )
 	}
 } )
+GameEvents.Subscribe( "au_keeper_teleport_start", heroes => {
+	let panel = $( "#KeeperHeroCenterCelect" )
+	panel.SetHasClass( "Visible", true )
+	let container = panel.FindChildTraverse( "HeroesContainer" )
+	container.RemoveAndDeleteChildren()
+
+	for ( let id in heroes ) {
+		let heroName = heroes[id]
+		let hero = $.CreatePanel( "DOTAHeroImage", container, "" )
+		hero.heroname = heroName
+
+		hero.SetPanelEvent( "onactivate", () => {
+			HideKeeperTeleport()
+
+			GameEvents.SendCustomGameEventToServer( "au_keeper_teleport_select", {
+				id: id
+			} )
+		} )
+	}
+} )
+GameEvents.Subscribe("CreateIngameErrorMessage", function(data) 
+{
+	GameEvents.SendEventClientSide("dota_hud_error_message", 
+	{
+		"splitscreenplayer": 0,
+		"reason": data.reason || 80,
+		"message": data.message
+	})
+})
+
+
 
 SubscribeNetTable( "game", "died", NetTableDied )
 SubscribeNetTable( "game", "impostors", NetTableImpostors )
@@ -342,6 +398,10 @@ GameUI.SetMouseCallback( ( event, button ) => {
 			} )
 		} )
 	}
+
+	GameEvents.Subscribe( 'chat_clean', HudChatCleaning );
+	GameEvents.Subscribe( 'chat_hidden', HudChatClosed );
+	GameEvents.Subscribe( 'chat_visible', HudChatOpen );
 
 	let minimapBlock = hudElements.FindChildTraverse( "minimap_block" )
 	let minimap = minimapBlock.FindChildTraverse( "minimap" )

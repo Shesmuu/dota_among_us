@@ -54,6 +54,7 @@
 	background-size: 140% 200%;
 	background-position: 50% 80%;
 	wash-color: red;
+	transform: rotateZ( 180deg );
 }
 
 .TopBarPlayer #Disconnected {

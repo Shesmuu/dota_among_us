@@ -4,7 +4,7 @@ class MinigameMortred extends Minigame {
 		this.container.BLoadLayoutSnippet( "MinigameMortred" )
 		this.knifes = []
 		this.rows = []
-		this.rowCount = 7
+		this.rowCount = 9
 		this.currentMortredPosY = 0
 		this.currentMortredPosX = 0
 		this.time = Game.GetGameTime() + 11
@@ -12,7 +12,6 @@ class MinigameMortred extends Minigame {
 		this.mortred = this.container.FindChildTraverse( "Mortred" )
 		this.timeTimer= this.container.FindChildTraverse( "Time" )
 		this.timeTimer.text = $.Localize( "#au_minigame_Mortred_score" ) + 0
-
 		this.container.FindChildTraverse( "Up" ).SetPanelEvent( "onactivate", () => this.UpMortred() )
 		this.container.FindChildTraverse( "Down" ).SetPanelEvent( "onactivate", () => this.DownMortred() )
 		this.container.FindChildTraverse( "Left" ).SetPanelEvent( "onactivate", () => this.LeftMortred() )

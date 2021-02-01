@@ -39,6 +39,6 @@ function au_impostor_rubick_kill:OnSpellStart()
 
 		Projectile( caster, self.target.hero, "particles/units/heroes/hero_rubick/rubick_spell_steal.vpcf" , 1200 )
 
-		player:RoleAbilities()
+		player:RoleAbilitiesRubick()
 	end )
 end

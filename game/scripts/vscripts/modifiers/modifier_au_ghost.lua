@@ -8,6 +8,11 @@ function modifier_au_ghost:IsHidden()
 	return true
 end
 
+function modifier_au_ghost:OnCreated()
+	self:GetParent():SetDayTimeVisionRange( 5000 )
+	self:GetParent():SetNightTimeVisionRange( 5000 )
+end
+
 function modifier_au_ghost:CheckState()
 	return {
 		[MODIFIER_STATE_INVISIBLE] = true,

@@ -13,10 +13,18 @@ class MinigameCollect extends Minigame {
 		const allVarItems = []
 		let varItemCount = 10
 
-		this.answer = $.CreatePanel( "Panel", this.container, "AnswerButton" )
+
+
+		this.answer_table = $.CreatePanel( "Panel", this.container, "AnswerTable" )
+
+		this.answer_info = $.CreatePanel( "Label", this.answer_table, "AnswerInfo" )
+		this.answer_info.text = $.Localize( "#collect_answer" )
+
+		this.answer = $.CreatePanel( "Panel", this.answer_table, "AnswerButton" )
 		this.answer_timer = $.CreatePanel( "Label", this.answer, "AnswerButtonTimer" )
 		this.answer_timer.text = "?"
 		this.time = Game.GetGameTime() + 6
+
 
 		for ( let itemName in this.itemTable ) {
 			random.push( itemName )
@@ -92,6 +100,7 @@ class MinigameCollect extends Minigame {
 		if ( Game.GetGameTime() >= this.time ) {
 			this.answer_timer.text = "?"
 			this.answer.SetPanelEvent( "onactivate", () => this.VisibleHelp() )
+			this.answer_info.text = $.Localize( "#collect_answerunlock" )
 		}
 	}
 

@@ -1,0 +1,59 @@
+@keyframes 'SabotageText' {
+	0% {
+		color: #d13d3d;
+	}
+
+	50% {
+		color: #d19b3d;
+	}
+
+	100% {
+		color: #d13d3d;
+	}
+}
+
+.CameraContainer {
+	flow-children: right;
+	align: center center;
+}
+
+.CameraContainer .button:hover {
+	border: 1px solid white;
+}
+
+.button
+{
+	width: 120px;
+	height: 120px;
+	horizontal-align: center;
+	wash-color: #999;
+	background-image: url("s2r://panorama/images/control_icons/arrow_solid_left_png.vtex");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#LeftArrow
+{
+	margin-right: 300px;
+}
+
+#RightArrow
+{
+	margin-left: 300px;
+	background-image: url("s2r://panorama/images/control_icons/arrow_solid_right_png.vtex");
+}
+
+#CameraError {
+	vertical-align: center;
+	text-align: center;
+	font-family: Radiance;
+	text-transform: uppercase;
+	font-weight:	bold;
+	color: white;
+	font-size: 24px;
+	animation-duration: 0.6s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-name: SabotageText;
+}

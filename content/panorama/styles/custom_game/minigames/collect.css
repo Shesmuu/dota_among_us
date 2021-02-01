@@ -4,7 +4,7 @@
 }
 
 #AllItemsContainer {
-	width: 350px;
+	width: 400px;
 	height: 100%;
 	border-right: 1px solid rgb( 26, 26, 26 );
 	background-color: rgb( 8, 8, 8 );
@@ -13,20 +13,49 @@
 	visibility: collapse;
 }
 
+
+#AnswerTable {
+	width: 170px;
+	height: 60px;
+	flow-children: right;
+}
+
 #AnswerButton {
-	width: 45px;
-	height: 45px;
+	width: 35px;
+	height: 35px;
 	border-radius: 100px;
 	border: 2px solid black;
-	margin: 10px;
+	align: center center;
 }
 
 #AnswerButtonTimer {
 	color: white;
-	font-size: 28px;
+	font-size: 20px;
 	font-family: Radiance;
 	align: center center;
 }
+
+#AnswerInfo {
+	color: white;
+	font-size: 16px;
+	font-family: Radiance;
+	align: center center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #AllItemsContainer DOTAItemImage {
 	height: 38px;
@@ -66,7 +95,7 @@
 
 #ItemCollect {
 	height: 400px;
-	width: 600px;
+	width: 700px;
 }
 
 #ItemCollect #Center {
@@ -74,7 +103,7 @@
 	vertical-align: center;
 	margin-bottom: 40px;
 	flow-children: down;
-	margin-left: 170px;
+	margin-left: 250px;
 }
 
 #ItemCollect #Center Label {
