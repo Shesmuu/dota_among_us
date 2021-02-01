@@ -5,8 +5,8 @@ import { DataBase } from "./database"
 export class Players {
 	private server: Server
 
-	public startReports: number = 5
-	public needMatchesToUpdateReports: number = 15
+	public startReports: number = 10
+	public needMatchesToUpdateReports: number = 20
 	public needReportsToBan: number = 8
 	public banMatches: number = 10
 
@@ -21,6 +21,7 @@ export class Players {
 			low_priority_: 0,
 			imposter_rating: 1000,
 			peace_rating: 1000,
+			rating_season_1: 0,
 			rating: 1000,
 			ban: 0,
 			reports_remaining: this.startReports,
