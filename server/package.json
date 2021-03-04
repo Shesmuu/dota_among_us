@@ -1,7 +1,7 @@
 {
 	"scripts": {
 		"start": "node prod/server.js",
-		"dev": "concurrently \"tsc -p . --watch\" \"nodemon prod/server.js\"",
+		"dev": "nodemon --files src/server.ts",
 		"build": "tsc -p . --watch"
 	},
 	"dependencies": {
