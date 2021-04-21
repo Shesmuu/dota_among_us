@@ -1,20 +1,11 @@
 LinkLuaModifier( "modifier_au_tiny_toss", "abilities/impostor/tiny/au_impostor_tiny_toss", LUA_MODIFIER_MOTION_HORIZONTAL  )
 LinkLuaModifier( "modifier_generic_arc_lua", "abilities/impostor/tiny/au_impostor_tiny_toss", LUA_MODIFIER_MOTION_BOTH )
+LinkLuaModifier( "modifier_au_impostor_kill", "abilities/impostor/tiny/modifier_au_impostor_kill", LUA_MODIFIER_MOTION_NONE )
 
 au_impostor_tiny_toss = {}
 
-function au_impostor_tiny_toss:FindEnemies()
-    local caster = self:GetCaster()
-    local radius = self:GetSpecialValueFor( "radius" )
-    local units = FindUnitsInRadius( caster:GetTeamNumber(), caster:GetOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false )
-    local target
-    for _,unit in pairs(units) do
-        if unit.player and unit.player.role ~= AU_ROLE_IMPOSTOR and unit.player.alive and unit ~= caster then
-            target = unit
-            break
-        end
-    end
-    return target
+function au_impostor_tiny_toss:GetIntrinsicModifierName()
+    return "modifier_au_impostor_kill"
 end
 
 function au_impostor_tiny_toss:OnAbilityPhaseStart()
@@ -22,13 +13,20 @@ function au_impostor_tiny_toss:OnAbilityPhaseStart()
     if not GridNav:IsTraversable( self.vTargetPosition ) then
         return false
     end
-    return self:FindEnemies()
+    if not self.target or not self.target.alive then
+        return false
+    end
+    return true
 end
 
 function au_impostor_tiny_toss:OnSpellStart()
+    if not self.target or not self.target.alive then
+        return
+    end
     self.point = self:GetCursorPosition()
-    local target = self:FindEnemies()
+    local target = self.target.hero
     target:AddNewModifier( self:GetCaster(), self, "modifier_au_tiny_toss", {} )
+    target.player:SetMinigame()
 end
 
 modifier_au_tiny_toss = class({})
@@ -61,7 +59,6 @@ function modifier_au_tiny_toss:OnCreated( kv )
     self.modifier:SetEndCallback(function( interrupted )
         self:Destroy()
         if interrupted then return end
-        if kickvoting_teleport_start == true then return end
         GridNav:DestroyTreesAroundPoint( self.parent:GetOrigin(), 270, false )
         self.parent.player:Kill( true, self.caster.player, false, true )
     end)

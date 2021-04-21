@@ -67,6 +67,9 @@ end
 function modifier_au_impostor_keeper_teleport:OnDestroy()
 	if not IsServer() then return end
 	if kickvoting_teleport_start == true then return end
+	if self:GetParent():HasModifier("modifier_au_tiny_toss") then
+		return
+	end
 	self:GetParent():StopSound("Hero_KeeperOfTheLight.Recall.Target")
 	if self:GetRemainingTime() <= 0 then
 		local caster_position = self:GetCaster():GetAbsOrigin()
@@ -76,6 +79,9 @@ function modifier_au_impostor_keeper_teleport:OnDestroy()
 					self:GetParent():CastAbilityNoTarget(self:GetParent():FindAbilityByName( "au_impostor_morph_transform" ), self:GetParent():GetPlayerID())
 				end
 			end
+			if self:GetParent():HasModifier( "modifier_au_impostor_ls_infest" ) then
+				self:GetParent():CastAbilityNoTarget(self:GetParent():FindAbilityByName( "au_impostor_ls_infest" ), self:GetParent():GetPlayerID())
+			end
 			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_poof.vpcf", PATTACH_POINT, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(particle)
 			FindClearSpaceForUnit(self:GetParent(), self:GetCaster():GetAbsOrigin(), false)
@@ -83,6 +89,7 @@ function modifier_au_impostor_keeper_teleport:OnDestroy()
 			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_poof.vpcf", PATTACH_POINT, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(particle)
 			self:GetParent():Stop()
+			self:GetParent().player:SetMinigame()
 		end
 	end
 end
@@ -133,7 +140,7 @@ function au_impostor_keeper_teleport:Teleport( id )
 		return
 	end 
 
-	if not p or not p.alive or not p.hero or p.hero:HasModifier("modifier_au_tiny_toss") or p.hero:HasModifier("modifier_au_impostor_ls_infest_effect") then
+	if not p or not p.alive or not p.hero or p.hero:HasModifier("modifier_au_tiny_toss") then
 		CustomGameEventManager:Send_ServerToPlayer(player_message, "CreateIngameErrorMessage", {message="#au_heroes_is_die"})
 		return
 	end

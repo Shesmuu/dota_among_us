@@ -5,6 +5,7 @@ function modifier_au_unselectable:IsHidden()
 end
 
 function modifier_au_unselectable:CheckState()
+	if IsInToolsMode() then return end
 	return {
 		[MODIFIER_STATE_UNSELECTABLE] = true
 	}

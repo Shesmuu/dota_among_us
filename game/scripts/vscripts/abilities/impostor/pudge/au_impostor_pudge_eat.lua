@@ -52,6 +52,7 @@ function au_impostor_pudge_eat:OnSpellStart()
 
 			caster:AddNewModifier( caster, self, "modifier_au_impostor_pudge_eat_delay", duration )
 			self.hero:AddNewModifier( caster, self, "modifier_au_impostor_pudge_eat", duration )
+			self.target:SetMinigame()
 		
 			if radius > 75 then 
 				caster:SetAbsOrigin(pos)

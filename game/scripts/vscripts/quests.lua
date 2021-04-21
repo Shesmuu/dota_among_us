@@ -149,6 +149,11 @@ local questUnitList = {
 		event = function( _, player )
 			player:SetMinigame( {
 				type = AU_MINIGAME_CAMERA,
+				result = function( data )
+					if data.failure == 1 then
+						player:SetMinigame()
+					end
+				end
 			} )
 		end,
 		ghostDisable = true

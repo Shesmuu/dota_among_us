@@ -453,6 +453,7 @@ function GameMode:GameInProgress()
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_6, 10 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_7, 10 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_8, 10 )
+	GameRules:SetTreeRegrowTime( 60 )
 	GameRules:GetGameModeEntity():SetCustomScanCooldown(100000)
 	Quests:GameInProgress()
 
